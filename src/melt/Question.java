@@ -6,8 +6,10 @@ public class Question {
     private String question;
     private String answer;
     
+
     private char correctAnswer;
     
+
     public Question(int id, String question, String answer) {
         super();
         this.id = id;

@@ -22,6 +22,7 @@ public class Main {
                 }
             }
         } catch (ClassNotFoundException ex) {
+
             java.util.logging.Logger.getLogger(AddQuestion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(AddQuestion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -36,6 +37,7 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AddQuestion().setVisible(true);
+
                 
             }
         });

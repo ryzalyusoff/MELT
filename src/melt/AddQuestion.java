@@ -1,25 +1,19 @@
 package melt;
 
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Enumeration;
 import java.util.List;
 import javax.management.Query;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 /**
  *
  * @author ryzal_000
  */
-public class AddQuestion extends javax.swing.JFrame {
+public class addQuestion extends javax.swing.JFrame {
 
     private Connection con;
     private Statement st;
@@ -27,24 +21,11 @@ public class AddQuestion extends javax.swing.JFrame {
     
     private QuestionDAO questionDAO;
     
-    private String addedQuestion;
-    private String addedAnswer1;
-    private String addedAnswer2;
-    private String addedAnswer3;
-    private String addedAnswer4;
-    
-    
-    private String sql1;
-    private String sql2;
-    private String sql3;
-    private String sql4;
-    
-    private ButtonGroup choices;
     
     /**
      * Creates new form addQuestion
      */
-      public AddQuestion() {
+      public addQuestion() {
         initComponents();
         
          try {
@@ -55,12 +36,6 @@ public class AddQuestion extends javax.swing.JFrame {
             questions = questionDAO.getAllQuestion();
             QuestionTableModel model = new QuestionTableModel(questions);
             questionTable.setModel(model);
-            
-            choices = new ButtonGroup();
-            choices.add(choice1);
-            choices.add(choice2);
-            choices.add(choice3);
-            choices.add(choice4);
           
             
         } catch (Exception exc) {
@@ -86,30 +61,6 @@ public class AddQuestion extends javax.swing.JFrame {
         }
         
     }  
-    
-    public void close() {
-        //WindowEvent windClosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
-        //Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(windClosingEvent);
-        //this..setVisible(false);
-    }
-    
-    // THIS METHOD COULD BE USE to get Selected answer
-    /*
-    private JRadioButton getSelectedRadioButton(ButtonGroup buttonGroup) {
-
-        Enumeration<AbstractButton> abstractButtons = buttonGroup.getElements();
-        JRadioButton radioButton = null;
-
-        while (abstractButtons.hasMoreElements()) {
-            radioButton = (JRadioButton) abstractButtons.nextElement();
-            if (radioButton.isSelected()) {
-                break;
-            }
-        }
-        
-    return radioButton;
-    }
-    */
       
     public void connectDb() {
         try {
@@ -141,14 +92,12 @@ public class AddQuestion extends javax.swing.JFrame {
         answerField2 = new javax.swing.JTextField();
         answerField3 = new javax.swing.JTextField();
         answerField4 = new javax.swing.JTextField();
-        choice1 = new javax.swing.JRadioButton();
-        choice2 = new javax.swing.JRadioButton();
-        choice3 = new javax.swing.JRadioButton();
-        choice4 = new javax.swing.JRadioButton();
+        correct1 = new javax.swing.JRadioButton();
+        correct2 = new javax.swing.JRadioButton();
+        correct3 = new javax.swing.JRadioButton();
+        correct4 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         questionTable = new javax.swing.JTable();
-        editBtn = new javax.swing.JButton();
-        deleteBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -164,6 +113,7 @@ public class AddQuestion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MELT");
+        setPreferredSize(new java.awt.Dimension(960, 500));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Add Question"));
@@ -201,10 +151,10 @@ public class AddQuestion extends javax.swing.JFrame {
                         .addGap(0, 156, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(choice1)
-                            .addComponent(choice2)
-                            .addComponent(choice3)
-                            .addComponent(choice4))
+                            .addComponent(correct1)
+                            .addComponent(correct2)
+                            .addComponent(correct3)
+                            .addComponent(correct4))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(answerField4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -229,17 +179,17 @@ public class AddQuestion extends javax.swing.JFrame {
                                 .addGap(19, 19, 19)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(answerField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(choice1))
+                                    .addComponent(correct1))
                                 .addGap(18, 18, 18)
                                 .addComponent(answerField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(choice2))
+                            .addComponent(correct2))
                         .addGap(18, 18, 18)
                         .addComponent(answerField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(choice3))
+                    .addComponent(correct3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(answerField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(choice4))
+                    .addComponent(correct4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addBtn))
         );
@@ -252,7 +202,7 @@ public class AddQuestion extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Id", "Question", "Answer"
+                "No", "Question", "Answer"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -265,20 +215,17 @@ public class AddQuestion extends javax.swing.JFrame {
         });
         questionTable.setMinimumSize(new java.awt.Dimension(46, 64));
         jScrollPane1.setViewportView(questionTable);
-
-        editBtn.setText("EDIT");
-        editBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBtnActionPerformed(evt);
-            }
-        });
-
-        deleteBtn.setText("DELETE");
-        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBtnActionPerformed(evt);
-            }
-        });
+        if (questionTable.getColumnModel().getColumnCount() > 0) {
+            questionTable.getColumnModel().getColumn(0).setMinWidth(1);
+            questionTable.getColumnModel().getColumn(0).setPreferredWidth(1);
+            questionTable.getColumnModel().getColumn(0).setMaxWidth(1);
+            questionTable.getColumnModel().getColumn(1).setMinWidth(5);
+            questionTable.getColumnModel().getColumn(1).setPreferredWidth(5);
+            questionTable.getColumnModel().getColumn(1).setMaxWidth(5);
+            questionTable.getColumnModel().getColumn(2).setMinWidth(5);
+            questionTable.getColumnModel().getColumn(2).setPreferredWidth(5);
+            questionTable.getColumnModel().getColumn(2).setMaxWidth(5);
+        }
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(206, 25));
 
@@ -337,26 +284,16 @@ public class AddQuestion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(editBtn)
-                        .addGap(10, 10, 10)
-                        .addComponent(deleteBtn)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editBtn)
-                    .addComponent(deleteBtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -374,64 +311,33 @@ public class AddQuestion extends javax.swing.JFrame {
         try  {
             connectDb();
 
-            
-            
-            this.addedQuestion = questionField.getText();
-            this.addedAnswer1 = answerField1.getText();
-            this.addedAnswer2 = answerField2.getText();
-            this.addedAnswer3 = answerField3.getText();
-            this.addedAnswer4 = answerField4.getText();
+            String addedQuestion = questionField.getText();
+            String addedAnswer1 = answerField1.getText();
+            String addedAnswer2 = answerField2.getText();
+            String addedAnswer3 = answerField3.getText();
+            String addedAnswer4 = answerField4.getText();
             
           
-            
             String finalAnswer = addedAnswer1 +", "+ addedAnswer2+ ", " + addedAnswer3 + ", " + addedAnswer4;
             
-            /////////////// ADDED question to DB //////////////// 
             String sql = "INSERT INTO questions (question, answer) VALUES('"+addedQuestion+"','"+finalAnswer+"')";
        
-            /////////////// Get the last id that was inserted for the question //////////////// 
             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);  
             pstmt.executeUpdate();  
             ResultSet keys = pstmt.getGeneratedKeys();    
             keys.next();  
             int key = keys.getInt(1);
      
-            
-            /////////////// INSERT the correct choice (of answer) to DB  //////////////// 
-              //String selectedRadioButtonText = getSelectedRadioButton(choices).getText();
-            
-            char correctAnswer;
-            
-            if(choice1.isSelected()) {
-                correctAnswer = 'A';
-                sql1 = "INSERT INTO answers (answer,questionID, correct) VALUES('"+addedAnswer1+"', '"+key+"' , 1)";
-                sql2 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer2+"', '"+key+"')";
-                sql3 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer3+"', '"+key+"')";
-                sql4 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer4+"', '"+key+"')";
-            } else if(choice2.isSelected()) {
-                correctAnswer = 'B';
-                sql1 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer1+"', '"+key+"')";
-                sql2 = "INSERT INTO answers (answer,questionID, correct) VALUES('"+addedAnswer2+"', '"+key+"', 1)";
-                sql3 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer3+"', '"+key+"')";
-                sql4 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer4+"', '"+key+"')";
-            } else if(choice3.isSelected()) {
-                correctAnswer = 'C';
-                sql1 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer1+"', '"+key+"')";
-                sql2 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer2+"', '"+key+"')";
-                sql3 = "INSERT INTO answers (answer,questionID, correct) VALUES('"+addedAnswer3+"', '"+key+"', 1)";
-                sql4 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer4+"', '"+key+"')";
-            } else {
-                correctAnswer = 'D'; 
-                sql1 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer1+"', '"+key+"')";
-                sql2 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer2+"', '"+key+"')";
-                sql3 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer3+"', '"+key+"')";
-                sql4 = "INSERT INTO answers (answer,questionID, correct) VALUES('"+addedAnswer4+"', '"+key+"', )";
-            }
-            
-            /////////////// INSERT the answers to DB  //////////////// 
+            String sql1 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer1+"', '"+key+"')";
             st.executeUpdate(sql1);
+            
+            String sql2 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer2+"', '"+key+"')";
             st.executeUpdate(sql2);
+            
+            String sql3 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer3+"', '"+key+"')";
             st.executeUpdate(sql3);
+            
+            String sql4 = "INSERT INTO answers (answer,questionID) VALUES('"+addedAnswer4+"', '"+key+"')";
             st.executeUpdate(sql4);
             
             refresh();
@@ -453,68 +359,6 @@ public class AddQuestion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
-    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        // TODO add your handling code here:
-        try  {
-            
-            connectDb();
-             int selectedRow = questionTable.getSelectedRow();
-             String rowID = (questionTable.getModel().getValueAt(selectedRow,0).toString());
-             
-             //String sql = "SELECT * FROM questions WHERE id='"+rowID+"' ";
-             
-             String sql = "DELETE FROM questions WHERE id='"+rowID+"'";
-             int rows = st.executeUpdate(sql);
-             
-             if (rows > 0) {
-                JOptionPane.showMessageDialog(null, "Question was successfully deleted!"); 
-                refresh();
-             } else {
-                 JOptionPane.showMessageDialog(null, "ERROR : delete was not successfull!");
-                 refresh();
-             }
-             
-             /*
-             Statement statement = con.createStatement();
-             ResultSet result = statement.executeQuery(sql);
-             String question = "";
-             while(result.next()) {
-              question = result.getString("question");
-             }
-             */
-             
-             //JOptionPane.showMessageDialog(null, question );
-
-        }  catch (Exception exc) {
-            exc.printStackTrace();
-        }
-    }//GEN-LAST:event_deleteBtnActionPerformed
-
-    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        //JOptionPane.showMessageDialog(null, "new dialog will be opened!");     
-        //dispose();
-        
-        int selectedRow = questionTable.getSelectedRow();
-        String rowQuestion = (questionTable.getModel().getValueAt(selectedRow,1).toString());
-        
-        String rowAnswer1 = (questionTable.getModel().getValueAt(selectedRow,2).toString());
-        
-        EditQuestion editQPanel = new EditQuestion();
-        
-        editQPanel.questionField.setText(rowQuestion);
-        editQPanel.answer1.setText(rowAnswer1);
-        
-        editQPanel.setVisible(true);
-        
-        
-        //String addedAnswer1;
-        //String addedAnswer2;
-        //String addedAnswer3;
-        //String addedAnswer4;
-        
-        //close();
-    }//GEN-LAST:event_editBtnActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
@@ -522,12 +366,10 @@ public class AddQuestion extends javax.swing.JFrame {
     private javax.swing.JTextField answerField2;
     private javax.swing.JTextField answerField3;
     private javax.swing.JTextField answerField4;
-    private javax.swing.JRadioButton choice1;
-    private javax.swing.JRadioButton choice2;
-    private javax.swing.JRadioButton choice3;
-    private javax.swing.JRadioButton choice4;
-    private javax.swing.JButton deleteBtn;
-    private javax.swing.JButton editBtn;
+    private javax.swing.JRadioButton correct1;
+    private javax.swing.JRadioButton correct2;
+    private javax.swing.JRadioButton correct3;
+    private javax.swing.JRadioButton correct4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;

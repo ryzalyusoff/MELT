@@ -63,13 +63,13 @@ public class QuestionDAO {
     
     private Question convertRowToQuestion(ResultSet myRs, int counter) throws SQLException {
 
-            int id = myRs.getInt("id");
-            //int id = counter;
-            //String id= myRs.getString("id");
+            //int id = myRs.getInt("id");
+            int id = counter;
+            
             String question = myRs.getString("question");
             String answer = myRs.getString("answer");
 
-            Question tempQuestion = new Question(id, question, answer);
+            Question tempQuestion = new Question(counter, question, answer);
 
             return tempQuestion;
     }
