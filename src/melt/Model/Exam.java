@@ -12,6 +12,7 @@ package melt.Model;
 public class Exam {
     private int exam_ID;
     private String Instructions;
+    private boolean isPublic;
 
     /**
      * @return the exam_ID
@@ -39,5 +40,19 @@ public class Exam {
      */
     public void setInstructions(String Instructions) {
         this.Instructions = Instructions;
+    }
+
+    /**
+     * @return the isPublic
+     */
+    public boolean isIsPublic() {
+        return isPublic;
+    }
+
+    /**
+     * @param isPublic the isPublic to set
+     */
+    public void setIsPublic(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 }
