@@ -24,7 +24,7 @@ public class QuestionDAO {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/melt","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
             st = con.createStatement();
             
         } catch(Exception ex) {
@@ -45,7 +45,7 @@ public class QuestionDAO {
         
         try {
             myStmt = con.createStatement();
-            myRs = st.executeQuery("SELECT * FROM questions");
+            myRs = st.executeQuery("SELECT * FROM question");
             
         
             int count = 1;
@@ -64,13 +64,13 @@ public class QuestionDAO {
     
     private Question convertRowToQuestion(ResultSet myRs, int counter) throws SQLException {
 
-            int id = myRs.getInt("id");
+            int id = myRs.getInt("Question_ID");
             //int id = counter;
             
-            String question = myRs.getString("question");
-            String answer = myRs.getString("answer");
+            String question = myRs.getString("Question_Text");
+            //String answer = myRs.getString("answer");
 
-            Question tempQuestion = new Question(id, question, answer);
+            Question tempQuestion = new Question(id, question);
 
             return tempQuestion;
     }
