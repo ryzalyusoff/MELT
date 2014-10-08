@@ -5,13 +5,35 @@
  */
 package melt;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ryzal_000
  */
 public class EditQuestion extends javax.swing.JFrame {
 
-    public String getQuestion;
+    public String questionID;
+    
+    public String question = "";
+    public ButtonGroup choices;
+    
+    private Connection con;
+    private Statement st;
+    private ResultSet rs;
+    
+    public int answerID1 = 0;
+    public int answerID2 = 0;
+    public int answerID3 = 0;
+    public int answerID4 = 0;
+    
+     
+    private AddQuestion AddQuestionPanel;
     
     /**
      * Creates new form startupPanel
@@ -19,8 +41,15 @@ public class EditQuestion extends javax.swing.JFrame {
     public EditQuestion() {
         initComponents();
         
-        //this.questionField.setText(getQuestion);
+        choices = new ButtonGroup();
+        choices.add(choice1);
+        choices.add(choice2);
+        choices.add(choice3);
+        choices.add(choice4);
+       
         
+       //System.out.println("Queston is: "+question);
+     
     }
 
     /**
@@ -88,6 +117,11 @@ public class EditQuestion extends javax.swing.JFrame {
         });
 
         updateBtn.setText("UPDATE");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout startupPanelLayout = new javax.swing.GroupLayout(startupPanel);
         startupPanel.setLayout(startupPanelLayout);
@@ -189,16 +223,127 @@ public class EditQuestion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_answer4ActionPerformed
 
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        //System.out.println("Queston is: "+questionField.getText());
+        
+        this.question = questionField.getText();
+ 
+        //System.out.println("Queston is: "+question);
+        
+        try  {
+            
+            connectDb();
+             
+             //String sql = "SELECT * FROM questions WHERE id='"+rowID+"' ";
+             
+            int errors = 0;
+            
+             String sql = "UPDATE questions SET question='"+this.question+"' WHERE id='"+questionID+"'";
+             int rows = st.executeUpdate(sql);
+             if(rows == 0) {
+                errors++;
+             }
+             
+             String sql1 = "";
+             String sql2 = "";
+             String sql3 = "";
+             String sql4 = "";
+             
+            String sqlreset = "UPDATE answers SET correct='0' WHERE id in ('"+answerID1+"', '"+answerID2+"','"+answerID3+"', '"+answerID4+"')";
+            st.executeUpdate(sqlreset); 
+             
+            if(choice1.isSelected()) { 
+            
+              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"', correct='1' WHERE id='"+answerID1+"' ";
+              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"' WHERE id='"+answerID2+"' ";
+              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"' WHERE id='"+answerID3+"' ";
+              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"' WHERE id='"+answerID4+"' ";
+                   
+            } else if (choice2.isSelected()) { 
+            
+              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"' WHERE id='"+answerID1+"' ";
+              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"', correct='1' WHERE id='"+answerID2+"' ";
+              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"' WHERE id='"+answerID3+"' ";
+              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"' WHERE id='"+answerID4+"' ";
+                
+            } else if (choice3.isSelected()) { 
+                
+              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"' WHERE id='"+answerID1+"' ";
+              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"' WHERE id='"+answerID2+"' ";
+              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"', correct='1' WHERE id='"+answerID3+"' ";
+              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"' WHERE id='"+answerID4+"' ";
+                
+            } else {
+            
+              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"' WHERE id='"+answerID1+"' ";
+              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"' WHERE id='"+answerID2+"' ";
+              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"' WHERE id='"+answerID3+"' ";
+              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"', correct='1' WHERE id='"+answerID4+"' ";  
+                
+            } 
+             
+             /////////////// UPDATE the answers to DB  //////////////// 
+             rows = st.executeUpdate(sql1);
+             if(rows == 0) {
+                errors++;
+             }
+            
+             rows = st.executeUpdate(sql2);
+             if(rows == 0) {
+                errors++;
+             }
+             
+             rows =  st.executeUpdate(sql3);
+             if(rows == 0) {
+                errors++;
+             }
+            
+             rows =  st.executeUpdate(sql4);
+             if(rows == 0) {
+                errors++;
+             }
+             
+             //AddQuestionPanel = new AddQuestion();
+              //  AddQuestionPanel.refresh();
+      
+            if (errors == 0) {
+               JOptionPane.showMessageDialog(null, "Question was successfully updated!");
+               
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR in updating question!!", "error", JOptionPane.ERROR_MESSAGE);
+            }
+             
+            
+
+        }  catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        
+        
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    
+      public void connectDb() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/melt","root","");
+            st = con.createStatement();
+            
+        } catch(Exception ex) {
+            System.out.println("Erro: "+ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField answer1;
-    private javax.swing.JTextField answer2;
-    private javax.swing.JTextField answer3;
-    private javax.swing.JTextField answer4;
-    private javax.swing.JRadioButton choice1;
-    private javax.swing.JRadioButton choice2;
-    private javax.swing.JRadioButton choice3;
-    private javax.swing.JRadioButton choice4;
+    public javax.swing.JTextField answer2;
+    public javax.swing.JTextField answer3;
+    public javax.swing.JTextField answer4;
+    public javax.swing.JRadioButton choice1;
+    public javax.swing.JRadioButton choice2;
+    public javax.swing.JRadioButton choice3;
+    public javax.swing.JRadioButton choice4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButton jRadioButton4;

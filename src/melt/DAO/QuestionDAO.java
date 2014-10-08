@@ -1,4 +1,4 @@
-package melt;
+package melt.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import melt.Question;
 
 public class QuestionDAO {
  
@@ -63,13 +64,13 @@ public class QuestionDAO {
     
     private Question convertRowToQuestion(ResultSet myRs, int counter) throws SQLException {
 
-            //int id = myRs.getInt("id");
-            int id = counter;
+            int id = myRs.getInt("id");
+            //int id = counter;
             
             String question = myRs.getString("question");
             String answer = myRs.getString("answer");
 
-            Question tempQuestion = new Question(counter, question, answer);
+            Question tempQuestion = new Question(id, question, answer);
 
             return tempQuestion;
     }
