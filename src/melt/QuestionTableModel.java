@@ -9,9 +9,7 @@ public class QuestionTableModel extends AbstractTableModel {
     private static final int QUESTION_COL = 1;
     private static final int ANSWER_COL = 2;
     
-
     private String[] columnNames = { "No", "Question"};
-
     private List<Question> questions;
     
     public QuestionTableModel(List<Question> theQuestions) {
