@@ -228,32 +228,33 @@ public class SectionPanel extends JPanel implements ActionListener {
 
     public boolean submitSection() {
         if (sectionContentFlag == sectionContentState.NOSUB) {    //on the condition that section has no subsection
+            Section_DAO section_DAO = new Section_DAO();
+            Subsection_DAO subsection_DAO = new Subsection_DAO();
+            Question_DAO question_DAO = new Question_DAO();
+            MCQ_DAO mcq_dao = new MCQ_DAO();
+
+            String final_timelimit_h = sectionTimeField_h.getText();
+            String final_timelimit_m = sectionTimeField_m.getText();
+            String final_timelimit_s = sectionTimeField_s.getText();
+
+            Date timeLimit = new Date();
+            try {
+                timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
+            } catch (ParseException ex) {
+                Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            section.setTimeLimit(timeLimit);
+
+            int section_ID = section_DAO.add(section);
+            SubSection subSection = new SubSection();
+            subSection.setSection_ID(section_ID);
+            subSection.setSubSection_Name("0");
+            int subsection_ID = subsection_DAO.add(subSection);
             Component[] components = sectionContentPanel.getComponents();
             for (Component component : components) {
-                if (component instanceof JPanel) {
+                if (component instanceof MCQPanel) {
                     //System.out.println(((JPanel)component).getName());
-                    Section_DAO section_DAO = new Section_DAO();
-                    Subsection_DAO subsection_DAO = new Subsection_DAO();
-                    Question_DAO question_DAO = new Question_DAO();
-                    MCQ_DAO mcq_dao = new MCQ_DAO();
 
-                    String final_timelimit_h = sectionTimeField_h.getText();
-                    String final_timelimit_m = sectionTimeField_m.getText();
-                    String final_timelimit_s = sectionTimeField_s.getText();
-
-                    Date timeLimit = new Date();
-                    try {
-                        timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    section.setTimeLimit(timeLimit);
-
-                    int section_ID = section_DAO.add(section);
-                    SubSection subSection = new SubSection();
-                    subSection.setSection_ID(section_ID);
-                    subSection.setSubSection_Name("0");
-                    int subsection_ID = subsection_DAO.add(subSection);
                     question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
                     mcq_dao.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
                 }
@@ -263,36 +264,36 @@ public class SectionPanel extends JPanel implements ActionListener {
             return true;
         } else if (sectionContentFlag == sectionContentState.TWOSUB) { //the condition that section has two subsection
 
+            Section_DAO section_DAO = new Section_DAO();
+
+            String final_timelimit_h = sectionTimeField_h.getText();
+            String final_timelimit_m = sectionTimeField_m.getText();
+            String final_timelimit_s = sectionTimeField_s.getText();
+
+            Date timeLimit = new Date();
+            try {
+                timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
+            } catch (ParseException ex) {
+                Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            section.setTimeLimit(timeLimit);
+
+            int section_ID = section_DAO.add(section);
             Component[] components = sectionContentPanel.getComponents();//Subsection
             for (Component component : components) {
-                if (component instanceof JPanel) {
-                    Section_DAO section_DAO = new Section_DAO();
-
-                    String final_timelimit_h = sectionTimeField_h.getText();
-                    String final_timelimit_m = sectionTimeField_m.getText();
-                    String final_timelimit_s = sectionTimeField_s.getText();
-
-                    Date timeLimit = new Date();
-                    try {
-                        timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    section.setTimeLimit(timeLimit);
-
-                    int section_ID = section_DAO.add(section);
+                if (component instanceof SubsectionPanel) {
+                    Subsection_DAO subsection_DAO = new Subsection_DAO();
+                    SubSection subSection = new SubSection();
+                    subSection.setSection_ID(section_ID);
+                    subSection.setSubSection_Name("");
+                    int subsection_ID = subsection_DAO.add(subSection);
                     Component[] components2 = ((JPanel) component).getComponents();  //SubsectionQuestion
                     for (Component component2 : components2) {
+                        System.out.println(component2 instanceof JPanel);
                         if (component2 instanceof JPanel) {
-                            Subsection_DAO subsection_DAO = new Subsection_DAO();
-                            SubSection subSection = new SubSection();
-                            subSection.setSection_ID(section_ID);
-                            subSection.setSubSection_Name("");
-                            int subsection_ID = subsection_DAO.add(subSection);
-                            Component[] components3 = ((JPanel) component2).getComponents(); //MCQ
+                            Component[] components3 = ((JPanel) component).getComponents();  //SubsectionQuestion
                             for (Component component3 : components3) {
-                                if (component3 instanceof JPanel) {
-
+                                if (component2 instanceof MCQPanel) {
                                     Question_DAO question_DAO = new Question_DAO();
                                     MCQ_DAO mcq_dao = new MCQ_DAO();
 
@@ -307,7 +308,6 @@ public class SectionPanel extends JPanel implements ActionListener {
                 }
 
             }
-
             JOptionPane.showMessageDialog(sectionLabel, "Successfully saved!", "Success", JOptionPane.PLAIN_MESSAGE);
             return true;
 
@@ -316,20 +316,22 @@ public class SectionPanel extends JPanel implements ActionListener {
             return false;
         }
     }
-    public boolean updateSection(){
-        MCQ_DAO mcq_DAO=new MCQ_DAO();
-        Question_DAO question_DAO=new Question_DAO();
-        Subsection_DAO subsection_DAO=new Subsection_DAO();
-        Section_DAO section_DAO=new Section_DAO();
-        
-        int section_ID=section.getSection_ID();
+
+    public boolean updateSection() {
+        MCQ_DAO mcq_DAO = new MCQ_DAO();
+        Question_DAO question_DAO = new Question_DAO();
+        Subsection_DAO subsection_DAO = new Subsection_DAO();
+        Section_DAO section_DAO = new Section_DAO();
+
+        int section_ID = section.getSection_ID();
         mcq_DAO.cancelRWithSubSec(section_ID);
         question_DAO.cancelRWithSubSec(section_ID);
-        subsection_DAO.delete("Section_ID='"+section_ID+"'");
-        section_DAO.delete("Section_ID='"+section_ID+"'");
-        
+        subsection_DAO.delete("Section_ID='" + section_ID + "'");
+        section_DAO.delete("Section_ID='" + section_ID + "'");
+
         return submitSection();
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sectionButton1) {
