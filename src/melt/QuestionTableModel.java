@@ -9,7 +9,9 @@ public class QuestionTableModel extends AbstractTableModel {
     private static final int QUESTION_COL = 1;
     private static final int ANSWER_COL = 2;
     
+
     private String[] columnNames = { "No", "Question"};
+
     private List<Question> questions;
     
     public QuestionTableModel(List<Question> theQuestions) {
@@ -41,8 +43,10 @@ public class QuestionTableModel extends AbstractTableModel {
 			return tempQuestion.getId();    
 		case QUESTION_COL:
 			return tempQuestion.getQuestion();
+
 		//case ANSWER_COL:
 		//	return tempQuestion.getAnswer();
+
 		default:
 			return tempQuestion.getQuestion();
 		}
