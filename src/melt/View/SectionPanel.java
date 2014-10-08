@@ -293,7 +293,7 @@ public class SectionPanel extends JPanel implements ActionListener {
                         if (component2 instanceof JPanel) {
                             Component[] components3 = ((JPanel) component2).getComponents();  //SubsectionQuestion
                             for (Component component3 : components3) {
-                                if (component2 instanceof MCQPanel) {
+                                if (component3 instanceof MCQPanel) {
                                     Question_DAO question_DAO = new Question_DAO();
                                     MCQ_DAO mcq_dao = new MCQ_DAO();
 
