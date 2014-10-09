@@ -192,6 +192,7 @@ public class SectionPanel extends JPanel implements ActionListener {
                 } catch (SQLException ex) {
                     Logger.getLogger(SubsectionPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                sectionContentFlag = sectionContentState.NOSUB;
 
             } else {
                 //on the condition has two subsection but only add a subsection
