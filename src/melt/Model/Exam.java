@@ -45,7 +45,7 @@ public class Exam {
     /**
      * @return the isPublic
      */
-    public boolean isIsPublic() {
+    public boolean getIsPublic() {
         return isPublic;
     }
 

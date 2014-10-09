@@ -48,6 +48,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
 
     
     public Exam(int exam_ID) {
+        this.exam_ID=exam_ID;
         this.setLocationRelativeTo(null);  //make window in the center of desktop
         setTitle("MELTSystem--Test");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -57,7 +58,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         JMenu jMenu1=new JMenu("ddd");
         jMenuBar1.add(jMenu1);
         getRootPane().setMenuBar(jMenuBar1);
-        this.exam_ID=exam_ID;
+        
         addWindowListener(this);
     }
 
@@ -81,7 +82,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         //Create p3
         p3 = new JPanel();
         
-        addSectionButton = new JButton("Add a Subsection");
+        addSectionButton = new JButton("Add a Section");
         addSectionButton.addActionListener(this);
         
         p3.setLayout(new BorderLayout());
@@ -213,7 +214,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==addSectionButton) {
             //this.dispose();
-            SettingSection settingSection=new SettingSection(exam_ID);
+            AddSection settingSection=new AddSection(exam_ID);
             //settingSection.setVisible(true);
             contentPanel.removeAll();
             JPanel temp=settingSection.getGUI();

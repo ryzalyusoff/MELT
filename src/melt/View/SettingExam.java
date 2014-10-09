@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import melt.DAO.Section_DAO;
+import melt.Model.*;
 
 /**
  *
@@ -29,23 +31,17 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
 
     public String sectionName;
     public int timeLimit_h,timeLimit_m,timeLimit_s,numOfSub;
-    public JButton submitButton,updateButton;
+    public JButton submitButton,updateButton,cancelButton;
     public SectionPanel sectionPanel1;
     public boolean isUpdate; 
+    JScrollPane p1000;
+    int exam_ID;
 
-    public SettingExam() {
-        isUpdate=false;
-        this.setLocationRelativeTo(null);  //make window in the center of desktop
-        setSize(640, 500);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setContentPane(getGUI());
-        addWindowListener(this);
+    
+
+    public SettingExam(String sectionName,int timeLimit_h,int timeLimit_m, int timeLimit_s,int numOfSub,int exam_ID)  {
         
-        
-
-    }
-
-    public SettingExam(String sectionName,int timeLimit_h,int timeLimit_m, int timeLimit_s,int numOfSub)  {
+        this.exam_ID=exam_ID;
         isUpdate=false;
         this.setLocationRelativeTo(null);  //make window in the center of desktop
         setSize(640, 500);
@@ -75,6 +71,10 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         sectionPanel1=new SectionPanel();
         sectionPanel1.getGUI(section_ID);
         
+        Section_DAO section_DAO=new Section_DAO();
+        Section section=section_DAO.getModel(section_ID);
+        this.exam_ID=section.getExam_ID();
+        
         setContentPane(getGUI());
         
     }
@@ -92,6 +92,8 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         submitButton.addActionListener(this);
         updateButton=new JButton("update");
         updateButton.addActionListener(this);
+        cancelButton=new JButton("cancel");
+        cancelButton.addActionListener(this);
 
         
         p999 = new JPanel();
@@ -99,7 +101,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         groupLayout = new GroupLayout(p999);
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
-        horizontalGroup_P = groupLayout.createParallelGroup();
+        horizontalGroup_P = groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER);
         verticalGroup_S = groupLayout.createSequentialGroup();
      
         horizontalGroup_P.addComponent(sectionPanel1);
@@ -109,11 +111,19 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
 
         verticalGroup_S.addComponent(sectionPanel1);
         if (isUpdate) {
-            horizontalGroup_P.addComponent(updateButton, GroupLayout.Alignment.CENTER);
-            verticalGroup_S.addComponent(updateButton);
+            horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
+                    .addComponent(updateButton)
+                    .addComponent(cancelButton));
+            verticalGroup_S.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addComponent(updateButton)
+                    .addComponent(cancelButton));
         }else{
-            horizontalGroup_P.addComponent(submitButton, GroupLayout.Alignment.CENTER);
-            verticalGroup_S.addComponent(submitButton);
+            horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
+                    .addComponent(submitButton)
+                    .addComponent(cancelButton));
+            verticalGroup_S.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addComponent(submitButton)
+                    .addComponent(cancelButton));
         }
                 
 
@@ -124,7 +134,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         /*add p999 to a jscrollpane so that there will 
         **have a scroll bar when we cannot see all thw content
         */
-        JScrollPane p1000=new JScrollPane(p999);
+        p1000=new JScrollPane(p999);
         p1000.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         p1000.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         
@@ -137,34 +147,35 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==submitButton) {
             if (sectionPanel1.submitSection()) {
-                this.dispose();
-                Exam exam=new Exam();
+                JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
+                rootFrame.dispose();
+                //this.dispose();
+                Exam exam=new Exam(exam_ID);
                 exam.setVisible(true);
             }
 
             
         }else if (e.getSource()==updateButton) {
             if (sectionPanel1.updateSection()) {
-                this.dispose();
-                Exam exam=new Exam();
+              
+                JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
+                rootFrame.dispose();
+                //this.dispose();
+                Exam exam=new Exam(exam_ID);
                 exam.setVisible(true);
             }
+        }else if (e.getSource()==cancelButton) {
+            p1000.setVisible(false);
+            p1000.getParent().remove(p1000);
+            p1000.invalidate();
+                
+              
         }
     }
 
     public static void main(String[] args) {
-        SettingExam p = new SettingExam("hhhh", 30, 0, 0, 0);
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SettingExam.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(SettingExam.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(SettingExam.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(SettingExam.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        SettingExam p = new SettingExam("hhhh", 30, 0, 0, 0,1);
+        
         
         p.setVisible(true);
     }
@@ -177,7 +188,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
     @Override
     public void windowClosing(WindowEvent e) {
         this.dispose();
-        Exam exam=new Exam();
+        Exam exam=new Exam(1);
         exam.setVisible(true);
         System.out.println("Closing!");
     }

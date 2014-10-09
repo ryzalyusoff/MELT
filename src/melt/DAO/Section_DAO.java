@@ -73,8 +73,8 @@ public class Section_DAO {
             sQLHelper.sqlConnect();
             ResultSet rs = sQLHelper.runQuery(sql.toString());
             if (rs.next()) {
-                section.setExam_ID(rs.getInt("section_ID"));
-                section.setSection_ID(rs.getInt("section_ID"));
+                section.setExam_ID(rs.getInt("Exam_ID"));
+                section.setSection_ID(rs.getInt("Section_ID"));
                 section.setSection_Name(rs.getString("Section_Name"));
                 section.setTimeLimit(new SimpleDateFormat("HH:mm:ss").parse(rs.getString("TimeLimit")));
             }
