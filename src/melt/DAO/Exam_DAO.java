@@ -15,13 +15,12 @@ import melt.Util.SQLHelper;
  *
  * @author Aote Zhou
  */
-public class Subsection_DAO {
-    
+public class Exam_DAO {
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
-        sql.append("SELECT SubSection_ID,Section_ID,SubSection_Name");
-        sql.append(" FROM MELTSystem.`SubSection`");
+        sql.append("SELECT Exam_ID,Instructions,isPublic");
+        sql.append(" FROM MELTSystem.`Exam`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }
@@ -31,42 +30,53 @@ public class Subsection_DAO {
         //sQLHelper.sqlClose();
         return rs;
     }
-    
-    public int add(melt.Model.SubSection subSection){
-        int generated_Subsec_ID=-1;
+    public int add(melt.Model.Exam exam){
+        int generated_Exam_ID=-1;
         
         StringBuffer sql=new StringBuffer();
-        sql.append("INSERT INTO SubSection");
-        sql.append("(`SubSection_ID`,");
-        sql.append("`Section_ID`,");
-        sql.append("`SubSection_Name`)");
+        sql.append("INSERT INTO Exam");
+        sql.append("(`Exam_ID`,");
+        sql.append("`Instructions`,");
+        sql.append("`isPublic`)");
         sql.append("VALUES");
         sql.append("(null,");
-        sql.append("'"+subSection.getSection_ID()+"',");
-        sql.append("'"+subSection.getSubSection_Name()+"');");
+        sql.append("'"+exam.getInstructions()+"',");
+        if (exam.getIsPublic()) {
+            sql.append("1);");
+        }else{
+            sql.append("0);");
+        }
+        
         
         SQLHelper sQLHelper=new SQLHelper();
         sQLHelper.sqlConnect();
         ResultSet rs=sQLHelper.runUpdate2(sql.toString());
         try {
             if (rs.next()) {
-                generated_Subsec_ID=rs.getInt(1);
+                generated_Exam_ID=rs.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Subsection_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return generated_Subsec_ID;
+        return generated_Exam_ID;
     }
-    public void delete(String whereString){
-        StringBuffer sql = new StringBuffer("");
-        sql.append("Delete from MELTSystem.`SubSection`");
-        if (whereString.trim() != "") {
-            sql.append(" where " + whereString);
-        }
+    public void makeItPublic(int exam_ID){
+        StringBuffer sql1=new StringBuffer();
+        sql1.append("UPDATE Exam ");
+        sql1.append("SET isPublic=1");
+        sql1.append(" where Exam_ID='");
+        sql1.append(exam_ID+"';");
+        StringBuffer sql2=new StringBuffer();
+        sql2.append("UPDATE Exam ");
+        sql2.append("SET isPublic=0");
+        sql2.append(" where isPublic=1;");
+
+        
         SQLHelper sQLHelper = new SQLHelper();
         sQLHelper.sqlConnect();
-        sQLHelper.runUpdate(sql.toString());
-        sQLHelper.sqlClose();
+        
+        sQLHelper.runUpdate(sql2.toString());
+        sQLHelper.runUpdate(sql1.toString());
         
     }
 }

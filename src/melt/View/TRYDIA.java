@@ -20,7 +20,7 @@ public class TRYDIA extends JDialog{
     }
     public static void main(String[] args) {
         TRYDIA trydia=new TRYDIA();
-        trydia.setContentPane(new SettingSection().getGUI());
+        trydia.setContentPane(new AddSection(1).getGUI());
         trydia.setVisible(true);
     }
     
