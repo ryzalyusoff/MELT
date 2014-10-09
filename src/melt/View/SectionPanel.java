@@ -50,7 +50,7 @@ public class SectionPanel extends JPanel implements ActionListener {
     };
     public sectionContentState sectionContentFlag;
 
-    Section section;
+    public Section section;
 
     int numOfSub;
 
@@ -68,15 +68,17 @@ public class SectionPanel extends JPanel implements ActionListener {
         GroupLayout.ParallelGroup horizontalGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S;
 
-        section = new Section();
-        section.setSection_Name(sectionName);
-        try {
-            Date timeLimit = new SimpleDateFormat("HH:mm:ss").parse(timelimit_h + ":" + timelimit_m + ":" + timelimit_s);
-            section.setTimeLimit(timeLimit);
-        } catch (ParseException ex) {
-            Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        if (section == null) {
+            section = new Section();
+            section.setSection_Name(sectionName);
+            try {
+                Date timeLimit = new SimpleDateFormat("HH:mm:ss").parse(timelimit_h + ":" + timelimit_m + ":" + timelimit_s);
+                section.setTimeLimit(timeLimit);
+            } catch (ParseException ex) {
+                Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            section.setExam_ID(section.getExam_ID());
         }
-        section.setExam_ID(1);
 
         //create p1
         //p1 = new JPanel();
@@ -101,7 +103,7 @@ public class SectionPanel extends JPanel implements ActionListener {
         sectionTimeField_m.setMaximumSize(new Dimension(30, 4));
         sectionTimeField_s = new JTextField(timelimit_s + "");
         sectionTimeField_s.setMaximumSize(new Dimension(30, 4));
-        sectionButton1 = new JButton("Add a Section");
+        sectionButton1 = new JButton("Add a Subsection");
         sectionButton2 = new JButton("Add a Question");
 //        sectionButton3 = new JButton("Delete");
 
@@ -329,7 +331,8 @@ public class SectionPanel extends JPanel implements ActionListener {
         subsection_DAO.delete("Section_ID='" + section_ID + "'");
         section_DAO.delete("Section_ID='" + section_ID + "'");
 
-        return submitSection();
+        boolean result = submitSection();
+        return result;
     }
 
     @Override
