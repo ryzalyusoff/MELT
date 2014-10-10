@@ -39,8 +39,8 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                //new AddQuestion().setVisible(true);
-                new startupPanel().setVisible(true);
+                new AddQuestion().setVisible(true);
+                //new startupPanel().setVisible(true);
 
                 
             }
