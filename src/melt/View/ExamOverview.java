@@ -8,27 +8,18 @@ package melt.View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import melt.DAO.Exam_DAO;
-import melt.DAO.MCQ_DAO;
-import melt.DAO.Question_DAO;
-import melt.DAO.Section_DAO;
-import melt.DAO.Subsection_DAO;
-import melt.Model.*;
 
 /**
- *
+ * privode an overview of the exam(show all the exam in the system)
  * @author Aote Zhou
  */
 
@@ -65,20 +56,16 @@ public class ExamOverview extends JFrame implements ActionListener{
         setP2();
         //Create p3
         p3 = new JPanel();
+        p3.setLayout(new BorderLayout());
         
         addExamButton = new JButton("Add a Exam");
         addExamButton.addActionListener(this);
         
-        
-        p3.setLayout(new BorderLayout());
-        //p3.add(new JLabel("Overall   6.0/30.0"));
-        //p3.add(addExamButton,BorderLayout.SOUTH);
-
         //Create p4
         p4 = new JPanel();
         p4.setPreferredSize(new Dimension(300,1000));
         p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
-        //p4.add(p1);
+        
         jspane=new JScrollPane(p2);
         jspane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         p4.add(jspane);
@@ -93,7 +80,7 @@ public class ExamOverview extends JFrame implements ActionListener{
         contentPanel.setLayout(new BorderLayout());
         p5.add(contentPanel);
         
-        
+        //set the color of the left part
         p2.setBackground(new Color(153, 153, 153));
         p3.setBackground(new Color(153, 153, 153));
         p4.setBackground(new Color(153, 153, 153));
@@ -107,17 +94,15 @@ public class ExamOverview extends JFrame implements ActionListener{
     private void setP2(){
         
         
-        
+        //get Exams in the Database
         getExams();
-        
+        //buttons and labels
         buttons = new JButton[exams.size()];
         isPublicButtons=new JButton[exams.size()];
-        
-        
-        
 
         examLabels=new JLabel[exams.size()];
-
+        
+        //set labels and buttons
         for (int i = 1; i < exams.size() + 1; i++) {
             melt.Model.Exam exam=exams.get(i-1);
            
@@ -143,6 +128,10 @@ public class ExamOverview extends JFrame implements ActionListener{
 
         }
         
+        /**
+         * 
+         * setlayout
+        */
         //p2.setLayout(new GridLayout(sections.size(),3));
         GroupLayout groupLayout;
         GroupLayout.ParallelGroup horizontalGroup_P;
@@ -179,6 +168,9 @@ public class ExamOverview extends JFrame implements ActionListener{
         //p2.repaint();
 
     }
+    /**
+     * getExams from database
+     */
     private void getExams() {
         try {
             Exam_DAO exam_DAO=new Exam_DAO();
@@ -203,12 +195,17 @@ public class ExamOverview extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
        if(((JButton)e.getSource()).getText().equals("Edit")){  //Edit Button
-            this.dispose();
+            this.dispose(); //close current window
+            
+            //create a new window to show detailed examinfo
             int exam_ID=Integer.parseInt(((JButton)e.getSource()).getName());
             Exam exam=new Exam(exam_ID);
             exam.setVisible(true);
             
-        }else if(e.getSource()==addExamButton){
+        }else if(e.getSource()==addExamButton){ 
+            /**
+             * get panel from addExam and add to the right panel
+             */
             AddExam addExam=new AddExam();
             //settingSection.setVisible(true);
             contentPanel.removeAll();
@@ -222,6 +219,7 @@ public class ExamOverview extends JFrame implements ActionListener{
             Exam_DAO exam_DAO=new Exam_DAO();
             int exam_ID=Integer.parseInt(((JButton)e.getSource()).getName());
             exam_DAO.makeItPublic(exam_ID);
+            //update the panel
             p2.removeAll();
             setP2();
         }

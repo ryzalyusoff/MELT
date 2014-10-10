@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * a helper class for the database the properties are stored in jdbc.properties
  * @author Aote Zhou
  */
 public class SQLHelper {

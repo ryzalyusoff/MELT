@@ -17,6 +17,12 @@ import melt.Util.SQLHelper;
  * @author Aote Zhou
  */
 public class MCQ_DAO {
+
+    /**
+     *get mcq by question_ID
+     * @param Question_ID
+     * @return
+     */
     public MCQ getModel(int Question_ID) {
         MCQ mcquestion = new MCQ();
         try {
@@ -42,6 +48,12 @@ public class MCQ_DAO {
         }
         return mcquestion;
     }
+
+    /**
+     *update the subsec_ID of a specific question
+     * @param subsec_ID
+     * @param Q_ID
+     */
     public void update(int subsec_ID,int Q_ID){
         StringBuffer sql=new StringBuffer();
         sql.append("UPDATE MCQ ");
@@ -56,6 +68,11 @@ public class MCQ_DAO {
         sQLHelper.runUpdate(sql.toString());
                 
     }
+
+    /**
+     * make the subsection_ID of the specific question null
+     * @param section_ID
+     */
     public void cancelRWithSubSec(int section_ID){
         StringBuffer sql=new StringBuffer();
         sql.append("UPDATE MCQ ");

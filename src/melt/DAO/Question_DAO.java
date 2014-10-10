@@ -18,6 +18,11 @@ import melt.Util.SQLHelper;
  */
 public class Question_DAO {
 
+    /**
+     * get question by Question_ID
+     * @param Question_ID
+     * @return
+     */
     public Question getModel(int Question_ID) {
         Question question = new Question();
         try {
@@ -43,7 +48,12 @@ public class Question_DAO {
         }
         return question;
     }
-
+    
+    /**
+     * get a set of result
+     * @param whereString
+     * @return
+     */
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
@@ -59,6 +69,10 @@ public class Question_DAO {
         return rs;
     }
 
+    /**
+     * make the section_ID of specific subsection null
+     * @param section_ID
+     */
     public void cancelRWithSubSec(int section_ID){
         StringBuffer sql=new StringBuffer();
         sql.append("UPDATE Question ");

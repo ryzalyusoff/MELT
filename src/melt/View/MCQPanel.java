@@ -17,7 +17,7 @@ import melt.DAO.*;
 import melt.Model.*;
 
 /**
- *
+ * the panel of MCQ
  * @author Aote Zhou
  */
 public class MCQPanel extends JPanel implements ActionListener{
@@ -33,19 +33,20 @@ public class MCQPanel extends JPanel implements ActionListener{
         super();
         this.Q_ID=Q_ID;
     }
-    
+
+    /**
+     * set the contentpanel
+     */
     public void getGUI(){
-        //JPanel p3;
         
         GroupLayout groupLayout;
         GroupLayout.ParallelGroup horizontalContentGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S,horizontalGroup_S;
-        //p3 = new JPanel();
         this.setName(Q_ID+"");
-        //p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
-//        p3.setBackground(Color.cyan);
-
+        
+        //getQuestions from database
         getQ(Q_ID);
+        
         questionLabel = new JLabel("Question 1");
         questionDeleteButton = new JButton("Delete");
         questionContent = new JLabel(question.getQuestion_Text());
@@ -58,14 +59,14 @@ public class MCQPanel extends JPanel implements ActionListener{
         }
    
         questionDeleteButton.addActionListener(this);
-
+        //setlayouts
         groupLayout = new GroupLayout(this);
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
         horizontalContentGroup_P=groupLayout.createParallelGroup();
         horizontalGroup_S = groupLayout.createSequentialGroup();
         verticalGroup_S = groupLayout.createSequentialGroup();
-        
+        //group for choices
         GroupLayout.ParallelGroup choiceGroup_P=groupLayout.createParallelGroup();
         GroupLayout.SequentialGroup choiceGroup_S=groupLayout.createSequentialGroup();
         
@@ -75,7 +76,7 @@ public class MCQPanel extends JPanel implements ActionListener{
         }
         
         
-
+        //group for questions
         horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(questionLabel)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
@@ -85,6 +86,7 @@ public class MCQPanel extends JPanel implements ActionListener{
         horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addGap(5)
                 .addGroup(choiceGroup_P));
+        //group for horizontal
         horizontalGroup_S.addGap(0).addGroup(horizontalContentGroup_P);
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
@@ -102,9 +104,12 @@ public class MCQPanel extends JPanel implements ActionListener{
 
         this.setLayout(groupLayout);
         
-        //return p3;
     }
 
+    /**
+     *get questions from database
+     * @param questionID
+     */
     public void getQ(int questionID){
         Question_DAO question_DAO=new Question_DAO();
         MCQOption_DAO mCQOption_DAO=new MCQOption_DAO();

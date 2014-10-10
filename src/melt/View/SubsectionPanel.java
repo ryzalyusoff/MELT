@@ -21,7 +21,7 @@ import melt.DAO.Question_DAO;
 import melt.Model.*;
 
 /**
- *
+ * panel for the subsection
  * @author Aote Zhou
  */
 public class SubsectionPanel extends JPanel implements ActionListener{
@@ -31,6 +31,9 @@ public class SubsectionPanel extends JPanel implements ActionListener{
     JPanel subsectionQuestionPanel;
     JPanel p1,p2;
     
+    /**
+     *set the GUI of this panel
+     */
     public void getGUI(){
         
         
@@ -90,6 +93,11 @@ public class SubsectionPanel extends JPanel implements ActionListener{
 
         //return p2;
     }
+
+    /**
+     *get the gui when provided with a subsection
+     * @param subSection
+     */
     public void getGUI(SubSection subSection){
         getGUI();
         Question_DAO question_DAO=new Question_DAO();
@@ -105,10 +113,19 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         
         //return p2;
     }
+
+    /**
+     * add MCQPanel to subsectionQuestionPanel
+     * @param mCQPanel
+     */
     public void addQ(MCQPanel mCQPanel){
         mCQPanel.getGUI();
         subsectionQuestionPanel.add(mCQPanel);
     }
+
+    /**
+     * reaint the subsectionpanel
+     */
     public void subQPanelRepaint(){
         subsectionQuestionPanel.revalidate();
         subsectionQuestionPanel.repaint();
@@ -116,10 +133,11 @@ public class SubsectionPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==subsectionButton1) {
+        if (e.getSource()==subsectionButton1) {//add a question
             ChooseQuestionsPanel chooseQuestionsPanel=new ChooseQuestionsPanel(this);
             chooseQuestionsPanel.setVisible(true);
-        }if (e.getSource()==subsectionButton2) {
+        }if (e.getSource()==subsectionButton2) {//cancel
+            //remove current panel form the parent panel
             this.setVisible(false);
             this.getParent().remove(this);
             this.invalidate();
