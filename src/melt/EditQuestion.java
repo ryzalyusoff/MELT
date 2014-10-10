@@ -51,7 +51,7 @@ public class EditQuestion extends javax.swing.JFrame {
 
         startupPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Edit Question"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Question :");
 
         questionField.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +60,7 @@ public class EditQuestion extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Answer   :");
 
         answer1.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +87,8 @@ public class EditQuestion extends javax.swing.JFrame {
             }
         });
 
+        updateBtn.setBackground(new java.awt.Color(51, 153, 255));
+        updateBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         updateBtn.setText("UPDATE");
 
         javax.swing.GroupLayout startupPanelLayout = new javax.swing.GroupLayout(startupPanel);

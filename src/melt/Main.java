@@ -35,8 +35,9 @@ public class Main {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new AddQuestion().setVisible(true);
+                new addQuestion().setVisible(true);
 
                 
             }
