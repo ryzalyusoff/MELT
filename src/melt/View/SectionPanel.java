@@ -5,7 +5,6 @@
  */
 package melt.View;
 
-import com.mysql.jdbc.interceptors.ResultSetScannerInterceptor;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -55,13 +54,15 @@ public class SectionPanel extends JPanel implements ActionListener {
     public Section section;
 
     public int numOfSub;//number of subsections
+    int exam_ID;
 
-    public SectionPanel() {
-
+    public SectionPanel(int exam_ID) {
+        this.exam_ID=exam_ID;
     }
 
-    public SectionPanel(int numOfSub) {
+    public SectionPanel(int numOfSub,int exam_ID) {
         this.numOfSub = numOfSub;
+        this.exam_ID=exam_ID;
     }
 
     /**
@@ -97,7 +98,7 @@ public class SectionPanel extends JPanel implements ActionListener {
         //sectionContentPanel.setBackground(Color.red);
         sectionContentPanel.setLayout(new BoxLayout(sectionContentPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < numOfSub; i++) {
-            SubsectionPanel subSectionPanel1 = new SubsectionPanel();
+            SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
 
             subSectionPanel1.getGUI();
             sectionContentPanel.add(subSectionPanel1);       
@@ -218,7 +219,7 @@ public class SectionPanel extends JPanel implements ActionListener {
 
             } else {
                 //on the condition has two subsection but only add a subsection
-                SubsectionPanel subSectionPanel1 = new SubsectionPanel();
+                SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
 
                 subSectionPanel1.getGUI(subSections.get(0));
                 //add subSectionPanel1 and set the flag of section
@@ -228,8 +229,8 @@ public class SectionPanel extends JPanel implements ActionListener {
 
         } else if (subSections.size() == 2) {
             //create two panels
-            SubsectionPanel subSectionPanel1 = new SubsectionPanel();
-            SubsectionPanel subSectionPanel2 = new SubsectionPanel();
+            SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
+            SubsectionPanel subSectionPanel2 = new SubsectionPanel(exam_ID);
 
             subSectionPanel1.getGUI(subSections.get(0));
             subSectionPanel2.getGUI(subSections.get(1));
@@ -397,7 +398,7 @@ public class SectionPanel extends JPanel implements ActionListener {
 
             } else {
                 //add the subsections to the contentpanel
-                SubsectionPanel subSectionPanel1 = new SubsectionPanel();
+                SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
 
                 subSectionPanel1.getGUI();
                 sectionContentPanel.add(subSectionPanel1);
@@ -413,7 +414,7 @@ public class SectionPanel extends JPanel implements ActionListener {
             } else {
                 //set the contentflag and open the choose question panel
                 sectionContentFlag = sectionContentState.NOSUB;
-                ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel(this);
+                ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel((SectionPanel)this);
                 chooseQuestionsPanel.setVisible(true);
             }
 

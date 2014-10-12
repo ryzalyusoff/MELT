@@ -9,7 +9,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -259,7 +258,14 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             
         }else if (((JButton)e.getSource()).getText().equals("Delete")) {
             //set section_ID
-            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+            // wait for complete
+            int section_ID = 0;
+            for (int i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].isSelected()) {
+                    section_ID = Integer.parseInt((checkbox[i].getName()));
+                }
+            }
+            
             //create and intialize the DAOs
             MCQ_DAO mcq_DAO=new MCQ_DAO();
             Question_DAO question_DAO=new Question_DAO();
@@ -286,8 +292,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
                     section_ID = Integer.parseInt((checkbox[i].getName()));
                 }
             }
-           //get sectionID
-            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+           
             //get settingExamPanel and add to right panel
             SettingExam settingExam=new SettingExam(section_ID);
             contentPanel.removeAll();

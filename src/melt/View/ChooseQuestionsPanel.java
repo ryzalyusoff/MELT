@@ -44,6 +44,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
     double width;
+    int exam_ID;
     /**
      * initialize the ChooseQuestionPanel a
      *
@@ -65,6 +66,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
      */
     public ChooseQuestionsPanel(SectionPanel fatherPanel) {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        this.exam_ID=((SectionPanel)fatherPanel).exam_ID;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         double height = screenSize.getHeight();
@@ -72,10 +74,12 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
         this.fatherPanel = fatherPanel;
+        
         fatherPanelState=0;
     }
     public ChooseQuestionsPanel(SubsectionPanel fatherPanel) {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        this.exam_ID=((SubsectionPanel)fatherPanel).exam_ID;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         double height = screenSize.getHeight();
@@ -83,6 +87,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
         this.fatherPanel = fatherPanel;
+        
         fatherPanelState=1;
     }
      /**
@@ -162,7 +167,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         try {
             Question_DAO question_DAO = new Question_DAO();
             //get question
-            ResultSet rs = question_DAO.getList("");
+            ResultSet rs = question_DAO.getList("question_ID in (select question_ID from QuestionsByExamID where Exam_ID!='"+exam_ID+"') ");
             ArrayList<Object[]> objectArraylist = new ArrayList<Object[]>();
             //store data into arraylist
             while (rs.next()) {

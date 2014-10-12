@@ -76,7 +76,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
 
-        sectionPanel1=new SectionPanel();
+        sectionPanel1=new SectionPanel(exam_ID);
         sectionPanel1.getGUI(section_ID);
         
         Section_DAO section_DAO=new Section_DAO();
