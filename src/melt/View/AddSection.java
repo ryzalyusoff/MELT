@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- *
+ * JFrame class for adding a section
  * @author eddychou
  */
 public class AddSection extends JFrame implements ActionListener,WindowListener{
@@ -31,7 +31,6 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
     public JPanel p1;
     public int exam_ID;
     
-
     public AddSection(int exam_ID) {
         this.exam_ID=exam_ID;
         this.setLocationRelativeTo(null);  //make window in the center of desktop
@@ -42,6 +41,10 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
         
     }
     
+    /**
+     *get the contentPane
+     * @return
+     */
     public JPanel getGUI(){
         
         
@@ -68,17 +71,18 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
         button2.addActionListener(this);
         
 
-        
+        //Create grouplayout and horizontalGroup and VerticalGroup
         GroupLayout groupLayout;
         GroupLayout.SequentialGroup horizontalGroup_S,verticalGroup_S; 
         
         groupLayout=new GroupLayout(p1);
+        //set auto Gaps
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
         
         horizontalGroup_S=groupLayout.createSequentialGroup();
         verticalGroup_S=groupLayout.createSequentialGroup();
-        
+        //set horizontalGroup and VerticalGroup
         horizontalGroup_S.addGroup(groupLayout.createParallelGroup()
                             .addComponent(l1)
                             .addComponent(l2)
@@ -113,10 +117,10 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
                             .addComponent(cb1));
                                                 
                            
-        
+        //set grouplayout
         groupLayout.setHorizontalGroup(horizontalGroup_S);
         groupLayout.setVerticalGroup(verticalGroup_S);
-        
+        //set p1's layout
         p1.setLayout(groupLayout);
         
         return p1;
@@ -126,7 +130,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==button1) {
+        if (e.getSource()==button1) {//cancel button
             //Exam exam=new Exam();
             //exam.setVisible(true);
             //this.dispose();
@@ -134,13 +138,15 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
             p1.getParent().remove(p1);
             p1.invalidate();
             
-        }else if (e.getSource()==button2) {
+        }else if (e.getSource()==button2) {//ok button
+            //get every attribute needed for the exam
             String sectionName=tf1.getText();
             int timeLimit_h=Integer.parseInt(tf3_h.getText());
             int timeLimit_m=Integer.parseInt(tf3_m.getText());
             int timeLimit_s=Integer.parseInt(tf3_s.getText());
             int numOfSub=cb1.getSelectedIndex();
             
+            //get settingExamPanel and put it into right part of the frame
             SettingExam settingExamFrame=new SettingExam(sectionName, timeLimit_h, timeLimit_m, timeLimit_s, numOfSub,exam_ID);
             //settingExamFrame.setVisible(true);
             JPanel parentJpanel=(JPanel)p1.getParent();
@@ -162,8 +168,8 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
     @Override
     public void windowClosing(WindowEvent e) {
         this.dispose();
-        Exam exam=new Exam(1);
-        exam.setVisible(true);
+//        Exam exam=new Exam(1);
+//        exam.setVisible(true);
     }
 
     @Override

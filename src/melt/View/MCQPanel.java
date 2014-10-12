@@ -17,7 +17,7 @@ import melt.DAO.*;
 import melt.Model.*;
 
 /**
- *
+ * the panel of MCQ
  * @author Aote Zhou
  */
 public class MCQPanel extends JPanel implements ActionListener{
@@ -33,7 +33,9 @@ public class MCQPanel extends JPanel implements ActionListener{
         super();
         this.Q_ID=Q_ID;
     }
-    
+    /**
+     * set the contentpanel
+     */
     public void getGUI(){
         //JPanel p3;
         
@@ -75,7 +77,7 @@ public class MCQPanel extends JPanel implements ActionListener{
         }
         
         
-
+        //group for horizontal
         horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(questionLabel)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
@@ -86,7 +88,7 @@ public class MCQPanel extends JPanel implements ActionListener{
                 .addGap(5)
                 .addGroup(choiceGroup_P));
         horizontalGroup_S.addGap(0).addGroup(horizontalContentGroup_P);
-
+        //group for vertical
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                 .addComponent(questionDeleteButton)
                 .addComponent(questionLabel));
@@ -104,7 +106,10 @@ public class MCQPanel extends JPanel implements ActionListener{
         
         //return p3;
     }
-
+    /**
+     *get questions from database
+     * @param questionID
+     */
     public void getQ(int questionID){
         Question_DAO question_DAO=new Question_DAO();
         MCQOption_DAO mCQOption_DAO=new MCQOption_DAO();
@@ -121,3 +126,4 @@ public class MCQPanel extends JPanel implements ActionListener{
         }
     }
 }
+

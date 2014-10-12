@@ -19,6 +19,11 @@ import melt.Util.SQLHelper;
  */
 public class MCQOption_DAO {
     public MCQOption[] getModel(int Question_ID) {
+     /**
+     *get mcqOPtions for a question
+     * @param Question_ID
+     * @return
+     */
         ArrayList<MCQOption> mCQOptions=new ArrayList<MCQOption>();
         try {
            
@@ -46,7 +51,11 @@ public class MCQOption_DAO {
         }
         return mCQOptions.toArray(new MCQOption[mCQOptions.size()]);
     }
-    
+    /**
+     *get a set of result for MCQOptions
+     * @param whereString
+     * @return
+     */
     public ResultSet getList(String whereString){
         
         StringBuffer sql=new StringBuffer("");

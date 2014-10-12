@@ -1,3 +1,6 @@
+
+   
+ 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,8 +33,9 @@ import javax.swing.table.TableCellRenderer;
 import melt.DAO.Question_DAO;
 
 /**
+ * the dialog enable for teacher to choose question for the Exam
  *
- * @author eddychou
+ * @author Aote Zhou
  */
 public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     
@@ -40,7 +44,11 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
     double width;
-    
+    /**
+     * initialize the ChooseQuestionPanel a
+     *
+     * @param fatherPanel the panel where the question will go to in the future
+     */
     public ChooseQuestionsPanel() {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -50,7 +58,11 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
     }
-
+    /**
+     * initialize the ChooseQuestionPanel and make sure the fatherPanel
+     *
+     * @param fatherPanel the panel where the question will go to in the future
+     */
     public ChooseQuestionsPanel(SectionPanel fatherPanel) {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -73,17 +85,24 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         this.fatherPanel = fatherPanel;
         fatherPanelState=1;
     }
-    
+     /**
+     * get contentPane
+     *
+     * @return
+     */
     public JPanel getGUI() {
         JPanel p1;
         
         button1 = new JButton("Add Question");
         button1.addActionListener(this);
+        //columnNames for the table
         String[] columnNames = {
             "Question ID",
             "Question",
             ""};
+         //get data from database
         Object[][] data = getData();
+        //create jtable
         table1 = new JTable(data, columnNames);
         table1.setShowHorizontalLines(true);
         table1.getColumnModel().getColumn(0).setMaxWidth(70);
@@ -102,7 +121,10 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             return c;
         };
     });
+                 
+        //set selectionMode
         table1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        //turn the last column from text to checkbox
         table1.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
             
             @Override
@@ -139,8 +161,10 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     public Object[][] getData() {
         try {
             Question_DAO question_DAO = new Question_DAO();
+            //get question
             ResultSet rs = question_DAO.getList("");
             ArrayList<Object[]> objectArraylist = new ArrayList<Object[]>();
+            //store data into arraylist
             while (rs.next()) {
                 Object[] col = new Object[3];
                 col[0] = rs.getInt(1);
@@ -149,6 +173,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
                 objectArraylist.add(col);
                 
             }
+            //trun arraylist<object[]> to object[][]
             Object[][] datas = new Object[objectArraylist.size()][3];
             for (int i = 0; i < objectArraylist.size(); i++) {
                 datas[i] = objectArraylist.get(i);

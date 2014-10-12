@@ -10,21 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import melt.DAO.Section_DAO;
 import melt.Model.*;
 
 /**
- *
+ * Frame for setting the Exam
  * @author Aote Zhou
  */
 public class SettingExam extends JFrame implements ActionListener,WindowListener {
@@ -37,8 +33,15 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
     JScrollPane p1000;
     int exam_ID;
 
-    
-
+    /**
+     * when a new Exam is going to be set
+     * @param sectionName
+     * @param timeLimit_h
+     * @param timeLimit_m
+     * @param timeLimit_s
+     * @param numOfSub
+     * @param exam_ID
+     */
     public SettingExam(String sectionName,int timeLimit_h,int timeLimit_m, int timeLimit_s,int numOfSub,int exam_ID)  {
         
         this.exam_ID=exam_ID;
@@ -61,6 +64,11 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         
         
     }
+
+    /**
+     *when an old exam is going to be edited
+     * @param section_ID
+     */
     public SettingExam(int section_ID)  {
         isUpdate=true;//Edit or Update Mode
         this.setLocationRelativeTo(null);  //make window in the center of desktop
@@ -79,7 +87,10 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         
     }
     
-
+    /**
+     *get the contentpanel
+     * @return
+     */
     public JScrollPane getGUI() {
         JPanel p999;
         
@@ -110,6 +121,8 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
                 
 
         verticalGroup_S.addComponent(sectionPanel1);
+        
+        //when update shows the update button and when add shows the submit button
         if (isUpdate) {
             horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                     .addComponent(updateButton)
@@ -146,7 +159,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==submitButton) {
-            if (sectionPanel1.submitSection()) {
+            if (sectionPanel1.submitSection()) {//if submit succeed
                 JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
                 rootFrame.dispose();
                 //this.dispose();
@@ -156,7 +169,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
 
             
         }else if (e.getSource()==updateButton) {
-            if (sectionPanel1.updateSection()) {
+            if (sectionPanel1.updateSection()) {//if update succeed
               
                 JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
                 rootFrame.dispose();
@@ -165,6 +178,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
                 exam.setVisible(true);
             }
         }else if (e.getSource()==cancelButton) {
+            //remove current panel when calbutton
             p1000.setVisible(false);
             p1000.getParent().remove(p1000);
             p1000.invalidate();

@@ -33,7 +33,7 @@ import melt.DAO.*;
 import melt.Model.*;
 
 /**
- *
+ * panels for sections
  * @author Aote Zhou
  */
 public class SectionPanel extends JPanel implements ActionListener {
@@ -45,16 +45,16 @@ public class SectionPanel extends JPanel implements ActionListener {
     public JButton sectionSubmitButton;
     public JPanel p1;
     public JPanel sectionContentPanel;
-
+    //state for sectionContents:have no subsec or two subsec
     public enum sectionContentState {
 
         NOSUB, TWOSUB
     };
-    public sectionContentState sectionContentFlag;
+    public sectionContentState sectionContentFlag;//the flag to store Content State
 
     public Section section;
 
-    int numOfSub;
+    public int numOfSub;//number of subsections
 
     public SectionPanel() {
 
@@ -64,12 +64,20 @@ public class SectionPanel extends JPanel implements ActionListener {
         this.numOfSub = numOfSub;
     }
 
+    /**
+     *get the content panel(when adding a new section)
+     * @param sectionName 
+     * @param timelimit_h
+     * @param timelimit_m
+     * @param timelimit_s
+     */
     public void getGUI(String sectionName, int timelimit_h, int timelimit_m, int timelimit_s) {
 
         GroupLayout groupLayout;
         GroupLayout.ParallelGroup horizontalGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S;
 
+        //if the section instance is null then create new ()
         if (section == null) {
             section = new Section();
             section.setSection_Name(sectionName);
@@ -153,12 +161,21 @@ public class SectionPanel extends JPanel implements ActionListener {
         //return p1;
     }
 
+    /**
+     *get the content panel of section(a section which is now exited in the database)
+     * @param section_ID
+     */
     public void getGUI(int section_ID) {
+        //create section_DAO
         Section_DAO section_DAO = new Section_DAO();
+        //get section
         section = section_DAO.getModel(section_ID);
+        //get section's timelimit
         Date sectionTimeLimit = section.getTimeLimit();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(sectionTimeLimit);
+        
+        //set content panel
         getGUI(section.getSection_Name(), calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
 
         //get subsections
@@ -178,12 +195,15 @@ public class SectionPanel extends JPanel implements ActionListener {
         } catch (SQLException ex) {
             Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        //the condition that have only one subsection in the database now
         if (subSections.size() == 1) {
-            //the condition that have only one subsection in the database now
             SubSection subSection = subSections.get(0);
             if (subSection.getSubSection_Name().equals("0")) {
-                //on the condition no subsection
+                //on the condition no subsection            
+                //if the subsectionname equals 0 means this section will have no subsection and have only one type of question
+
+                //getquestions
                 Question_DAO question_DAO = new Question_DAO();
                 ResultSet rs1 = question_DAO.getList("subsection_ID='" + subSection.getSubSection_ID() + "'");
                 try {
@@ -201,18 +221,19 @@ public class SectionPanel extends JPanel implements ActionListener {
                 SubsectionPanel subSectionPanel1 = new SubsectionPanel();
 
                 subSectionPanel1.getGUI(subSections.get(0));
-
+                //add subSectionPanel1 and set the flag of section
                 sectionContentPanel.add(subSectionPanel1);
                 sectionContentFlag = sectionContentState.TWOSUB;
             }
 
         } else if (subSections.size() == 2) {
+            //create two panels
             SubsectionPanel subSectionPanel1 = new SubsectionPanel();
             SubsectionPanel subSectionPanel2 = new SubsectionPanel();
 
             subSectionPanel1.getGUI(subSections.get(0));
             subSectionPanel2.getGUI(subSections.get(1));
-
+            //add subseationpanel to the contentpanel and set the contentstate
             sectionContentPanel.add(subSectionPanel1);
             sectionContentPanel.add(subSectionPanel2);
             sectionContentFlag = sectionContentState.TWOSUB;
@@ -221,23 +242,36 @@ public class SectionPanel extends JPanel implements ActionListener {
         //return p1;
     }
 
+    /**
+     *get GUI of mcqPanel and set it as content panel
+     * @param mCQPanel
+     */
     public void addQ(MCQPanel mCQPanel) {
         mCQPanel.getGUI();
         sectionContentPanel.add(mCQPanel);
     }
 
+    /**
+     *repaint the subQuestionPanel
+     */
     public void subQPanelRepaint() {
         sectionContentPanel.revalidate();
         sectionContentPanel.repaint();
     }
 
+    /**
+     *deal with the data when submit the section
+     * @return
+     */
     public boolean submitSection() {
-        if (sectionContentFlag == sectionContentState.NOSUB) {    //on the condition that section has no subsection
+        if (sectionContentFlag == sectionContentState.NOSUB) {    
+            //on the condition that section has no subsection
             Section_DAO section_DAO = new Section_DAO();
             Subsection_DAO subsection_DAO = new Subsection_DAO();
             Question_DAO question_DAO = new Question_DAO();
             MCQ_DAO mcq_dao = new MCQ_DAO();
 
+            // get timelimit
             String final_timelimit_h = sectionTimeField_h.getText();
             String final_timelimit_m = sectionTimeField_m.getText();
             String final_timelimit_s = sectionTimeField_s.getText();
@@ -250,7 +284,10 @@ public class SectionPanel extends JPanel implements ActionListener {
             }
             section.setTimeLimit(timeLimit);
 
+            //add section and get section_ID
             int section_ID = section_DAO.add(section);
+            
+            //construct the subsection and add to the database
             SubSection subSection = new SubSection();
             subSection.setSection_ID(section_ID);
             subSection.setSubSection_Name("0");
@@ -265,10 +302,12 @@ public class SectionPanel extends JPanel implements ActionListener {
                 }
 
             }
+            
             JOptionPane.showMessageDialog(sectionLabel, "Successfully saved!", "Success", JOptionPane.PLAIN_MESSAGE);
             return true;
         } else if (sectionContentFlag == sectionContentState.TWOSUB) { //the condition that section has two subsection
 
+            //add section to the database
             Section_DAO section_DAO = new Section_DAO();
 
             String final_timelimit_h = sectionTimeField_h.getText();
@@ -284,6 +323,7 @@ public class SectionPanel extends JPanel implements ActionListener {
             section.setTimeLimit(timeLimit);
 
             int section_ID = section_DAO.add(section);
+            //get subsection and add to the database
             Component[] components = sectionContentPanel.getComponents();//Subsection
             for (Component component : components) {
                 if (component instanceof SubsectionPanel) {
@@ -291,7 +331,9 @@ public class SectionPanel extends JPanel implements ActionListener {
                     SubSection subSection = new SubSection();
                     subSection.setSection_ID(section_ID);
                     subSection.setSubSection_Name("");
+                    
                     int subsection_ID = subsection_DAO.add(subSection);
+                    //get subsection question and save to the database
                     Component[] components2 = ((JPanel) component).getComponents();  //SubsectionQuestion
                     for (Component component2 : components2) {
                         System.out.println(component2 instanceof JPanel);
@@ -322,6 +364,10 @@ public class SectionPanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     *operations for update the section(delete the related info first and then add again)
+     * @return
+     */
     public boolean updateSection() {
         MCQ_DAO mcq_DAO = new MCQ_DAO();
         Question_DAO question_DAO = new Question_DAO();
@@ -340,14 +386,17 @@ public class SectionPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == sectionButton1) {
+        if (e.getSource() == sectionButton1) { //add a subsection
             if (sectionContentFlag == sectionContentState.NOSUB && sectionContentPanel.getComponentCount() != 0) {
+                //the condition when there are still some questions in the section
                 JOptionPane.showMessageDialog(sectionLabel, "Delete all the questions first!", "Attention", JOptionPane.ERROR_MESSAGE);
 
             } else if (sectionContentPanel.getComponentCount() >= 2) {
+                //the condition that already have two subsecions
                 JOptionPane.showMessageDialog(sectionLabel, "Already have two subsections!", "Attention", JOptionPane.ERROR_MESSAGE);
 
             } else {
+                //add the subsections to the contentpanel
                 SubsectionPanel subSectionPanel1 = new SubsectionPanel();
 
                 subSectionPanel1.getGUI();
@@ -356,11 +405,13 @@ public class SectionPanel extends JPanel implements ActionListener {
                 sectionContentFlag = sectionContentState.TWOSUB;
             }
 
-        } else if (e.getSource() == sectionButton2) {
+        } else if (e.getSource() == sectionButton2) {//add a question
             if (sectionContentFlag == sectionContentState.TWOSUB && sectionContentPanel.getComponentCount() != 0) {
+                //the condtion that still some subsection exist in the section
                 JOptionPane.showMessageDialog(sectionLabel, "Delete all the subsections first!", "Attention", JOptionPane.ERROR_MESSAGE);
 
             } else {
+                //set the contentflag and open the choose question panel
                 sectionContentFlag = sectionContentState.NOSUB;
                 ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel(this);
                 chooseQuestionsPanel.setVisible(true);

@@ -5,7 +5,6 @@
  */
 package melt.View;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -17,12 +16,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import melt.DAO.Exam_DAO;
 
 /**
- *
+ * JFrame class for adding a exam can also use getGUI to return its jpanel
  * @author eddychou
  */
 public class AddExam extends JFrame implements ActionListener,WindowListener{
@@ -42,6 +40,10 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         setContentPane(getGUI());
     }
     
+    /**
+     *create the contentPane
+     * @return
+     */
     public JPanel getGUI(){
         
         
@@ -63,12 +65,15 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         GroupLayout.SequentialGroup verticalGroup_S; 
         
         groupLayout=new GroupLayout(p1);
+        //set suto gaps in the grouplayout
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
         
+        //create horizontalGruop and verticalGroup
         horizontalGroup_P=groupLayout.createParallelGroup();
         verticalGroup_S=groupLayout.createSequentialGroup();
         
+        //Set horizontalGroup and verticalGroup
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                             .addComponent(l1)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED,10,Short.MAX_VALUE))
@@ -85,10 +90,10 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
                             .addComponent(button2));
                                                 
                            
-        
+        //set grouplayout
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
-        
+        //set p1's layout
         p1.setLayout(groupLayout);
         
         return p1;
@@ -98,7 +103,7 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==button1) {
+        if (e.getSource()==button1) {//cancel button
             //Exam exam=new Exam();
             //exam.setVisible(true);
             //this.dispose();
@@ -106,17 +111,17 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
             p1.getParent().remove(p1);
             p1.invalidate();
             
-        }else if (e.getSource()==button2) {
+        }else if (e.getSource()==button2) {//submit button
             
             //parentJpanel.repaint();
             melt.Model.Exam exam =new melt.Model.Exam();
             exam.setInstructions(ta1.getText());
             exam.setIsPublic(false);
             
-            //initialize Exam_DAO
+            //initialize Exam_DAO and add exam into database
             Exam_DAO exam_DAO=new Exam_DAO();
             exam_DAO.add(exam);
-            
+            //close the parentFrame and reopen it
             JFrame fatherFrame=(JFrame)p1.getRootPane().getParent();
             fatherFrame.dispose();
             ExamOverview examOverview=new ExamOverview();

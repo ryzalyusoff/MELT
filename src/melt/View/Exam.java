@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import javax.swing.border.Border;
 import melt.DAO.MCQ_DAO;
 import melt.DAO.Question_DAO;
 import melt.DAO.Section_DAO;
@@ -31,7 +30,7 @@ import melt.DAO.Subsection_DAO;
 import melt.Model.*;
 
 /**
- *
+ * Exam frame shows the detailed info of it(Sections and subsec and Questions)
  * @author Aote Zhou
  */
 
@@ -59,6 +58,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         double height = screenSize.getHeight();
         setSize((int)width, (int)height);
         setContentPane(getGUI());
+        //MenuBar
         JMenuBar jMenuBar1=new JMenuBar();
         JMenu jMenu1=new JMenu("ddd");
         jMenuBar1.add(jMenu1);
@@ -70,18 +70,18 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
     public JPanel getGUI() {
         
 
-        welcomeLabel = new JLabel("....,Welcome!");
-        timeLabel = new JLabel("dd-mm-yyyy hh:mm");
+//        welcomeLabel = new JLabel("....,Welcome!");
+//        timeLabel = new JLabel("dd-mm-yyyy hh:mm");
+//
+//        
+//        // create p1
+//        p1 = new JPanel();
+//        p1.setLayout(new GridLayout(1, 3));
+//        p1.add(welcomeLabel);
+//        p1.add(new JPanel());
+//        p1.add(timeLabel);
 
-        
-        // create p1
-        p1 = new JPanel();
-        p1.setLayout(new GridLayout(1, 3));
-        p1.add(welcomeLabel);
-        p1.add(new JPanel());
-        p1.add(timeLabel);
-
-        //create p2
+        //create p2(p2 is the main part to show the sections and its subsec and questions)
         p2 = new JPanel();
         setP2();
         //Create p3
@@ -112,13 +112,13 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         p4 = new JPanel();
         p4.setMaximumSize(new Dimension(100,1000));
         p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
-        //p4.add(p1);
+            //add p2 to a scrollpane and set scrollbarpolicy
         jspane=new JScrollPane(p2);
         jspane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         p4.add(jspane);
         p4.add(p3);
         
-        //create p5
+        //create p5 (right part)
         p5=new JPanel();
         p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
         p5.add(p4);
@@ -127,7 +127,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         contentPanel.setLayout(new BorderLayout());
         p5.add(contentPanel);
         
-        
+        //set the background color of the leftpart
         p2.setBackground(new Color(153, 153, 153));
         p3.setBackground(new Color(153, 153, 153));
         p4.setBackground(new Color(153, 153, 153));
@@ -138,9 +138,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
     }
 
     private void setP2(){
-        
-        
-        
+        //getsections according to exam_ID
         getSections(exam_ID);
         
         checkbox = new JCheckBox[sections.size()];        
@@ -148,6 +146,8 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
 
         sectionLabels=new JLabel[sections.size()];
 
+        
+        //set editbuttons, editbuttons and sectionlabels
         for (int i = 1; i < sections.size() + 1; i++) {
             Section section=sections.get(i-1);
             String sectionTimeLimit=new SimpleDateFormat("HH:mm:ss").format(section.getTimeLimit());
@@ -179,6 +179,8 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         }
         
         //p2.setLayout(new GridLayout(sections.size(),3));
+        
+        //setlayout
         GroupLayout groupLayout;
         GroupLayout.ParallelGroup horizontalGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S;
@@ -214,6 +216,10 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         //p2.repaint();
 
     }
+    /**
+     * get sections according to exam
+     * @param exam_ID 
+     */
     private void getSections(int exam_ID) {
         try {
             Section_DAO section_DAO = new Section_DAO();
@@ -241,9 +247,8 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==addSectionButton) {
-            //this.dispose();
+            //add settingSection panel to the right panel
             AddSection settingSection=new AddSection(exam_ID);
-            //settingSection.setVisible(true);
             contentPanel.removeAll();
             JPanel temp=settingSection.getGUI();
             
@@ -253,19 +258,15 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             //contentPanel.repaint();
             
         }else if (((JButton)e.getSource()).getText().equals("Delete")) {
-            // wait for complete
-            int section_ID = 0;
-            for (int i = 0; i < checkbox.length; i++) {
-                if (checkbox[i].isSelected()) {
-                    section_ID = Integer.parseInt((checkbox[i].getName()));
-                }
-            }
+            //set section_ID
+            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+            //create and intialize the DAOs
             MCQ_DAO mcq_DAO=new MCQ_DAO();
             Question_DAO question_DAO=new Question_DAO();
             Subsection_DAO subsection_DAO=new Subsection_DAO();
             Section_DAO section_DAO=new Section_DAO();
         
-            
+            //update the info of question and MCQ then delete the relative data in section and subsection 
             mcq_DAO.cancelRWithSubSec(section_ID);
             question_DAO.cancelRWithSubSec(section_ID);
             subsection_DAO.delete("Section_ID='"+section_ID+"'");
@@ -285,6 +286,9 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
                     section_ID = Integer.parseInt((checkbox[i].getName()));
                 }
             }
+           //get sectionID
+            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+            //get settingExamPanel and add to right panel
             SettingExam settingExam=new SettingExam(section_ID);
             contentPanel.removeAll();
             contentPanel.setLayout(new BorderLayout());

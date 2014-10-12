@@ -20,6 +20,11 @@ import melt.Util.SQLHelper;
  */
 public class Section_DAO {
 
+    /**
+     * add section into database
+     * @param section
+     * @return
+     */
     public int add(melt.Model.Section section) {
         int generated_Sec_ID=-1;
         StringBuffer sql = new StringBuffer();
@@ -47,6 +52,12 @@ public class Section_DAO {
         }
         return generated_Sec_ID;
     }
+
+    /**
+     *
+     * @param whereString
+     * @return
+     */
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
@@ -61,6 +72,12 @@ public class Section_DAO {
         //sQLHelper.sqlClose();
         return rs;
     }
+
+    /**
+     *
+     * @param section_ID
+     * @return
+     */
     public Section getModel(int section_ID) {
         Section section=new Section();
         try {
@@ -87,6 +104,11 @@ public class Section_DAO {
         }
         return section;
     }
+
+    /**
+     * delete the data according to the whereString
+     * @param whereString
+     */
     public void delete(String whereString){
         StringBuffer sql = new StringBuffer("");
         sql.append("Delete from `Section`");

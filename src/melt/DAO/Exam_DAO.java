@@ -16,6 +16,12 @@ import melt.Util.SQLHelper;
  * @author Aote Zhou
  */
 public class Exam_DAO {
+
+    /**
+     * get the list
+     * @param whereString the string in the sql after 'where'
+     * @return
+     */
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
@@ -30,6 +36,12 @@ public class Exam_DAO {
         //sQLHelper.sqlClose();
         return rs;
     }
+
+    /**
+     * add an exam
+     * @param exam
+     * @return
+     */
     public int add(melt.Model.Exam exam){
         int generated_Exam_ID=-1;
         
@@ -60,6 +72,11 @@ public class Exam_DAO {
         }
         return generated_Exam_ID;
     }
+
+    /**
+     *make a exam public and the previous public one to be private
+     * @param exam_ID
+     */
     public void makeItPublic(int exam_ID){
         StringBuffer sql1=new StringBuffer();
         sql1.append("UPDATE Exam ");

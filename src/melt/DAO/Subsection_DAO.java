@@ -17,6 +17,11 @@ import melt.Util.SQLHelper;
  */
 public class Subsection_DAO {
     
+    /**
+     *
+     * @param whereString
+     * @return
+     */
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
@@ -32,6 +37,11 @@ public class Subsection_DAO {
         return rs;
     }
     
+    /**
+     *add
+     * @param subSection
+     * @return
+     */
     public int add(melt.Model.SubSection subSection){
         int generated_Subsec_ID=-1;
         
@@ -57,6 +67,11 @@ public class Subsection_DAO {
         }
         return generated_Subsec_ID;
     }
+
+    /**
+     *do delete operations according to the whereString
+     * @param whereString
+     */
     public void delete(String whereString){
         StringBuffer sql = new StringBuffer("");
         sql.append("Delete from `SubSection`");

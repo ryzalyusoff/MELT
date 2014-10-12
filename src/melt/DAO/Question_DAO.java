@@ -18,13 +18,18 @@ import melt.Util.SQLHelper;
  */
 public class Question_DAO {
 
+    /**
+     * get question by Question_ID
+     * @param Question_ID
+     * @return
+     */
     public Question getModel(int Question_ID) {
         Question question = new Question();
         try {
            
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT Question_ID,SubSection_ID,QType_ID,Question_Text");
-            sql.append(" FROM `Question`");
+            sql.append(" FROM MELTSystem.`Question`");
             sql.append(" where Question_ID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();
@@ -43,12 +48,17 @@ public class Question_DAO {
         }
         return question;
     }
-
+    
+    /**
+     * get a set of result
+     * @param whereString
+     * @return
+     */
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT Question_ID,SubSection_ID,QType_ID,Question_Text");
-        sql.append(" FROM `Question`");
+        sql.append(" FROM MELTSystem.`Question`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }
@@ -59,6 +69,10 @@ public class Question_DAO {
         return rs;
     }
 
+    /**
+     * make the section_ID of specific subsection null
+     * @param section_ID
+     */
     public void cancelRWithSubSec(int section_ID){
         StringBuffer sql=new StringBuffer();
         sql.append("UPDATE Question ");
