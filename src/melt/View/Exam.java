@@ -286,8 +286,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
                     section_ID = Integer.parseInt((checkbox[i].getName()));
                 }
             }
-           //get sectionID
-            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+          
             //get settingExamPanel and add to right panel
             SettingExam settingExam=new SettingExam(section_ID);
             contentPanel.removeAll();
