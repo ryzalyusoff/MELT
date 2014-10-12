@@ -20,7 +20,7 @@ public class Exam_DAO {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT Exam_ID,Instructions,isPublic");
-        sql.append(" FROM MELTSystem.`Exam`");
+        sql.append(" FROM `Exam`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }

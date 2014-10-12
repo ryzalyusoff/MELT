@@ -24,7 +24,7 @@ public class Question_DAO {
            
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT Question_ID,SubSection_ID,QType_ID,Question_Text");
-            sql.append(" FROM MELTSystem.`Question`");
+            sql.append(" FROM `Question`");
             sql.append(" where Question_ID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();
@@ -48,7 +48,7 @@ public class Question_DAO {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT Question_ID,SubSection_ID,QType_ID,Question_Text");
-        sql.append(" FROM MELTSystem.`Question`");
+        sql.append(" FROM `Question`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }

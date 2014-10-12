@@ -5,6 +5,7 @@
  */
 package melt.View;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -16,7 +17,9 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
+import javax.swing.SwingConstants;
 import melt.DAO.Question_DAO;
 import melt.Model.*;
 
@@ -46,18 +49,19 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
         
         
-        subsectionLabel1 = new JLabel("Subsection 1");
+        subsectionLabel1 = new JLabel("Subsection");
         subsectionButton1 = new JButton("Add question");
         subsectionButton2 = new JButton("Delete");
         
         subsectionButton1.addActionListener(this);
         subsectionButton2.addActionListener(this);
-
+        
         groupLayout = new GroupLayout(this);
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
         verticalGroup_S = groupLayout.createSequentialGroup();
         horizontalGroup_P = groupLayout.createParallelGroup();
+        JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
 
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(subsectionLabel1)
@@ -66,15 +70,16 @@ public class SubsectionPanel extends JPanel implements ActionListener{
                 .addComponent(subsectionButton2))
             .addGroup(groupLayout.createSequentialGroup()
                 .addGap(20)
-                .addComponent(subsectionQuestionPanel));
+                .addComponent(subsectionQuestionPanel))
+                .addComponent(sep); 
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                 .addComponent(subsectionLabel1)
                 .addComponent(subsectionButton1)
                 .addComponent(subsectionButton2))
-                .addComponent(subsectionQuestionPanel);
+                .addComponent(subsectionQuestionPanel)
+                .addComponent(sep);                
                 
-
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
         
@@ -120,8 +125,24 @@ public class SubsectionPanel extends JPanel implements ActionListener{
             ChooseQuestionsPanel chooseQuestionsPanel=new ChooseQuestionsPanel(this);
             chooseQuestionsPanel.setVisible(true);
         }if (e.getSource()==subsectionButton2) {
+//            Component lastSeparator = null;
+//            for (Component comp : this.getComponents()) 
+//            {
+//                if(comp instanceof JSeparator)
+//                {
+//                    lastSeparator = comp;
+//                }
+//            }
+//            for(int i = 0; i<this.getComponents().length;i++)
+//            {
+//               if(this.getComponent(i) == lastSeparator)
+//               {
+//                   this.remove(i);
+//               }
+//            }
+            
             this.setVisible(false);
-            this.getParent().remove(this);
+            this.getParent().remove(this);   
             this.invalidate();
         }
     }

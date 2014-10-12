@@ -23,7 +23,7 @@ public class MCQ_DAO {
            
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT Question_ID,SubSection_ID,QType_ID,Question_Text");
-            sql.append(" FROM MELTSystem.`MCQ`");
+            sql.append(" FROM `MCQ`");
             sql.append(" where Question_ID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();

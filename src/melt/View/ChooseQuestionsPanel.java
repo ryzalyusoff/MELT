@@ -5,7 +5,11 @@
  */
 package melt.View;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -21,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import melt.DAO.Question_DAO;
 
@@ -34,25 +39,35 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     JButton button1;
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
+    double width;
     
     public ChooseQuestionsPanel() {
-        this.setLocationRelativeTo(null);  //make window in the center of desktop
-        setSize(640, 500);
+        //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int)width, (int)height);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
     }
 
     public ChooseQuestionsPanel(SectionPanel fatherPanel) {
-        this.setLocationRelativeTo(null);  //make window in the center of desktop
-        setSize(640, 500);
+        //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int)width, (int)height);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
         this.fatherPanel = fatherPanel;
         fatherPanelState=0;
     }
     public ChooseQuestionsPanel(SubsectionPanel fatherPanel) {
-        this.setLocationRelativeTo(null);  //make window in the center of desktop
-        setSize(640, 500);
+        //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int)width, (int)height);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
         this.fatherPanel = fatherPanel;
@@ -62,14 +77,31 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     public JPanel getGUI() {
         JPanel p1;
         
-        button1 = new JButton("OK");
+        button1 = new JButton("Add Question");
         button1.addActionListener(this);
         String[] columnNames = {
-            "Q_ID",
-            "Q_TEXT",
-            "Choose"};
+            "Question ID",
+            "Question",
+            ""};
         Object[][] data = getData();
         table1 = new JTable(data, columnNames);
+        table1.setShowHorizontalLines(true);
+        table1.getColumnModel().getColumn(0).setMaxWidth(70);
+        table1.getColumnModel().getColumn(0).setMinWidth(50);
+        table1.getColumnModel().getColumn(2).setMaxWidth(50);
+        
+        table1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, 
+                Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            Component c = super.getTableCellRendererComponent(table, 
+                value, isSelected, hasFocus, row, column);
+            c.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));                        
+            return c;
+        };
+    });
         table1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table1.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
             
@@ -78,6 +110,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 
                 JCheckBox ck = new JCheckBox();
+                ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));  
                 ck.setSelected(isSelected);
                 ck.setHorizontalAlignment(0);
                 return ck;
@@ -87,7 +120,11 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
         p1.add(new JScrollPane(table1));
-        p1.add(button1);
+        JPanel p = new JPanel();
+        p.setLayout(new FlowLayout());
+        p.setMaximumSize(new Dimension((int)width,30));
+        p.add(button1,CENTER_ALIGNMENT);
+        p1.add(p);
         
         return p1;
         

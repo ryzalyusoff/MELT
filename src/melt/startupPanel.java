@@ -5,6 +5,9 @@
  */
 package melt;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author ryzal_000
@@ -13,12 +16,17 @@ public class startupPanel extends javax.swing.JFrame {
 
     
     AddQuestion questionPanel; 
+    melt.View.ExamOverview examPanel;
     
     /**
      * Creates new form startupPanel
      */
     public startupPanel() {
         initComponents();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int)width, (int)height);
     }
 
     /**
@@ -54,6 +62,11 @@ public class startupPanel extends javax.swing.JFrame {
         });
 
         jButton2.setText("EXAM");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/melt/question_icon.png"))); // NOI18N
 
@@ -143,6 +156,13 @@ public class startupPanel extends javax.swing.JFrame {
         questionPanel.setVisible(true);
         questionPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        examPanel = new melt.View.ExamOverview();
+        examPanel.setVisible(true);
+        examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
