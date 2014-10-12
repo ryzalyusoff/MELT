@@ -432,23 +432,27 @@ public class AddQuestion extends javax.swing.JFrame {
              
              int errors = 0;
              
-             String deleteAnswer = "DELETE FROM mcqoption WHERE Question_ID='"+rowID+"'";
-             int rows = st.executeUpdate(deleteAnswer);
+             
+             String deleteMCQ = "DELETE FROM mcq WHERE Question_ID='"+rowID+"'";
+             int rows = st.executeUpdate(deleteMCQ);
              if (rows == 0) {
                  errors++;
              }
              
              String deleteQuestion = "DELETE FROM question WHERE Question_ID='"+rowID+"'";
-             rows = st.executeUpdate(deleteQuestion);
+              rows = st.executeUpdate(deleteQuestion);
              if (rows == 0) {
                  errors++;
              }
              
-             String deleteMCQ = "DELETE FROM mcq WHERE Question_ID='"+rowID+"'";
-             rows = st.executeUpdate(deleteMCQ);
+             
+             String deleteAnswer = "DELETE FROM mcqoption WHERE Question_ID='"+rowID+"'";
+              rows = st.executeUpdate(deleteAnswer);
              if (rows == 0) {
                  errors++;
              }
+             
+             
              
              if (errors == 0) {
                 JOptionPane.showMessageDialog(null, "Question was successfully deleted!"); 
