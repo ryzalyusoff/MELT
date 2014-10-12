@@ -53,7 +53,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
         
         l1=new JLabel("Section Name");
         l2=new JLabel("Time Limit");
-        l3=new JLabel("The Num of Subsections");
+        l3=new JLabel("The Number of Subsections");
         l4=new JLabel(":");
         l5=new JLabel(":"); 
         tf1=new JTextField();
@@ -62,6 +62,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
         tf3_s=new JTextField("00");
         cb1=new JComboBox();
         cb1.addItem("0");
+        cb1.addItem("1");
         cb1.addItem("2");
         button1=new JButton("Cancel");
         button2=new JButton("   OK   ");
@@ -143,7 +144,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
             int timeLimit_h=Integer.parseInt(tf3_h.getText());
             int timeLimit_m=Integer.parseInt(tf3_m.getText());
             int timeLimit_s=Integer.parseInt(tf3_s.getText());
-            int numOfSub=cb1.getSelectedIndex()*2;
+            int numOfSub=cb1.getSelectedIndex();
             
             //get settingExamPanel and put it into right part of the frame
             SettingExam settingExamFrame=new SettingExam(sectionName, timeLimit_h, timeLimit_m, timeLimit_s, numOfSub,exam_ID);

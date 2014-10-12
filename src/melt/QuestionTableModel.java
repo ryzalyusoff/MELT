@@ -10,9 +10,9 @@ public class QuestionTableModel extends AbstractTableModel {
     private static final int ANSWER_COL = 2;
     
     private String[] columnNames = { "No", "Question"};
-    private List<Question> questions;
+    private List<getQuestion> questions;
     
-    public QuestionTableModel(List<Question> theQuestions) {
+    public QuestionTableModel(List<getQuestion> theQuestions) {
 		questions = theQuestions;
     }
     
@@ -34,7 +34,7 @@ public class QuestionTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Question tempQuestion = questions.get(row);
+		getQuestion tempQuestion = questions.get(row);
 
 		switch (col) {
                 case NO_COL:

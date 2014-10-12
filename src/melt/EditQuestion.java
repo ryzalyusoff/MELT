@@ -31,8 +31,9 @@ public class EditQuestion extends javax.swing.JFrame {
     public int answerID2 = 0;
     public int answerID3 = 0;
     public int answerID4 = 0;
+    public int answerID5 = 0;
+    public int answerID6 = 0;
     
-     
     private AddQuestion AddQuestionPanel;
     
     /**
@@ -41,11 +42,6 @@ public class EditQuestion extends javax.swing.JFrame {
     public EditQuestion() {
         initComponents();
         
-        choices = new ButtonGroup();
-        choices.add(choice1);
-        choices.add(choice2);
-        choices.add(choice3);
-        choices.add(choice4);
        
         
        //System.out.println("Queston is: "+question);
@@ -62,6 +58,7 @@ public class EditQuestion extends javax.swing.JFrame {
     private void initComponents() {
 
         jRadioButton4 = new javax.swing.JRadioButton();
+        jLabel4 = new javax.swing.JLabel();
         startupPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         questionField = new javax.swing.JTextField();
@@ -70,11 +67,19 @@ public class EditQuestion extends javax.swing.JFrame {
         answer2 = new javax.swing.JTextField();
         answer3 = new javax.swing.JTextField();
         answer4 = new javax.swing.JTextField();
-        choice1 = new javax.swing.JRadioButton();
-        choice3 = new javax.swing.JRadioButton();
-        choice2 = new javax.swing.JRadioButton();
-        choice4 = new javax.swing.JRadioButton();
         updateBtn = new javax.swing.JButton();
+        answer5 = new javax.swing.JTextField();
+        answer6 = new javax.swing.JTextField();
+        choice1 = new javax.swing.JCheckBox();
+        choice2 = new javax.swing.JCheckBox();
+        choice3 = new javax.swing.JCheckBox();
+        choice5 = new javax.swing.JCheckBox();
+        choice4 = new javax.swing.JCheckBox();
+        choice6 = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+
+        jLabel4.setText("Correct Answer");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,6 +128,22 @@ public class EditQuestion extends javax.swing.JFrame {
             }
         });
 
+        answer5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer5ActionPerformed(evt);
+            }
+        });
+
+        answer6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer6ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Correct Answer");
+
+        jLabel5.setText("Answer Text");
+
         javax.swing.GroupLayout startupPanelLayout = new javax.swing.GroupLayout(startupPanel);
         startupPanel.setLayout(startupPanelLayout);
         startupPanelLayout.setHorizontalGroup(
@@ -134,24 +155,31 @@ public class EditQuestion extends javax.swing.JFrame {
                     .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(updateBtn)
                         .addGroup(startupPanelLayout.createSequentialGroup()
-                            .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(startupPanelLayout.createSequentialGroup()
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, startupPanelLayout.createSequentialGroup()
-                                    .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(choice6)
+                                        .addComponent(choice5)
+                                        .addComponent(choice4)
                                         .addComponent(choice3)
-                                        .addComponent(choice1)
                                         .addComponent(choice2)
-                                        .addComponent(choice4))
+                                        .addComponent(choice1))
                                     .addGap(34, 34, 34)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(answer1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(answer1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(questionField, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(answer2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(answer4, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(answer3, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                                .addComponent(answer2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(answer3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(answer4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(answer6, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(answer5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(startupPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel5)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         startupPanelLayout.setVerticalGroup(
             startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,23 +190,35 @@ public class EditQuestion extends javax.swing.JFrame {
                     .addComponent(questionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(answer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(choice1))
-                .addGap(25, 25, 25)
-                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(answer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(choice2))
-                .addGap(25, 25, 25)
-                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(34, 34, 34)
+                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answer1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(choice1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(40, 40, 40)
+                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(choice2)
+                    .addComponent(answer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(answer3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(choice3))
-                .addGap(26, 26, 26)
+                .addGap(31, 31, 31)
                 .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(answer4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(choice4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                    .addComponent(choice4)
+                    .addComponent(answer4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answer5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(choice5, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(27, 27, 27)
+                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answer6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(choice6, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
                 .addComponent(updateBtn)
                 .addContainerGap())
         );
@@ -238,83 +278,135 @@ public class EditQuestion extends javax.swing.JFrame {
              
             int errors = 0;
             
-             String sql = "UPDATE questions SET question='"+this.question+"' WHERE id='"+questionID+"'";
-             int rows = st.executeUpdate(sql);
-             if(rows == 0) {
-                errors++;
-             }
+           
              
              String sql1 = "";
              String sql2 = "";
              String sql3 = "";
              String sql4 = "";
+             String sql5 = "";
+             String sql6 = "";
              
-            String sqlreset = "UPDATE answers SET correct='0' WHERE id in ('"+answerID1+"', '"+answerID2+"','"+answerID3+"', '"+answerID4+"')";
-            st.executeUpdate(sqlreset); 
-             
-            if(choice1.isSelected()) { 
+             int isSelected = 0;
             
-              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"', correct='1' WHERE id='"+answerID1+"' ";
-              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"' WHERE id='"+answerID2+"' ";
-              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"' WHERE id='"+answerID3+"' ";
-              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"' WHERE id='"+answerID4+"' ";
-                   
-            } else if (choice2.isSelected()) { 
-            
-              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"' WHERE id='"+answerID1+"' ";
-              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"', correct='1' WHERE id='"+answerID2+"' ";
-              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"' WHERE id='"+answerID3+"' ";
-              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"' WHERE id='"+answerID4+"' ";
-                
-            } else if (choice3.isSelected()) { 
-                
-              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"' WHERE id='"+answerID1+"' ";
-              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"' WHERE id='"+answerID2+"' ";
-              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"', correct='1' WHERE id='"+answerID3+"' ";
-              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"' WHERE id='"+answerID4+"' ";
-                
+            if (choice1.isSelected()) {
+                sql1 = "UPDATE mcqoption SET Content='"+answer1.getText()+"', isAnswerOrNot='1' WHERE MCQOption_ID='"+answerID1+"' ";
+                isSelected ++;
             } else {
-            
-              sql1 = "UPDATE answers SET answer='"+answer1.getText()+"' WHERE id='"+answerID1+"' ";
-              sql2 = "UPDATE answers SET answer='"+answer2.getText()+"' WHERE id='"+answerID2+"' ";
-              sql3 = "UPDATE answers SET answer='"+answer3.getText()+"' WHERE id='"+answerID3+"' ";
-              sql4 = "UPDATE answers SET answer='"+answer4.getText()+"', correct='1' WHERE id='"+answerID4+"' ";  
-                
-            } 
-             
-             /////////////// UPDATE the answers to DB  //////////////// 
-             rows = st.executeUpdate(sql1);
-             if(rows == 0) {
-                errors++;
-             }
-            
-             rows = st.executeUpdate(sql2);
-             if(rows == 0) {
-                errors++;
-             }
-             
-             rows =  st.executeUpdate(sql3);
-             if(rows == 0) {
-                errors++;
-             }
-            
-             rows =  st.executeUpdate(sql4);
-             if(rows == 0) {
-                errors++;
-             }
-             
-             //AddQuestionPanel = new AddQuestion();
-              //  AddQuestionPanel.refresh();
-      
-            if (errors == 0) {
-               JOptionPane.showMessageDialog(null, "Question was successfully updated!");
-               
-            } else {
-                JOptionPane.showMessageDialog(null, "ERROR in updating question!!", "error", JOptionPane.ERROR_MESSAGE);
+                 sql1 = "UPDATE mcqoption SET Content='"+answer1.getText()+"' WHERE MCQOption_ID='"+answerID1+"' ";
             }
-             
             
+            if (choice2.isSelected()) {
+                sql2 = "UPDATE mcqoption SET Content='"+answer2.getText()+"', isAnswerOrNot='1' WHERE MCQOption_ID='"+answerID2+"' ";
+                isSelected ++;
+            } else {
+                sql2 = "UPDATE mcqoption SET Content='"+answer2.getText()+"' WHERE MCQOption_ID='"+answerID2+"' ";
+            }
+            
+            if (choice3.isSelected()) {
+                 sql3 = "UPDATE mcqoption SET Content='"+answer3.getText()+"', isAnswerOrNot='1' WHERE MCQOption_ID='"+answerID3+"' ";
+                isSelected ++;
+            } else {
+                sql3 = "UPDATE mcqoption SET Content='"+answer3.getText()+"' WHERE MCQOption_ID='"+answerID3+"' ";
+            }
+            
+            if (choice5.isSelected()) {
+                sql4 = "UPDATE mcqoption SET Content='"+answer4.getText()+"', isAnswerOrNot='1' WHERE MCQOption_ID='"+answerID4+"' ";
+                isSelected ++;
+            } else {
+                sql4 = "UPDATE mcqoption SET Content='"+answer4.getText()+"' WHERE MCQOption_ID='"+answerID4+"' ";
+            }
+            
+            if (choice4.isSelected()) {
+                sql5 = "UPDATE mcqoption SET Content='"+answer5.getText()+"', isAnswerOrNot='1' WHERE MCQOption_ID='"+answerID5+"' ";
+                isSelected ++;
+            } else {
+                sql5 = "UPDATE mcqoption SET Content='"+answer5.getText()+"' WHERE MCQOption_ID='"+answerID5+"' ";
+            }
+            
+            if (choice6.isSelected()) {
+                sql6 = "UPDATE mcqoption SET Content='"+answer6.getText()+"', isAnswerOrNot='1' WHERE MCQOption_ID='"+answerID6+"' "; 
+                isSelected ++;
+            } else {
+                sql6 = "UPDATE mcqoption SET Content='"+answer6.getText()+"' WHERE MCQOption_ID='"+answerID6+"' ";
+            }
+            
+            int emptycounter = 0;
+            
+            if (!answer1.getText().equals("")) { emptycounter++;} 
+            if (!answer2.getText().equals("")) { emptycounter++;}
+            if (!answer3.getText().equals("")) { emptycounter++;}
+            if (!answer4.getText().equals("")) { emptycounter++;}
+            if (!answer5.getText().equals("")) { emptycounter++;}
+            if (!answer6.getText().equals("")) { emptycounter++;}
+            
+            
+            
+            if (!this.question.equals("")) {
+                
+                if (emptycounter >= 2 ){
+               //System.out.println("Answer is:" + emptycounter);
 
+                     if ( isSelected > 0 )    {
+  
+                           String sql = "UPDATE question SET Question_Text='"+this.question+"' WHERE Question_id='"+questionID+"'";
+                            int rows = st.executeUpdate(sql);
+                            if(rows == 0) {
+                               errors++;
+                            }
+                         
+                          /////////////// UPDATE the answers to DB  //////////////// 
+                            rows = st.executeUpdate(sql1);
+                            if(rows == 0) {
+                               errors++;
+                            }
+
+                            rows = st.executeUpdate(sql2);
+                            if(rows == 0) {
+                               errors++;
+                            }
+
+                            rows =  st.executeUpdate(sql3);
+                            if(rows == 0) {
+                               errors++;
+                            }
+
+                            rows =  st.executeUpdate(sql4);
+                            if(rows == 0) {
+                               errors++;
+                            }
+
+                            rows =  st.executeUpdate(sql5);
+                            if(rows == 0) {
+                               errors++;
+                            }
+
+                            rows =  st.executeUpdate(sql6);
+                            if(rows == 0) {
+                               errors++;
+                            }
+
+                           if (errors == 0) {
+                              JOptionPane.showMessageDialog(null, "Question was successfully updated!");
+
+                           } else {
+                               JOptionPane.showMessageDialog(null, "ERROR in updating question!!", "error", JOptionPane.ERROR_MESSAGE);
+                           }
+                         
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select at least one correct answer!", "error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please fill in at least 2 answers!", "error", JOptionPane.ERROR_MESSAGE);
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Please enter the question!", "error", JOptionPane.ERROR_MESSAGE);
+            }
+           
+   
         }  catch (Exception exc) {
             exc.printStackTrace();
         }
@@ -322,12 +414,20 @@ public class EditQuestion extends javax.swing.JFrame {
         
     }//GEN-LAST:event_updateBtnActionPerformed
 
+    private void answer5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer5ActionPerformed
+
+    private void answer6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer6ActionPerformed
+
     
       public void connectDb() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/melt","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
             st = con.createStatement();
             
         } catch(Exception ex) {
@@ -340,12 +440,19 @@ public class EditQuestion extends javax.swing.JFrame {
     public javax.swing.JTextField answer2;
     public javax.swing.JTextField answer3;
     public javax.swing.JTextField answer4;
-    public javax.swing.JRadioButton choice1;
-    public javax.swing.JRadioButton choice2;
-    public javax.swing.JRadioButton choice3;
-    public javax.swing.JRadioButton choice4;
+    public javax.swing.JTextField answer5;
+    public javax.swing.JTextField answer6;
+    public javax.swing.JCheckBox choice1;
+    public javax.swing.JCheckBox choice2;
+    public javax.swing.JCheckBox choice3;
+    public javax.swing.JCheckBox choice4;
+    public javax.swing.JCheckBox choice5;
+    public javax.swing.JCheckBox choice6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JRadioButton jRadioButton4;
     public javax.swing.JTextField questionField;
     private javax.swing.JPanel startupPanel;

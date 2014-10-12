@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import melt.Question;
+import melt.getQuestion;
 
 public class QuestionDAO {
  
@@ -24,7 +24,7 @@ public class QuestionDAO {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/melt","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
             st = con.createStatement();
             
         } catch(Exception ex) {
@@ -33,9 +33,9 @@ public class QuestionDAO {
     }
     
     // Get all Question
-    public List<Question> getAllQuestion() throws Exception {
+    public List<getQuestion> getAllQuestion() throws Exception {
     
-        List<Question> list = new ArrayList<>();
+        List<getQuestion> list = new ArrayList<>();
         
         Statement myStmt = null;
         ResultSet myRs = null;
@@ -45,12 +45,12 @@ public class QuestionDAO {
         
         try {
             myStmt = con.createStatement();
-            myRs = st.executeQuery("SELECT * FROM questions");
+            myRs = st.executeQuery("SELECT * FROM question");
             
         
             int count = 1;
             while (myRs.next()) {
-                Question tempQuestion = convertRowToQuestion(myRs, count);
+                getQuestion tempQuestion = convertRowToQuestion(myRs, count);
                 list.add(tempQuestion);
                 
                 count++;
@@ -62,15 +62,15 @@ public class QuestionDAO {
         }    
     }
     
-    private Question convertRowToQuestion(ResultSet myRs, int counter) throws SQLException {
+    private getQuestion convertRowToQuestion(ResultSet myRs, int counter) throws SQLException {
 
-            int id = myRs.getInt("id");
+            int id = myRs.getInt("Question_ID");
             //int id = counter;
             
-            String question = myRs.getString("question");
-            String answer = myRs.getString("answer");
+            String question = myRs.getString("Question_Text");
+            //String answer = myRs.getString("answer");
 
-            Question tempQuestion = new Question(id, question, answer);
+            getQuestion tempQuestion = new getQuestion(id, question);
 
             return tempQuestion;
     }

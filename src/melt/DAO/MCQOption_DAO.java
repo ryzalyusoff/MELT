@@ -18,19 +18,18 @@ import melt.Util.SQLHelper;
  * @author Aote Zhou
  */
 public class MCQOption_DAO {
-
-    /**
+    public MCQOption[] getModel(int Question_ID) {
+     /**
      *get mcqOPtions for a question
      * @param Question_ID
      * @return
      */
-    public MCQOption[] getModel(int Question_ID) {
         ArrayList<MCQOption> mCQOptions=new ArrayList<MCQOption>();
         try {
            
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT MCQOption_ID,Question_ID,Content,isAnswerOrNot");
-            sql.append(" FROM MELTSystem.`MCQOption`");
+            sql.append(" FROM `MCQOption`");
             sql.append(" where Question_ID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();
@@ -52,7 +51,6 @@ public class MCQOption_DAO {
         }
         return mCQOptions.toArray(new MCQOption[mCQOptions.size()]);
     }
-    
     /**
      *get a set of result for MCQOptions
      * @param whereString
@@ -62,7 +60,7 @@ public class MCQOption_DAO {
         
         StringBuffer sql=new StringBuffer("");
         sql.append("SELECT MCQOption_ID,Question_ID,Content,isAnswerOrNot");
-        sql.append(" FROM `MELTSystem`.`MCQOption`");
+        sql.append(" FROM `MCQOption`");
         if (whereString.trim()!="") {
             sql.append(" where "+whereString);
         }
