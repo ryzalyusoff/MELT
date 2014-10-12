@@ -660,7 +660,7 @@ public class AddQuestion extends javax.swing.JFrame {
             /////////////// ADDED question to DB ////////////////
             //String sql = "INSERT INTO questions (question, answer) VALUES('"+addedQuestion+"','"+finalAnswer+"')";
 
-            String sql = "INSERT INTO question (Question_Text) VALUES('"+addedQuestion+"')";
+            String sql = "INSERT INTO question (Question_Text, 	QType_ID) VALUES('"+addedQuestion+"', '1')";
 
              int key = 0;
             
@@ -670,6 +670,9 @@ public class AddQuestion extends javax.swing.JFrame {
              ResultSet keys = pstmt.getGeneratedKeys();
              keys.next();
              key = keys.getInt(1);  
+             
+            String sql0 = "INSERT INTO mcq (Question_ID, Question_Text, QType_ID) VALUES('"+addedQuestion+"', '1')";
+                
 
             /////////////// INSERT the correct choice (of answer) to DB  ////////////////
             //String selectedRadioButtonText = getSelectedRadioButton(choices).getText();
