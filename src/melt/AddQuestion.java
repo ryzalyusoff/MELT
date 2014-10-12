@@ -671,7 +671,7 @@ public class AddQuestion extends javax.swing.JFrame {
              keys.next();
              key = keys.getInt(1);  
              
-            String sql0 = "INSERT INTO mcq (Question_ID, Question_Text, QType_ID) VALUES('"+addedQuestion+"', '1')";
+            //String sql0 = "INSERT INTO mcq (Question_ID, Question_Text, QType_ID) VALUES('"+addedQuestion+"', '1')";
                 
 
             /////////////// INSERT the correct choice (of answer) to DB  ////////////////
