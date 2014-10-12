@@ -51,7 +51,7 @@ public class Section_DAO {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT Section_ID,Exam_ID,Section_Name,TimeLimit");
-        sql.append(" FROM MELTSystem.`Section`");
+        sql.append(" FROM `Section`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }
@@ -67,7 +67,7 @@ public class Section_DAO {
             
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT Section_ID,Exam_ID,Section_Name,TimeLimit");
-            sql.append(" FROM MELTSystem.`Section`");
+            sql.append(" FROM `Section`");
             sql.append(" where Section_ID="+section_ID);
             SQLHelper sQLHelper = new SQLHelper();
             sQLHelper.sqlConnect();
@@ -89,7 +89,7 @@ public class Section_DAO {
     }
     public void delete(String whereString){
         StringBuffer sql = new StringBuffer("");
-        sql.append("Delete from MELTSystem.`Section`");
+        sql.append("Delete from `Section`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }

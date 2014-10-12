@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -37,10 +38,11 @@ import melt.Model.*;
 public class Exam extends JFrame implements ActionListener,WindowListener{
 
     public JLabel welcomeLabel, timeLabel;
-    public JButton addSectionButton;
+    public JButton addSectionButton, deleteButton, editButton;
     public ArrayList<Section> sections;
     public JLabel[] sectionLabels;
     public JButton[] buttons,deleteButtons;
+    public JCheckBox[] checkbox;
     public JPanel contentPanel;
     public JPanel p1, p2, p3, p4,p5;
     public JScrollPane jspane;
@@ -49,10 +51,13 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
     
     public Exam(int exam_ID) {
         this.exam_ID=exam_ID;
-        this.setLocationRelativeTo(null);  //make window in the center of desktop
+        //this.setLocationRelativeTo(null);  //make window in the center of desktop
         setTitle("MELTSystem--Test");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setSize(1000, 600);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int)width, (int)height);
         setContentPane(getGUI());
         JMenuBar jMenuBar1=new JMenuBar();
         JMenu jMenu1=new JMenu("ddd");
@@ -82,13 +87,27 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         //Create p3
         p3 = new JPanel();
         
+        editButton = new JButton("Edit");
+        editButton.addActionListener(this);
+        
+        deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(this);
+        
         addSectionButton = new JButton("Add a Section");
         addSectionButton.addActionListener(this);
         
         p3.setLayout(new BorderLayout());
         //p3.add(new JLabel("Overall   6.0/30.0"));
-        p3.add(addSectionButton,BorderLayout.SOUTH);
+        JPanel pTemp = new JPanel(new BorderLayout());
 
+        pTemp.setBackground(new Color(153, 153, 153));
+        
+        pTemp.add(editButton,BorderLayout.NORTH);
+        pTemp.add(deleteButton,BorderLayout.CENTER);
+        pTemp.add(addSectionButton,BorderLayout.SOUTH);
+
+        p3.add(pTemp,BorderLayout.SOUTH);
+        
         //Create p4
         p4 = new JPanel();
         p4.setMaximumSize(new Dimension(100,1000));
@@ -124,10 +143,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         
         getSections(exam_ID);
         
-        buttons = new JButton[sections.size()];
-        deleteButtons = new JButton[sections.size()];
-        
-        
+        checkbox = new JCheckBox[sections.size()];        
         
 
         sectionLabels=new JLabel[sections.size()];
@@ -138,15 +154,27 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             
             sectionLabels[i - 1] = new JLabel("Section" + i + "  " + section.getSection_Name());
             //Edit Button
-            buttons[i - 1] = new JButton("Edit");
-            buttons[i-1].setName(section.getSection_ID()+"");
-            buttons[i-1].addActionListener(this);
-            //Delete Button
-            deleteButtons[i - 1] = new JButton("Delete");
-            deleteButtons[i-1].setName(section.getSection_ID()+"");
-            deleteButtons[i-1].addActionListener(this);
             
-            
+            //Checkboxes
+            checkbox[i - 1] = new JCheckBox();
+            checkbox[i - 1].setName(section.getSection_ID() + "");
+            checkbox[i - 1].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JCheckBox cbLog = (JCheckBox) e.getSource();
+
+                    if (cbLog.isSelected()) {
+                        for (int i = 0; i < checkbox.length; i++) {
+                            if (!(checkbox[i] == e.getSource())) {
+                                checkbox[i].setEnabled(false);
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < checkbox.length; i++) {
+                            checkbox[i].setEnabled(true);
+                        }
+                    }
+                }
+            });          
 
         }
         
@@ -169,18 +197,18 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
 //            p2.add(buttons[i]);
 //            p2.add(deleteButtons[i]);
             horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
+                    .addComponent(checkbox[i])
                     .addComponent(sectionLabels[i])
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                    .addComponent(buttons[i])
-                    .addComponent(deleteButtons[i]));
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE));
+                    
+            
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                    .addComponent(sectionLabels[i])
-                    .addComponent(buttons[i])
-                    .addComponent(deleteButtons[i]));
+                    .addComponent(checkbox[i])
+                    .addComponent(sectionLabels[i]));
+            
         }
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
-        
         p2.setLayout(groupLayout);
         p2.revalidate();
         //p2.repaint();
@@ -226,7 +254,12 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             
         }else if (((JButton)e.getSource()).getText().equals("Delete")) {
             // wait for complete
-            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+            int section_ID = 0;
+            for (int i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].isSelected()) {
+                    section_ID = Integer.parseInt((checkbox[i].getName()));
+                }
+            }
             MCQ_DAO mcq_DAO=new MCQ_DAO();
             Question_DAO question_DAO=new Question_DAO();
             Subsection_DAO subsection_DAO=new Subsection_DAO();
@@ -246,7 +279,12 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             
         }else if(((JButton)e.getSource()).getText().equals("Edit")){  //Edit Button
            // this.dispose();
-            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+            int section_ID = 0;
+            for (int i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].isSelected()) {
+                    section_ID = Integer.parseInt((checkbox[i].getName()));
+                }
+            }
             SettingExam settingExam=new SettingExam(section_ID);
             contentPanel.removeAll();
             contentPanel.setLayout(new BorderLayout());

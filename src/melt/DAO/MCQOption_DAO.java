@@ -24,7 +24,7 @@ public class MCQOption_DAO {
            
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT MCQOption_ID,Question_ID,Content,isAnswerOrNot");
-            sql.append(" FROM MELTSystem.`MCQOption`");
+            sql.append(" FROM `MCQOption`");
             sql.append(" where Question_ID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();
@@ -51,7 +51,7 @@ public class MCQOption_DAO {
         
         StringBuffer sql=new StringBuffer("");
         sql.append("SELECT MCQOption_ID,Question_ID,Content,isAnswerOrNot");
-        sql.append(" FROM `MELTSystem`.`MCQOption`");
+        sql.append(" FROM `MCQOption`");
         if (whereString.trim()!="") {
             sql.append(" where "+whereString);
         }

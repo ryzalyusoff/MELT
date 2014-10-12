@@ -21,7 +21,7 @@ public class Subsection_DAO {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT SubSection_ID,Section_ID,SubSection_Name");
-        sql.append(" FROM MELTSystem.`SubSection`");
+        sql.append(" FROM `SubSection`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }
@@ -59,7 +59,7 @@ public class Subsection_DAO {
     }
     public void delete(String whereString){
         StringBuffer sql = new StringBuffer("");
-        sql.append("Delete from MELTSystem.`SubSection`");
+        sql.append("Delete from `SubSection`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }
