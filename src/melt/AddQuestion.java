@@ -430,14 +430,27 @@ public class AddQuestion extends javax.swing.JFrame {
              
              //String sql = "SELECT * FROM questions WHERE id='"+rowID+"' ";
              
+             int errors = 0;
+             
              String deleteAnswer = "DELETE FROM mcqoption WHERE Question_ID='"+rowID+"'";
-             st.executeUpdate(deleteAnswer);
+             int rows = st.executeUpdate(deleteAnswer);
+             if (rows == 0) {
+                 errors++;
+             }
              
+             String deleteQuestion = "DELETE FROM question WHERE Question_ID='"+rowID+"'";
+             rows = st.executeUpdate(deleteQuestion);
+             if (rows == 0) {
+                 errors++;
+             }
              
-             String sql = "DELETE FROM question WHERE Question_ID='"+rowID+"'";
-             int rows = st.executeUpdate(sql);
+             String deleteMCQ = "DELETE FROM mcq WHERE Question_ID='"+rowID+"'";
+             rows = st.executeUpdate(deleteMCQ);
+             if (rows == 0) {
+                 errors++;
+             }
              
-             if (rows > 0) {
+             if (errors == 0) {
                 JOptionPane.showMessageDialog(null, "Question was successfully deleted!"); 
                 refresh();
              } else {
@@ -660,7 +673,10 @@ public class AddQuestion extends javax.swing.JFrame {
             /////////////// ADDED question to DB ////////////////
             //String sql = "INSERT INTO questions (question, answer) VALUES('"+addedQuestion+"','"+finalAnswer+"')";
 
-            String sql = "INSERT INTO question (Question_Text, 	QType_ID) VALUES('"+addedQuestion+"', '1')";
+            int QType_ID = 1;
+            
+            // Insert Question into question table
+            String sql = "INSERT INTO question (Question_Text, 	QType_ID) VALUES('"+addedQuestion+"', '"+QType_ID+"')";
 
              int key = 0;
             
@@ -670,9 +686,10 @@ public class AddQuestion extends javax.swing.JFrame {
              ResultSet keys = pstmt.getGeneratedKeys();
              keys.next();
              key = keys.getInt(1);  
-             
-            //String sql0 = "INSERT INTO mcq (Question_ID, Question_Text, QType_ID) VALUES('"+addedQuestion+"', '1')";
-                
+            
+            // Insert Question into mcq table 
+            String sql0 = "INSERT INTO mcq (Question_ID, Question_Text, QType_ID) VALUES('"+key+"','"+addedQuestion+"', '"+QType_ID+"')";
+            st.executeUpdate(sql0);
 
             /////////////// INSERT the correct choice (of answer) to DB  ////////////////
             //String selectedRadioButtonText = getSelectedRadioButton(choices).getText();
@@ -765,18 +782,24 @@ public class AddQuestion extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Please select at least one correct answer!", "error", JOptionPane.ERROR_MESSAGE);
                         String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
                         st.executeUpdate(deletesql);
+                        String deletesql2 = "DELETE FROM mcq WHERE Question_ID='"+key+"'";
+                        st.executeUpdate(deletesql2);
                     }
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Please fill in at least 2 answers!", "error", JOptionPane.ERROR_MESSAGE);
                     String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
                     st.executeUpdate(deletesql);
+                    String deletesql2 = "DELETE FROM mcq WHERE Question_ID='"+key+"'";
+                    st.executeUpdate(deletesql2);
                 }
                 
             } else {
                 JOptionPane.showMessageDialog(null, "Please enter the question!", "error", JOptionPane.ERROR_MESSAGE);
                 String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
                 st.executeUpdate(deletesql);
+                String deletesql2 = "DELETE FROM mcq WHERE Question_ID='"+key+"'";
+                st.executeUpdate(deletesql2);
                 
             }
             
