@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -103,7 +104,7 @@ public class ExamOverview extends JFrame implements ActionListener {
         p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
         p5.add(p4);
         contentPanel = new JPanel();
-        contentPanel.setLayout(new BorderLayout());
+        contentPanel.setLayout(new FlowLayout());
         p5.add(contentPanel);
         
         //set the color of the left part
