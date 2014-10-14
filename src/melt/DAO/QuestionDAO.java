@@ -45,7 +45,7 @@ public class QuestionDAO {
         
         try {
             myStmt = con.createStatement();
-            myRs = st.executeQuery("SELECT * FROM question");
+            myRs = st.executeQuery("SELECT * FROM mcq");
             
         
             int count = 1;

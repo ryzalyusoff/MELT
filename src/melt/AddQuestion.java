@@ -697,7 +697,7 @@ public class AddQuestion extends javax.swing.JFrame {
             int QType_ID = 1;
             
             // Insert Question into question table
-            String sql = "INSERT INTO question (Question_Text, 	QType_ID) VALUES('"+addedQuestion+"', '"+QType_ID+"')";
+            String sql = "INSERT INTO question (QType_ID) VALUES('"+QType_ID+"')";
 
              int key = 0;
             
