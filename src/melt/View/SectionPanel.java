@@ -324,6 +324,7 @@ public class SectionPanel extends JPanel implements ActionListener {
                 Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             section.setTimeLimit(timeLimit);
+            section.setExam_ID(exam_ID);
 
             int section_ID = section_DAO.add(section);
             //get subsection and add to the database
