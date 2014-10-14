@@ -5,6 +5,7 @@
  */
 package melt.View;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
 import melt.DAO.Exam_DAO;
@@ -34,7 +36,7 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
 
     public AddExam() {
         this.setLocationRelativeTo(null);  //make window in the center of desktop
-        setSize(500, 150);
+        setSize(400, 150);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
         setContentPane(getGUI());
@@ -50,8 +52,11 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         //Create p1
         p1=new JPanel();
         
-        l1=new JLabel("Instruction");
+        l1=new JLabel("Instructions");
         ta1=new JTextArea();
+        JScrollPane sp = new JScrollPane(ta1);
+        ta1.setMinimumSize(new Dimension(500, 100));
+        sp.setMinimumSize(new Dimension(500, 500)); 
         button1=new JButton("Cancel");
         button2=new JButton("   OK   ");
         
@@ -77,14 +82,14 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                             .addComponent(l1)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED,10,Short.MAX_VALUE))
-                        .addComponent(ta1)
+                        .addComponent(sp)
                         .addGroup(groupLayout.createSequentialGroup()
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                             .addComponent(button1)
                             .addComponent(button2));
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                             .addComponent(l1))
-                .addComponent(ta1)
+                .addComponent(sp)
                 .addGroup(groupLayout.createParallelGroup()
                             .addComponent(button1)
                             .addComponent(button2));

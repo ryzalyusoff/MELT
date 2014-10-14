@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -52,7 +53,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
         p1=new JPanel();
         
         l1=new JLabel("Section Name");
-        l2=new JLabel("Time Limit");
+        l2=new JLabel("Time Limit (hh:mm:ss)");
         l3=new JLabel("The Number of Subsections");
         l4=new JLabel(":");
         l5=new JLabel(":"); 
@@ -140,10 +141,22 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
             
         }else if (e.getSource()==button2) {//ok button
             //get every attribute needed for the exam
+            int timeLimit_h=0;
+            int timeLimit_m=0;
+            int timeLimit_s=0;
             String sectionName=tf1.getText();
-            int timeLimit_h=Integer.parseInt(tf3_h.getText());
-            int timeLimit_m=Integer.parseInt(tf3_m.getText());
-            int timeLimit_s=Integer.parseInt(tf3_s.getText());
+            if(sectionName.trim().isEmpty())
+            {JOptionPane.showMessageDialog(p1, "Please enter a Section title", "Incorrect Section title", JOptionPane.ERROR_MESSAGE);
+            return ;}
+            try{
+            timeLimit_h=Integer.parseInt(tf3_h.getText());
+            timeLimit_m=Integer.parseInt(tf3_m.getText());
+            timeLimit_s=Integer.parseInt(tf3_s.getText());
+            }catch(Exception exception){JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
+            return ;}
+            if(timeLimit_h >24 || timeLimit_h <00 || timeLimit_m > 60 || timeLimit_m < 0 || timeLimit_s > 60 || timeLimit_s <0 || (timeLimit_h == 0 && timeLimit_m == 0 && timeLimit_s == 0))
+            {JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
+            return;}
             int numOfSub=cb1.getSelectedIndex();
             
             //get settingExamPanel and put it into right part of the frame

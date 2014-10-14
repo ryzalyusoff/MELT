@@ -39,7 +39,7 @@ import melt.Model.*;
 public class SectionPanel extends JPanel implements ActionListener {
 
     //components 
-    public JLabel sectionLabel, l1, l2;
+    public JLabel sectionLabel, l0,l1, l2;
     public JTextField sectionTimeField_h, sectionTimeField_m, sectionTimeField_s;
     public JButton sectionButton1, sectionButton2, sectionButton3;
     public JButton sectionSubmitButton;
@@ -81,6 +81,7 @@ public class SectionPanel extends JPanel implements ActionListener {
         if (section == null) {
             section = new Section();
             section.setSection_Name(sectionName);
+            
             try {
                 Date timeLimit = new SimpleDateFormat("HH:mm:ss").parse(timelimit_h + ":" + timelimit_m + ":" + timelimit_s);
                 section.setTimeLimit(timeLimit);
@@ -104,14 +105,30 @@ public class SectionPanel extends JPanel implements ActionListener {
             sectionContentFlag = sectionContentState.TWOSUB;
         }
 
-        sectionLabel = new JLabel("Section1 " + sectionName);
-        l1 = new JLabel(":");
-        l2 = new JLabel(":");
-        sectionTimeField_h = new JTextField(timelimit_h + "");
+        sectionLabel = new JLabel("Section " + sectionName);
+        l0 = new JLabel("Hours");
+        l1 = new JLabel("Minutes");
+        l2 = new JLabel("Seconds");
+        String timelimit_hString = Integer.toString(timelimit_h);
+        String timelimit_mString = Integer.toString(timelimit_m);
+        String timelimit_sString = Integer.toString(timelimit_s);
+        if(timelimit_h == 0)
+        {
+            timelimit_hString = "00";
+        }
+        if(timelimit_m == 0)
+        {
+            timelimit_mString = "00";
+        }
+        if(timelimit_s == 0)
+        {
+            timelimit_sString = "00";
+        }
+        sectionTimeField_h = new JTextField(timelimit_hString + "");
         sectionTimeField_h.setMaximumSize(new Dimension(30, 4));
-        sectionTimeField_m = new JTextField(timelimit_m + "");
+        sectionTimeField_m = new JTextField(timelimit_mString + "");
         sectionTimeField_m.setMaximumSize(new Dimension(30, 4));
-        sectionTimeField_s = new JTextField(timelimit_s + "");
+        sectionTimeField_s = new JTextField(timelimit_sString + "");
         sectionTimeField_s.setMaximumSize(new Dimension(30, 4));
         sectionButton1 = new JButton("Add a Subsection");
         sectionButton2 = new JButton("Add a Question");
@@ -133,6 +150,7 @@ public class SectionPanel extends JPanel implements ActionListener {
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(sectionLabel)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(l0)
                 .addComponent(sectionTimeField_h)
                 .addComponent(l1)
                 .addComponent(sectionTimeField_m)
@@ -143,8 +161,9 @@ public class SectionPanel extends JPanel implements ActionListener {
                 .addGroup(groupLayout.createSequentialGroup()
                         .addGap(20)
                         .addComponent(sectionContentPanel));
-        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(sectionLabel)
+                .addComponent(l0)
                 .addComponent(sectionTimeField_h)
                 .addComponent(l1)
                 .addComponent(sectionTimeField_m)
