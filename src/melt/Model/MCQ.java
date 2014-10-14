@@ -9,10 +9,8 @@ package melt.Model;
  *
  * @author Aote Zhou
  */
-public class MCQ {
-    private int question_ID;
-    private int subSection_ID;
-    private int qtype_ID;
+public class MCQ extends Question{
+   
     private String question_Text;
 
     /**
@@ -29,19 +27,6 @@ public class MCQ {
         this.question_ID = Question_ID;
     }
 
-    /**
-     * @return the subSection_ID
-     */
-    public int getSubSection_ID() {
-        return subSection_ID;
-    }
-
-    /**
-     * @param subSection_ID the subSection_ID to set
-     */
-    public void setSubSection_ID(int subSection_ID) {
-        this.subSection_ID = subSection_ID;
-    }
 
     /**
      * @return the Qtype_ID

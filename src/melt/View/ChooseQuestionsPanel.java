@@ -30,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import melt.DAO.MCQ_DAO;
 import melt.DAO.Question_DAO;
 
 /**
@@ -165,15 +166,15 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
      */
     public Object[][] getData() {
         try {
-            Question_DAO question_DAO = new Question_DAO();
+            MCQ_DAO mcq_DAO = new MCQ_DAO();
             //get question
-            ResultSet rs = question_DAO.getList("question_ID in (select question_ID from QuestionsByExamID where Exam_ID!='"+exam_ID+"') ");
+            ResultSet rs = mcq_DAO.getList("question_ID not in (select question_ID from QuestionsByExamID where Exam_ID='"+exam_ID+"') ");
             ArrayList<Object[]> objectArraylist = new ArrayList<Object[]>();
             //store data into arraylist
             while (rs.next()) {
                 Object[] col = new Object[3];
                 col[0] = rs.getInt(1);
-                col[1] = rs.getString(4);
+                col[1] = rs.getString(3);
                 col[2] = false;
                 objectArraylist.add(col);
                 

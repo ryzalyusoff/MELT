@@ -19,16 +19,17 @@ import melt.Util.SQLHelper;
 public class MCQ_DAO {
 
     /**
-     *get mcq by question_ID
+     * get mcq by question_ID
+     *
      * @param Question_ID
      * @return
      */
     public MCQ getModel(int Question_ID) {
         MCQ mcquestion = new MCQ();
         try {
-           
+
             StringBuffer sql = new StringBuffer("");
-            sql.append("SELECT Question_ID,SubSection_ID,QType_ID,Question_Text");
+            sql.append("SELECT Question_ID,QType_ID,Question_Text");
             sql.append(" FROM MELTSystem.`MCQ`");
             sql.append(" where Question_ID=" + Question_ID);
 
@@ -37,10 +38,10 @@ public class MCQ_DAO {
             ResultSet rs = sQLHelper.runQuery(sql.toString());
             while (rs.next()) {
 
-               mcquestion.setQtype_ID(rs.getInt("QType_ID"));
-               mcquestion.setQuestion_ID(rs.getInt("Question_ID"));
-               mcquestion.setQuestion_Text(rs.getString("Question_Text"));
-               mcquestion.setSubSection_ID(rs.getInt("SubSection_ID"));
+                mcquestion.setQtype_ID(rs.getInt("QType_ID"));
+                mcquestion.setQuestion_ID(rs.getInt("Question_ID"));
+                mcquestion.setQuestion_Text(rs.getString("Question_Text"));
+               
 
             }
         } catch (SQLException ex) {
@@ -50,43 +51,61 @@ public class MCQ_DAO {
     }
 
     /**
-     *update the subsec_ID of a specific question
+     * update the subsec_ID of a specific question
+     *
      * @param subsec_ID
      * @param Q_ID
      */
-    public void update(int subsec_ID,int Q_ID){
-        StringBuffer sql=new StringBuffer();
-        sql.append("UPDATE MCQ ");
-        sql.append("SET SubSection_ID='");
-        sql.append(subsec_ID+"'");
-        sql.append(" where Question_ID='");
-        sql.append(Q_ID+"'");
-        
+//    public void update(int subsec_ID, int Q_ID) {
+//        if (new SubsectionQuestion_DAO().hasRelWithSubsection(Q_ID)) {
+//            StringBuffer sql = new StringBuffer();
+//            sql.append("UPDATE MCQ ");
+//            sql.append("SET SubSection_ID='");
+//            sql.append(subsec_ID + "'");
+//            sql.append(" where Question_ID='");
+//            sql.append(Q_ID + "'");
+//
+//            SQLHelper sQLHelper = new SQLHelper();
+//            sQLHelper.sqlConnect();
+//
+//            sQLHelper.runUpdate(sql.toString());
+//        }else{
+//        StringBuffer sql=new StringBuffer();
+//            sql.append("insert into MCQ select Question_ID,'"+subsec_ID+"',QType_ID,Question_Text from MCQ where Question_ID="+Q_ID);
+//            
+//            SQLHelper sQLHelper=new SQLHelper();
+//            sQLHelper.sqlConnect();
+//            sQLHelper.runUpdate(sql.toString());
+//            sQLHelper.sqlClose();
+//        }
+//
+//    }
+    /**
+     * get a set of result
+     *
+     * @param whereString
+     * @return
+     */
+    public ResultSet getList(String whereString) {
+
+        StringBuffer sql = new StringBuffer("");
+        sql.append("SELECT Question_ID,QType_ID,Question_Text");
+        sql.append(" FROM MELTSystem.`MCQ`");
+        if (whereString.trim() != "") {
+            sql.append(" where " + whereString);
+        }
         SQLHelper sQLHelper = new SQLHelper();
         sQLHelper.sqlConnect();
-        
-        sQLHelper.runUpdate(sql.toString());
-                
+        ResultSet rs = sQLHelper.runQuery(sql.toString());
+        //sQLHelper.sqlClose();
+        return rs;
     }
 
-    /**
-     * make the subsection_ID of the specific question null
-     * @param section_ID
-     */
-    public void cancelRWithSubSec(int section_ID){
-        StringBuffer sql=new StringBuffer();
-        sql.append("UPDATE MCQ ");
-        sql.append("SET SubSection_ID=null");
-        sql.append(" where SubSection_ID in");
-        sql.append(" (select SubSection_ID from SubSection where Section_ID='"+section_ID+"')");
-        
-        SQLHelper sQLHelper = new SQLHelper();
-        sQLHelper.sqlConnect();
-        
-        sQLHelper.runUpdate(sql.toString());
-    }
+  
+
+    
+
     public static void main(String[] args) {
-        Question_DAO question_DAO=new Question_DAO();
-        question_DAO.update(5, 1);
+        
     }
 }

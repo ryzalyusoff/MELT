@@ -25,6 +25,7 @@ import javax.swing.*;
 import melt.DAO.MCQ_DAO;
 import melt.DAO.Question_DAO;
 import melt.DAO.Section_DAO;
+import melt.DAO.SubsectionQuestion_DAO;
 import melt.DAO.Subsection_DAO;
 import melt.Model.*;
 
@@ -267,14 +268,16 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             }
             
             //create and intialize the DAOs
-            MCQ_DAO mcq_DAO=new MCQ_DAO();
-            Question_DAO question_DAO=new Question_DAO();
+            //MCQ_DAO mcq_DAO=new MCQ_DAO();
+            //Question_DAO question_DAO=new Question_DAO();
+            SubsectionQuestion_DAO subSectionQuestion_DAO=new SubsectionQuestion_DAO();
             Subsection_DAO subsection_DAO=new Subsection_DAO();
             Section_DAO section_DAO=new Section_DAO();
         
             //update the info of question and MCQ then delete the relative data in section and subsection 
-            mcq_DAO.cancelRWithSubSec(section_ID);
-            question_DAO.cancelRWithSubSec(section_ID);
+            //mcq_DAO.cancelRWithSubSec(section_ID);
+            //question_DAO.cancelRWithSubSec(section_ID);
+            subSectionQuestion_DAO.cancelRWithSubSec(section_ID);
             subsection_DAO.delete("Section_ID='"+section_ID+"'");
             section_DAO.delete("Section_ID='"+section_ID+"'");
             
