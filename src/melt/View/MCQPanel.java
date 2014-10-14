@@ -50,7 +50,7 @@ public class MCQPanel extends JPanel implements ActionListener{
         getQ(Q_ID);
         questionLabel = new JLabel("Question 1");
         questionDeleteButton = new JButton("Delete");
-        questionContent = new JLabel(question.getQuestion_Text());
+        questionContent = new JLabel(((MCQ)question).getQuestion_Text());
         choices=new JLabel[mCQOptions.length];
         
         
