@@ -123,7 +123,7 @@ public class AddQuestion extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","root");
             st = con.createStatement();
             
         } catch(Exception ex) {
@@ -534,7 +534,7 @@ public class AddQuestion extends javax.swing.JFrame {
             String myDriver = "com.mysql.jdbc.Driver";
             String myUrl = "jdbc:mysql://localhost:3306/meltsystem";
             Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "");
+            Connection conn = DriverManager.getConnection(myUrl, "root", "root");
 
             // our SQL SELECT query. 
             // if you only need a few columns, specify them by name instead of using "*"

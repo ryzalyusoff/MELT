@@ -24,7 +24,7 @@ public class QuestionDAO {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","root");
             st = con.createStatement();
             
         } catch(Exception ex) {
