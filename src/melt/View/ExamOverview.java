@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -86,8 +87,8 @@ public class ExamOverview extends JFrame implements ActionListener {
         pTemp.setMaximumSize(new Dimension(100,200));
         pTemp.setBackground(new Color(153, 153, 153));
         
-        pTemp.add(isActivatedButton);
         pTemp.add(EditButton);
+        pTemp.add(isActivatedButton);
         pTemp.add(addExamButton);
         
         pTempOuter.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -263,7 +264,9 @@ public class ExamOverview extends JFrame implements ActionListener {
             JPanel temp = addExam.getGUI();
 
             contentPanel.setLayout(new BorderLayout());
-            contentPanel.add(temp);
+            
+            
+            contentPanel.add(temp, BorderLayout.NORTH);
             contentPanel.revalidate();
         } else if (((JButton) e.getSource()).getText().equals("Activate")) {
             //isPublicButtons

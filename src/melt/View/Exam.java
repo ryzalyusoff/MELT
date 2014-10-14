@@ -51,7 +51,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
     public Exam(int exam_ID) {
         this.exam_ID=exam_ID;
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
-        setTitle("MELTSystem--Test");
+        setTitle("MELTSystem");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
@@ -124,7 +124,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         p5.add(p4);
         contentPanel=new JPanel();
         //contentPanel.setBackground(Color.red);
-        contentPanel.setLayout(new BorderLayout());
+        contentPanel.setLayout(new FlowLayout());
         p5.add(contentPanel);
         
         //set the background color of the leftpart
@@ -133,7 +133,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         p4.setBackground(new Color(153, 153, 153));
         
         p4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Exam 1"));
-
+        
         return p5;
     }
 
