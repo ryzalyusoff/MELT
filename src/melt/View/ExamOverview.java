@@ -30,7 +30,7 @@ public class ExamOverview extends JFrame implements ActionListener {
 
     public ArrayList<melt.Model.Exam> exams;
     public JLabel[] examLabels;
-    JButton addExamButton;
+    JButton addExamButton,backButton;
     public JButton[] buttons, isPublicButtons;
     public JCheckBox[] checkbox;
     JPanel contentPanel;
@@ -70,6 +70,9 @@ public class ExamOverview extends JFrame implements ActionListener {
         addExamButton = new JButton("Add a Exam");
         addExamButton.addActionListener(this);
         
+        backButton=new JButton("Back");
+        backButton.addActionListener(this);
+        
         //Create p4
         p4 = new JPanel();
         p4.setMaximumSize(new Dimension(100,1000));
@@ -77,6 +80,7 @@ public class ExamOverview extends JFrame implements ActionListener {
         
         jspane=new JScrollPane(p2);
         jspane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        p4.add(backButton);
         p4.add(jspane);
         
         JPanel pTempOuter = new JPanel(new BorderLayout());
@@ -246,18 +250,25 @@ public class ExamOverview extends JFrame implements ActionListener {
             int exam_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
-                    this.dispose();
+                    //this.dispose();
                     exam_ID = Integer.parseInt((checkbox[i].getName()));
                     Exam exam = new Exam(exam_ID);
-            exam.setVisible(true);
+                    JFrame fatherFrame=(JFrame)p2.getRootPane().getParent();
+                    fatherFrame.setContentPane(exam.getGUI());
+                    fatherFrame.revalidate();
+                    fatherFrame.repaint();
+            //exam.setVisible(true);
                 }
             }
         }
             
         
 
-        }
-    else if (e.getSource() == addExamButton) {
+        }else if(e.getSource()==backButton){
+            this.dispose();
+            melt.startupPanel startupPanel=new melt.startupPanel();
+            startupPanel.setVisible(true);
+        }else if (e.getSource() == addExamButton) {
             AddExam addExam = new AddExam();
             //settingSection.setVisible(true);
             contentPanel.removeAll();
