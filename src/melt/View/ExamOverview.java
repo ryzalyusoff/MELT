@@ -70,7 +70,7 @@ public class ExamOverview extends JFrame implements ActionListener {
         addExamButton = new JButton("Add a Exam");
         addExamButton.addActionListener(this);
         
-        backButton=new JButton("Back");
+        backButton=new JButton("<<<Back to Main menu");
         backButton.addActionListener(this);
         
         //Create p4
