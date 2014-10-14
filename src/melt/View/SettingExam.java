@@ -57,7 +57,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         this.timeLimit_s=timeLimit_s;
         this.numOfSub=numOfSub;
         
-        sectionPanel1=new SectionPanel(numOfSub);
+        sectionPanel1=new SectionPanel(numOfSub,exam_ID);
         sectionPanel1.getGUI(sectionName,timeLimit_h,timeLimit_m,timeLimit_s);
         
         setContentPane(getGUI());
