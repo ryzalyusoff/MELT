@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
-import melt.DAO.Question_DAO;
+import melt.DAO.SubsectionQuestion_DAO;
 import melt.Model.*;
 
 /**
@@ -30,6 +30,12 @@ public class SubsectionPanel extends JPanel implements ActionListener{
     JButton subsectionButton1,subsectionButton2;
     JPanel subsectionQuestionPanel;
     JPanel p1,p2;
+    int exam_ID;
+
+    public SubsectionPanel(int exam_ID) {
+        this.exam_ID=exam_ID;
+    }
+    
     
     /**
      *set the GUI of this panel
@@ -82,6 +88,7 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         
         this.setLayout(groupLayout);
         
+        
 //        p1=new JPanel();
 //        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 //        p1.add(p2);
@@ -99,8 +106,8 @@ public class SubsectionPanel extends JPanel implements ActionListener{
      */
     public void getGUI(SubSection subSection){
         getGUI();
-        Question_DAO question_DAO=new Question_DAO();
-        ResultSet rs=question_DAO.getList("subsection_ID='"+subSection.getSubSection_ID()+"'");
+        SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
+        ResultSet rs=subsectionQuestion_DAO.getList("subsection_ID='"+subSection.getSubSection_ID()+"'");
         try {
             while (rs.next()) {
                 MCQPanel mCQPanel=new MCQPanel(rs.getInt("Question_ID"));
@@ -133,7 +140,7 @@ public class SubsectionPanel extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==subsectionButton1) {//add a question
-            ChooseQuestionsPanel chooseQuestionsPanel=new ChooseQuestionsPanel(this);
+            ChooseQuestionsPanel chooseQuestionsPanel=new ChooseQuestionsPanel((SubsectionPanel)this);
             chooseQuestionsPanel.setVisible(true);
         }if (e.getSource()==subsectionButton2) {//cancel
             //remove current panel form the parent panel

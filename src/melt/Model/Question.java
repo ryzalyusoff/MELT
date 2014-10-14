@@ -10,10 +10,8 @@ package melt.Model;
  * @author Aote Zhou
  */
 public class Question {
-    private int question_ID;
-    private int subSection_ID;
-    private int qtype_ID;
-    private String question_Text;
+    protected int question_ID;  
+    protected int qtype_ID;
 
     /**
      * @return the Question_ID
@@ -30,20 +28,6 @@ public class Question {
     }
 
     /**
-     * @return the subSection_ID
-     */
-    public int getSubSection_ID() {
-        return subSection_ID;
-    }
-
-    /**
-     * @param subSection_ID the subSection_ID to set
-     */
-    public void setSubSection_ID(int subSection_ID) {
-        this.subSection_ID = subSection_ID;
-    }
-
-    /**
      * @return the Qtype_ID
      */
     public int getQtype_ID() {
@@ -57,18 +41,5 @@ public class Question {
         this.qtype_ID = Qtype_ID;
     }
 
-    /**
-     * @return the Question_Text
-     */
-    public String getQuestion_Text() {
-        return question_Text;
-    }
-
-    /**
-     * @param Question_Text the Question_Text to set
-     */
-    public void setQuestion_Text(String Question_Text) {
-        this.question_Text = Question_Text;
-    }
     
 }

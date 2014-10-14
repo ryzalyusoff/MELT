@@ -116,10 +116,11 @@ public class MCQPanel extends JPanel implements ActionListener{
      * @param questionID
      */
     public void getQ(int questionID){
-        Question_DAO question_DAO=new Question_DAO();
+        //Question_DAO question_DAO=new Question_DAO();
+        MCQ_DAO mcq_dao=new MCQ_DAO();
         MCQOption_DAO mCQOption_DAO=new MCQOption_DAO();
         
-        question=question_DAO.getModel(questionID);
+        question=mcq_dao.getModel(questionID);
         mCQOptions=mCQOption_DAO.getModel(questionID);    
     }
     @Override
