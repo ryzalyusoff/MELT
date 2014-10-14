@@ -52,7 +52,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
         p1=new JPanel();
         
         l1=new JLabel("Section Name");
-        l2=new JLabel("Time Limit");
+        l2=new JLabel("Time Limit (hh:mm:ss)");
         l3=new JLabel("The Number of Subsections");
         l4=new JLabel(":");
         l5=new JLabel(":"); 

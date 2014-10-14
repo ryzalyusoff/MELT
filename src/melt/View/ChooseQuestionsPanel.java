@@ -132,7 +132,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 
                 JCheckBox ck = new JCheckBox();
-                ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));  
+            ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));      
                 ck.setSelected(isSelected);
                 ck.setHorizontalAlignment(0);
                 return ck;

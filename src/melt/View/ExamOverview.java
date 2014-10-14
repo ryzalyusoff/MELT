@@ -237,18 +237,26 @@ public class ExamOverview extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         if (((JButton) e.getSource()).getText().equals("Edit")) {  //Edit Button
-            this.dispose();
+            if(checkbox.length>0)
+            {
+            
             int exam_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
+                    this.dispose();
                     exam_ID = Integer.parseInt((checkbox[i].getName()));
+                    Exam exam = new Exam(exam_ID);
+            exam.setVisible(true);
                 }
             }
-            Exam exam = new Exam(exam_ID);
-            exam.setVisible(true);
+        }
+            
+        
 
-        } else if (e.getSource() == addExamButton) {
+        }
+    else if (e.getSource() == addExamButton) {
             AddExam addExam = new AddExam();
             //settingSection.setVisible(true);
             contentPanel.removeAll();
@@ -259,17 +267,21 @@ public class ExamOverview extends JFrame implements ActionListener {
             contentPanel.revalidate();
         } else if (((JButton) e.getSource()).getText().equals("Activate")) {
             //isPublicButtons
+            if(checkbox.length>0)
+            {
             Exam_DAO exam_DAO = new Exam_DAO();
             int exam_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
                     exam_ID = Integer.parseInt((checkbox[i].getName()));
-                }
-            }
-            exam_DAO.makeItPublic(exam_ID);
+                    exam_DAO.makeItPublic(exam_ID);
             //update the panel
             p2.removeAll();
             setP2();
+                }
+            }
+            
+            }
         }
 
     }

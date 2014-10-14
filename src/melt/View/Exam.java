@@ -60,7 +60,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         setContentPane(getGUI());
         //MenuBar
         JMenuBar jMenuBar1=new JMenuBar();
-        JMenu jMenu1=new JMenu("ddd");
+        JMenu jMenu1=new JMenu("Set the exam, by adding Sections, Subsections and Questions");
         jMenuBar1.add(jMenu1);
         getRootPane().setMenuBar(jMenuBar1);
         
@@ -152,7 +152,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             Section section=sections.get(i-1);
             String sectionTimeLimit=new SimpleDateFormat("HH:mm:ss").format(section.getTimeLimit());
             
-            sectionLabels[i - 1] = new JLabel("Section" + i + "  " + section.getSection_Name());
+            sectionLabels[i - 1] = new JLabel("Section " + i + "  " + section.getSection_Name());
             //Edit Button
             
             //Checkboxes
@@ -255,11 +255,21 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             contentPanel.setLayout(new FlowLayout());
             contentPanel.add(temp);
             contentPanel.revalidate();
+            for (int i = 0; i < checkbox.length; i++) {
+                checkbox[i].setSelected(false);
+                            checkbox[i].setEnabled(true);
+                        }
             //contentPanel.repaint();
             
         }else if (((JButton)e.getSource()).getText().equals("Delete")) {
             //set section_ID
-            int section_ID=Integer.parseInt(((JButton)e.getSource()).getName());
+            if(checkbox.length > 0)
+            {
+            int section_ID = 0;
+            for (int i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].isSelected()) {
+                    section_ID = Integer.parseInt((checkbox[i].getName()));
+                    //get settingExamPanel and add to right panel
             //create and intialize the DAOs
             MCQ_DAO mcq_DAO=new MCQ_DAO();
             Question_DAO question_DAO=new Question_DAO();
@@ -275,19 +285,22 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             p2.removeAll();
             
             setP2();
+                }
+            }
+            }
+        
             
             
             
         }else if(((JButton)e.getSource()).getText().equals("Edit")){  //Edit Button
            // this.dispose();
+            if(checkbox.length > 0)
+            {
             int section_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
                     section_ID = Integer.parseInt((checkbox[i].getName()));
-                }
-            }
-          
-            //get settingExamPanel and add to right panel
+                    //get settingExamPanel and add to right panel
             SettingExam settingExam=new SettingExam(section_ID);
             contentPanel.removeAll();
             contentPanel.setLayout(new BorderLayout());
@@ -295,6 +308,12 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             contentPanel.revalidate();
             //contentPanel.repaint();
             //settingExam.setVisible(true);
+                }
+            }
+          
+            
+            
+        }
             
         }
     }

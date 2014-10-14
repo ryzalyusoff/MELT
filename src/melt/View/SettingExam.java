@@ -101,9 +101,9 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         
         submitButton=new JButton("submit");
         submitButton.addActionListener(this);
-        updateButton=new JButton("update");
+        updateButton=new JButton("Update Section");
         updateButton.addActionListener(this);
-        cancelButton=new JButton("cancel");
+        cancelButton=new JButton("Cancel");
         cancelButton.addActionListener(this);
 
         

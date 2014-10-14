@@ -81,6 +81,7 @@ public class SectionPanel extends JPanel implements ActionListener {
         if (section == null) {
             section = new Section();
             section.setSection_Name(sectionName);
+            
             try {
                 Date timeLimit = new SimpleDateFormat("HH:mm:ss").parse(timelimit_h + ":" + timelimit_m + ":" + timelimit_s);
                 section.setTimeLimit(timeLimit);
@@ -104,7 +105,7 @@ public class SectionPanel extends JPanel implements ActionListener {
             sectionContentFlag = sectionContentState.TWOSUB;
         }
 
-        sectionLabel = new JLabel("Section1 " + sectionName);
+        sectionLabel = new JLabel("Section " + sectionName);
         l1 = new JLabel(":");
         l2 = new JLabel(":");
         sectionTimeField_h = new JTextField(timelimit_h + "");
