@@ -87,8 +87,8 @@ public class ExamOverview extends JFrame implements ActionListener {
         pTemp.setMaximumSize(new Dimension(100,200));
         pTemp.setBackground(new Color(153, 153, 153));
         
-        pTemp.add(isActivatedButton);
         pTemp.add(EditButton);
+        pTemp.add(isActivatedButton);
         pTemp.add(addExamButton);
         
         pTempOuter.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -104,7 +104,7 @@ public class ExamOverview extends JFrame implements ActionListener {
         p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
         p5.add(p4);
         contentPanel = new JPanel();
-        contentPanel.setLayout(new FlowLayout());
+        contentPanel.setLayout(new BorderLayout());
         p5.add(contentPanel);
         
         //set the color of the left part
@@ -238,39 +238,53 @@ public class ExamOverview extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         if (((JButton) e.getSource()).getText().equals("Edit")) {  //Edit Button
-            this.dispose();
+            if(checkbox.length>0)
+            {
+            
             int exam_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
+                    this.dispose();
                     exam_ID = Integer.parseInt((checkbox[i].getName()));
+                    Exam exam = new Exam(exam_ID);
+            exam.setVisible(true);
                 }
             }
-            Exam exam = new Exam(exam_ID);
-            exam.setVisible(true);
+        }
+            
+        
 
-        } else if (e.getSource() == addExamButton) {
+        }
+    else if (e.getSource() == addExamButton) {
             AddExam addExam = new AddExam();
             //settingSection.setVisible(true);
             contentPanel.removeAll();
             JPanel temp = addExam.getGUI();
 
             contentPanel.setLayout(new BorderLayout());
-            contentPanel.add(temp);
+            
+            
+            contentPanel.add(temp, BorderLayout.NORTH);
             contentPanel.revalidate();
         } else if (((JButton) e.getSource()).getText().equals("Activate")) {
             //isPublicButtons
+            if(checkbox.length>0)
+            {
             Exam_DAO exam_DAO = new Exam_DAO();
             int exam_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
                     exam_ID = Integer.parseInt((checkbox[i].getName()));
-                }
-            }
-            exam_DAO.makeItPublic(exam_ID);
+                    exam_DAO.makeItPublic(exam_ID);
             //update the panel
             p2.removeAll();
             setP2();
+                }
+            }
+            
+            }
         }
 
     }

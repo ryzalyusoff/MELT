@@ -145,27 +145,29 @@ public class AddQuestion extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        answerField1 = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        questionField = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        answerField1 = new javax.swing.JTextField();
         answerField2 = new javax.swing.JTextField();
         answerField3 = new javax.swing.JTextField();
         answerField4 = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        questionField = new javax.swing.JTextArea();
         answerField5 = new javax.swing.JTextField();
         answerField6 = new javax.swing.JTextField();
-        choice1 = new javax.swing.JCheckBox();
-        choice2 = new javax.swing.JCheckBox();
-        choice3 = new javax.swing.JCheckBox();
-        choice4 = new javax.swing.JCheckBox();
-        choice5 = new javax.swing.JCheckBox();
         choice6 = new javax.swing.JCheckBox();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        questionTable = new javax.swing.JTable();
+        choice5 = new javax.swing.JCheckBox();
+        choice4 = new javax.swing.JCheckBox();
+        choice3 = new javax.swing.JCheckBox();
+        choice2 = new javax.swing.JCheckBox();
+        choice1 = new javax.swing.JCheckBox();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        questionTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -208,6 +210,64 @@ public class AddQuestion extends javax.swing.JFrame {
         jLabel6.setText("Correct Answer");
         jLabel6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(choice1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(choice2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(choice3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(choice4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(choice5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(choice6, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(answerField5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                    .addComponent(answerField4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(answerField3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(answerField2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(answerField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(answerField6))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(choice1)
+                    .addComponent(answerField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(choice2)
+                    .addComponent(answerField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answerField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(choice3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answerField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(choice4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(answerField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(choice5))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answerField6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(choice6, javax.swing.GroupLayout.Alignment.TRAILING)))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -218,23 +278,6 @@ public class AddQuestion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(choice2)
-                            .addComponent(choice3)
-                            .addComponent(choice4)
-                            .addComponent(choice5)
-                            .addComponent(choice6)
-                            .addComponent(choice1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(answerField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                            .addComponent(answerField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(answerField4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(answerField5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(answerField6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(answerField1)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,7 +285,8 @@ public class AddQuestion extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addGap(92, 92, 92)
                                 .addComponent(jLabel5)))
-                        .addGap(0, 95, Short.MAX_VALUE)))
+                        .addGap(0, 70, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -253,44 +297,29 @@ public class AddQuestion extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                        .addComponent(answerField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(choice1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(answerField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(answerField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(choice2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(choice3)))
-                        .addGap(19, 19, 19)
-                        .addComponent(answerField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(choice4, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(answerField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(choice5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(answerField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(choice6))
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(addBtn))
         );
+
+        editBtn.setText("EDIT");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         questionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -317,19 +346,7 @@ public class AddQuestion extends javax.swing.JFrame {
             questionTable.getColumnModel().getColumn(0).setPreferredWidth(5);
         }
 
-        editBtn.setText("EDIT");
-        editBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBtnActionPerformed(evt);
-            }
-        });
-
-        deleteBtn.setText("DELETE");
-        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBtnActionPerformed(evt);
-            }
-        });
+        jScrollPane4.setViewportView(jScrollPane1);
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(206, 25));
 
@@ -386,27 +403,27 @@ public class AddQuestion extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(editBtn)
-                        .addGap(10, 10, 10)
-                        .addComponent(deleteBtn))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteBtn)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editBtn)
-                    .addComponent(deleteBtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(deleteBtn)
+                    .addComponent(editBtn))
+                .addGap(19, 19, 19))
         );
 
         jPanel1.getAccessibleContext().setAccessibleDescription("");
@@ -430,14 +447,31 @@ public class AddQuestion extends javax.swing.JFrame {
              
              //String sql = "SELECT * FROM questions WHERE id='"+rowID+"' ";
              
+             int errors = 0;
+             
+             
+             String deleteMCQ = "DELETE FROM mcq WHERE Question_ID='"+rowID+"'";
+             int rows = st.executeUpdate(deleteMCQ);
+             if (rows == 0) {
+                 errors++;
+             }
+             
+             String deleteQuestion = "DELETE FROM question WHERE Question_ID='"+rowID+"'";
+              rows = st.executeUpdate(deleteQuestion);
+             if (rows == 0) {
+                 errors++;
+             }
+             
+             
              String deleteAnswer = "DELETE FROM mcqoption WHERE Question_ID='"+rowID+"'";
-             st.executeUpdate(deleteAnswer);
+              rows = st.executeUpdate(deleteAnswer);
+             if (rows == 0) {
+                 errors++;
+             }
              
              
-             String sql = "DELETE FROM question WHERE Question_ID='"+rowID+"'";
-             int rows = st.executeUpdate(sql);
              
-             if (rows > 0) {
+             if (errors == 0) {
                 JOptionPane.showMessageDialog(null, "Question was successfully deleted!"); 
                 refresh();
              } else {
@@ -660,7 +694,10 @@ public class AddQuestion extends javax.swing.JFrame {
             /////////////// ADDED question to DB ////////////////
             //String sql = "INSERT INTO questions (question, answer) VALUES('"+addedQuestion+"','"+finalAnswer+"')";
 
-            String sql = "INSERT INTO question (Question_Text, 	QType_ID) VALUES('"+addedQuestion+"', '1')";
+            int QType_ID = 1;
+            
+            // Insert Question into question table
+            String sql = "INSERT INTO question (QType_ID) VALUES('"+QType_ID+"')";
 
              int key = 0;
             
@@ -670,9 +707,10 @@ public class AddQuestion extends javax.swing.JFrame {
              ResultSet keys = pstmt.getGeneratedKeys();
              keys.next();
              key = keys.getInt(1);  
-             
-            String sql0 = "INSERT INTO mcq (Question_ID, Question_Text, QType_ID) VALUES('"+addedQuestion+"', '1')";
-                
+            
+            // Insert Question into mcq table 
+            String sql0 = "INSERT INTO mcq (Question_ID, Question_Text, QType_ID) VALUES('"+key+"','"+addedQuestion+"', '"+QType_ID+"')";
+            st.executeUpdate(sql0);
 
             /////////////// INSERT the correct choice (of answer) to DB  ////////////////
             //String selectedRadioButtonText = getSelectedRadioButton(choices).getText();
@@ -765,18 +803,24 @@ public class AddQuestion extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Please select at least one correct answer!", "error", JOptionPane.ERROR_MESSAGE);
                         String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
                         st.executeUpdate(deletesql);
+                        String deletesql2 = "DELETE FROM mcq WHERE Question_ID='"+key+"'";
+                        st.executeUpdate(deletesql2);
                     }
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Please fill in at least 2 answers!", "error", JOptionPane.ERROR_MESSAGE);
                     String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
                     st.executeUpdate(deletesql);
+                    String deletesql2 = "DELETE FROM mcq WHERE Question_ID='"+key+"'";
+                    st.executeUpdate(deletesql2);
                 }
                 
             } else {
                 JOptionPane.showMessageDialog(null, "Please enter the question!", "error", JOptionPane.ERROR_MESSAGE);
                 String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
                 st.executeUpdate(deletesql);
+                String deletesql2 = "DELETE FROM mcq WHERE Question_ID='"+key+"'";
+                st.executeUpdate(deletesql2);
                 
             }
             
@@ -822,9 +866,11 @@ public class AddQuestion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea questionField;
     public javax.swing.JTable questionTable;
     // End of variables declaration//GEN-END:variables

@@ -54,8 +54,7 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         //subsectionQuestionPanel.setBackground(Color.white);
         subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
         
-        
-        subsectionLabel1 = new JLabel("Subsection 1");
+        subsectionLabel1 = new JLabel("Subsection");
         subsectionButton1 = new JButton("Add question");
         subsectionButton2 = new JButton("Delete");
         

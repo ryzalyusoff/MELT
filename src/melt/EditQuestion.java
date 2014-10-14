@@ -349,7 +349,7 @@ public class EditQuestion extends javax.swing.JFrame {
 
                      if ( isSelected > 0 )    {
   
-                           String sql = "UPDATE question SET Question_Text='"+this.question+"' WHERE Question_id='"+questionID+"'";
+                           String sql = "UPDATE mcq SET Question_Text='"+this.question+"' WHERE Question_id='"+questionID+"'";
                             int rows = st.executeUpdate(sql);
                             if(rows == 0) {
                                errors++;

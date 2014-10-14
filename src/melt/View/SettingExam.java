@@ -99,11 +99,11 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         GroupLayout.SequentialGroup verticalGroup_S;
 
         
-        submitButton=new JButton("submit");
+        submitButton=new JButton("Create Section");
         submitButton.addActionListener(this);
-        updateButton=new JButton("update");
+        updateButton=new JButton("Update Section");
         updateButton.addActionListener(this);
-        cancelButton=new JButton("cancel");
+        cancelButton=new JButton("Cancel");
         cancelButton.addActionListener(this);
 
         

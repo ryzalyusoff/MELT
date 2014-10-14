@@ -51,7 +51,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
     public Exam(int exam_ID) {
         this.exam_ID=exam_ID;
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
-        setTitle("MELTSystem--Test");
+        setTitle("MELTSystem");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
@@ -60,7 +60,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         setContentPane(getGUI());
         //MenuBar
         JMenuBar jMenuBar1=new JMenuBar();
-        JMenu jMenu1=new JMenu("ddd");
+        JMenu jMenu1=new JMenu("Set the exam, by adding Sections, Subsections and Questions");
         jMenuBar1.add(jMenu1);
         getRootPane().setMenuBar(jMenuBar1);
         
@@ -124,7 +124,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         p5.add(p4);
         contentPanel=new JPanel();
         //contentPanel.setBackground(Color.red);
-        contentPanel.setLayout(new BorderLayout());
+        contentPanel.setLayout(new FlowLayout());
         p5.add(contentPanel);
         
         //set the background color of the leftpart
@@ -133,7 +133,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
         p4.setBackground(new Color(153, 153, 153));
         
         p4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Exam 1"));
-
+        
         return p5;
     }
 
@@ -152,7 +152,7 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             Section section=sections.get(i-1);
             String sectionTimeLimit=new SimpleDateFormat("HH:mm:ss").format(section.getTimeLimit());
             
-            sectionLabels[i - 1] = new JLabel("Section" + i + "  " + section.getSection_Name());
+            sectionLabels[i - 1] = new JLabel("Section " + i + "  " + section.getSection_Name());
             //Edit Button
             
             //Checkboxes
@@ -255,18 +255,21 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             contentPanel.setLayout(new FlowLayout());
             contentPanel.add(temp);
             contentPanel.revalidate();
+            for (int i = 0; i < checkbox.length; i++) {
+                checkbox[i].setSelected(false);
+                            checkbox[i].setEnabled(true);
+                        }
             //contentPanel.repaint();
             
         }else if (((JButton)e.getSource()).getText().equals("Delete")) {
             //set section_ID
-            // wait for complete
+            if(checkbox.length > 0)
+            {
             int section_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
                     section_ID = Integer.parseInt((checkbox[i].getName()));
-                }
-            }
-            
+                    //get settingExamPanel and add to right panel
             //create and intialize the DAOs
             //MCQ_DAO mcq_DAO=new MCQ_DAO();
             //Question_DAO question_DAO=new Question_DAO();
@@ -284,19 +287,24 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             p2.removeAll();
             
             setP2();
+                }
+            }
+            }
+        
             
             
             
         }else if(((JButton)e.getSource()).getText().equals("Edit")){  //Edit Button
            // this.dispose();
+            if(checkbox.length > 0)
+            {
             int section_ID = 0;
             for (int i = 0; i < checkbox.length; i++) {
                 if (checkbox[i].isSelected()) {
                     section_ID = Integer.parseInt((checkbox[i].getName()));
-                }
-            }
-           
-            //get settingExamPanel and add to right panel
+
+                    //get settingExamPanel and add to right panel
+
             SettingExam settingExam=new SettingExam(section_ID);
             contentPanel.removeAll();
             contentPanel.setLayout(new BorderLayout());
@@ -304,6 +312,12 @@ public class Exam extends JFrame implements ActionListener,WindowListener{
             contentPanel.revalidate();
             //contentPanel.repaint();
             //settingExam.setVisible(true);
+                }
+            }
+          
+            
+            
+        }
             
         }
     }

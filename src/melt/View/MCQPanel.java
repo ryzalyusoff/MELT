@@ -25,7 +25,7 @@ public class MCQPanel extends JPanel implements ActionListener{
     //components in p3
     JLabel questionLabel, questionContent;
     JButton questionDeleteButton;
-    JRadioButton[] choices;
+    JLabel[] choices;
     int Q_ID;
     Question question;
     MCQOption[] mCQOptions;
@@ -51,11 +51,16 @@ public class MCQPanel extends JPanel implements ActionListener{
         questionLabel = new JLabel("Question 1");
         questionDeleteButton = new JButton("Delete");
         questionContent = new JLabel(((MCQ)question).getQuestion_Text());
-        choices=new JRadioButton[mCQOptions.length];
+        choices=new JLabel[mCQOptions.length];
         
         
         for(int i=0;i<mCQOptions.length;i++){
-            choices[i]=new JRadioButton(mCQOptions[i].getContent());
+            if(i == 0) choices[i]=new JLabel("A.  " + mCQOptions[i].getContent());            
+            if(i == 1) choices[i]=new JLabel("B.  " + mCQOptions[i].getContent());            
+            if(i == 2) choices[i]=new JLabel("C.  " + mCQOptions[i].getContent());
+            if(i == 3) choices[i]=new JLabel("D.  " + mCQOptions[i].getContent());
+            if(i == 4) choices[i]=new JLabel("E.  " + mCQOptions[i].getContent());
+            if(i == 5) choices[i]=new JLabel("F.  " + mCQOptions[i].getContent());
             
         }
    
@@ -71,7 +76,7 @@ public class MCQPanel extends JPanel implements ActionListener{
         GroupLayout.ParallelGroup choiceGroup_P=groupLayout.createParallelGroup();
         GroupLayout.SequentialGroup choiceGroup_S=groupLayout.createSequentialGroup();
         
-        for(JRadioButton choice:choices){
+        for(JLabel choice:choices){
             choiceGroup_P.addComponent(choice);
             choiceGroup_S.addComponent(choice);
         }
