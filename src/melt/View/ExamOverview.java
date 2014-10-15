@@ -266,7 +266,7 @@ public class ExamOverview extends JFrame implements ActionListener {
 
         }else if(e.getSource()==backButton){
             this.dispose();
-            melt.startupPanel startupPanel=new melt.startupPanel();
+            melt.View.startupPanel startupPanel=new melt.View.startupPanel();
             startupPanel.setVisible(true);
         }else if (e.getSource() == addExamButton) {
             AddExam addExam = new AddExam();
