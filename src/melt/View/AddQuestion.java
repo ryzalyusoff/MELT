@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import melt.DAO.QuestionDAO;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -38,7 +39,7 @@ import melt.View.SettingQuestion;
  *
  * @author ryzal_000
  */
-public class AddQuestion extends javax.swing.JFrame {
+public class AddQuestion extends javax.swing.JFrame implements WindowListener{
 
     
     private Connection con;
@@ -124,6 +125,7 @@ public class AddQuestion extends javax.swing.JFrame {
         setSize((int)width, (int)height); 
         
         setTable();
+          addWindowListener(this);
         
     }
     
@@ -825,4 +827,41 @@ public class AddQuestion extends javax.swing.JFrame {
     private javax.swing.JTextArea questionField;
     public javax.swing.JTable questionTable;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        this.dispose();
+        new melt.View.startupPanel().setVisible(true);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

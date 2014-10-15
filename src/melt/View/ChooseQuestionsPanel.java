@@ -123,26 +123,26 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         public Component getTableCellRendererComponent(JTable table, 
                 Object value, boolean isSelected, boolean hasFocus,
                 int row, int column) {
-            try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(
-            UIManager.getSystemLookAndFeelClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-
-
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        }
+//            try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(
+//            UIManager.getSystemLookAndFeelClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//
+//
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//
+//        }
             Component c = super.getTableCellRendererComponent(table, 
                 value, isSelected, hasFocus, row, column);
             c.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159)); 
@@ -159,28 +159,28 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
-                try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(
-            UIManager.getSystemLookAndFeelClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-
-
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        }
+//                try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(
+//            UIManager.getSystemLookAndFeelClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//
+//
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//
+//        }
                 JCheckBox ck = new JCheckBox();
-                ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));      
+                //ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));      
                 ck.setSelected(isSelected);
                 ck.setHorizontalAlignment(0);
                 table.setShowHorizontalLines(true);  

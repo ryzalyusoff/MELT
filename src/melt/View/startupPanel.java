@@ -157,14 +157,17 @@ public class startupPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
         questionPanel = new AddQuestion();
         questionPanel.setVisible(true);
-        questionPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        questionPanel.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         examPanel = new melt.View.ExamOverview();
         examPanel.setVisible(true);
-        examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        //examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        this.dispose();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

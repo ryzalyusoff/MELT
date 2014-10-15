@@ -14,6 +14,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import melt.DAO.Exam_DAO;
  * privode an overview of the exam(show all the exam in the system)
  * @author Aote Zhou
  */
-public class ExamOverview extends JFrame implements ActionListener {
+public class ExamOverview extends JFrame implements ActionListener,WindowListener {
 
     public ArrayList<melt.Model.Exam> exams;
     public JLabel[] examLabels;
@@ -41,7 +43,7 @@ public class ExamOverview extends JFrame implements ActionListener {
     public ExamOverview() {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
         setTitle("MELTSystem--Exam");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
@@ -51,6 +53,7 @@ public class ExamOverview extends JFrame implements ActionListener {
         JMenu jMenu1 = new JMenu("Exam");
         jMenuBar1.add(jMenu1);
         getRootPane().setMenuBar(jMenuBar1);
+        addWindowListener(this);
     }
 
     public JPanel getGUI() {
@@ -331,6 +334,43 @@ public class ExamOverview extends JFrame implements ActionListener {
 
         test.setVisible(true);
 
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        dispose();
+        new melt.View.startupPanel().setVisible(true);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

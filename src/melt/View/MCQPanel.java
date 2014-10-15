@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.LayoutStyle;
+import javax.swing.UIManager;
 import melt.DAO.*;
 import melt.Model.*;
 
@@ -37,6 +38,8 @@ public class MCQPanel extends JPanel implements ActionListener{
      * set the contentpanel
      */
     public void getGUI(){
+        
+         
         //JPanel p3;
         
         GroupLayout groupLayout;
@@ -48,7 +51,7 @@ public class MCQPanel extends JPanel implements ActionListener{
 //        p3.setBackground(Color.cyan);
 
         getQ(Q_ID);
-        questionLabel = new JLabel("Question 1");
+        questionLabel = new JLabel("");
         questionDeleteButton = new JButton("Delete");
         questionContent = new JLabel(((MCQ)question).getQuestion_Text());
         choices=new JLabel[mCQOptions.length];
