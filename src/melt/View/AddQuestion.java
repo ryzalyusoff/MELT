@@ -1,5 +1,6 @@
 package melt.View;
 
+import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import melt.Model.QuestionTableModel;
 import java.awt.Dimension;
 import melt.DAO.QuestionDAO;
@@ -25,6 +26,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import melt.View.EditQuestion;
@@ -125,7 +128,9 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
         setSize((int)width, (int)height); 
         
         setTable();
-          addWindowListener(this);
+        addWindowListener(this);
+      
+
         
     }
     
@@ -495,146 +500,160 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
             }
         });
         
-        // Get the selected row
-        int selectedRow = questionTable.getSelectedRow();
-        
-        // Get & set the question at column number 2 (from the table)
-        String rowQuestion = (questionTable.getModel().getValueAt(selectedRow,2).toString());
-        
-        // Get & set the id at column number 1 (from the table)
-        rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
-        
-        editQPanel.questionID = rowID;
-        
-        // Set the Question field on the edit panel based on the selected row
-        editQPanel.questionField.setText(rowQuestion);
-        
-        
-        connectDb();
         
         try {
-            
+                int rowcheck = questionTable.getSelectedRow();
+                if (rowcheck > -1) {
+                    
+                // Get the selected row
+                int selectedRow = questionTable.getSelectedRow();
 
-            rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
-            
-            String query = "SELECT * FROM mcqoption WHERE Question_ID='"+rowID+"' ";
-            
-            
-            // create the java statement
-             st = con.createStatement();
+                // Get & set the question at column number 2 (from the table)
+                String rowQuestion = (questionTable.getModel().getValueAt(selectedRow,2).toString());
 
-            // execute the query, and get a java resultset
-             rs = st.executeQuery(query);
-            
-            String answer1 = "";
-            String answer2 = "";
-            String answer3 = "";
-            String answer4 = "";
-            String answer5 = "";
-            String answer6 = "";
-            
-            int answerID1 = 0;
-            int answerID2 = 0;
-            int answerID3 = 0;
-            int answerID4 = 0;
-            int answerID5 = 0;
-            int answerID6 = 0;
-            
-            
-            
-            int counter = 1;
-            while (rs.next())
-            {
-              int id = rs.getInt("MCQOption_id");
-              int question = rs.getInt("Question_ID");
-              String answer = rs.getString("Content");
-              int correct = rs.getInt("isAnswerOrNot");
-              
-              
-              // print the results
-              //System.out.format("%s, %s, %s\n", id, question, answer);
-              
-              if (counter == 1){
-                  answer1 = answer;
-                  answerID1 = id;
-                  if (correct == 1) {
-                      editQPanel.choice1.setSelected(true);
+                // Get & set the id at column number 1 (from the table)
+                rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
+
+                editQPanel.questionID = rowID;
+
+                // Set the Question field on the edit panel based on the selected row
+                editQPanel.questionField.setText(rowQuestion);
+
+
+                    rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
+
+                        }
+                } catch (NullPointerException ex) {
+
+                }
+
+
+
+                connectDb();
+
+        try {
+
+             // Try and open the Edit panel if there is a question being selected on the table   
+             if (rowID != "" ) {   
+
+                String query = "SELECT * FROM mcqoption WHERE Question_ID='"+rowID+"' ";
+
+
+                // create the java statement
+                 st = con.createStatement();
+
+                // execute the query, and get a java resultset
+                 rs = st.executeQuery(query);
+
+                String answer1 = "";
+                String answer2 = "";
+                String answer3 = "";
+                String answer4 = "";
+                String answer5 = "";
+                String answer6 = "";
+
+                int answerID1 = 0;
+                int answerID2 = 0;
+                int answerID3 = 0;
+                int answerID4 = 0;
+                int answerID5 = 0;
+                int answerID6 = 0;
+
+
+
+                int counter = 1;
+                while (rs.next())
+                {
+                  int id = rs.getInt("MCQOption_id");
+                  int question = rs.getInt("Question_ID");
+                  String answer = rs.getString("Content");
+                  int correct = rs.getInt("isAnswerOrNot");
+
+
+                  // print the results
+                  //System.out.format("%s, %s, %s\n", id, question, answer);
+
+                  if (counter == 1){
+                      answer1 = answer;
+                      answerID1 = id;
+                      if (correct == 1) {
+                          editQPanel.choice1.setSelected(true);
+                      }
+                  } 
+
+                  if (counter == 2) {
+                      answer2 = answer;
+                      answerID2 = id;
+                      if (correct == 1) {
+                          editQPanel.choice2.setSelected(true);
+                      }
+                  } 
+
+                  if (counter == 3) {
+                      answer3 = answer;
+                      answerID3 = id;
+                      if (correct == 1) {
+                         editQPanel.choice3.setSelected(true);
+                      }
+                  } 
+
+                  if (counter == 4) {
+                      answer4 = answer;
+                      answerID4 = id;
+                      if (correct == 1) {
+                          editQPanel.choice5.setSelected(true);
+                      }
                   }
-              } 
-              
-              if (counter == 2) {
-                  answer2 = answer;
-                  answerID2 = id;
-                  if (correct == 1) {
-                      editQPanel.choice2.setSelected(true);
+
+                  if (counter == 5) {
+                      answer5 = answer;
+                      answerID5 = id;
+                      if (correct == 1) {
+                          editQPanel.choice4.setSelected(true);
+                      }
                   }
-              } 
-              
-              if (counter == 3) {
-                  answer3 = answer;
-                  answerID3 = id;
-                  if (correct == 1) {
-                     editQPanel.choice3.setSelected(true);
+
+                  if (counter == 6) {
+                      answer6 = answer;
+                      answerID6 = id;
+                      if (correct == 1) {
+                          editQPanel.choice6.setSelected(true);
+                      }
                   }
-              } 
-              
-              if (counter == 4) {
-                  answer4 = answer;
-                  answerID4 = id;
-                  if (correct == 1) {
-                      editQPanel.choice5.setSelected(true);
-                  }
-              }
-              
-              if (counter == 5) {
-                  answer5 = answer;
-                  answerID5 = id;
-                  if (correct == 1) {
-                      editQPanel.choice4.setSelected(true);
-                  }
-              }
-              
-              if (counter == 6) {
-                  answer6 = answer;
-                  answerID6 = id;
-                  if (correct == 1) {
-                      editQPanel.choice6.setSelected(true);
-                  }
-              }
-                  
-              
-              
-              counter++;
-              
-            }
-            st.close();
-            
-            
-            editQPanel.answer1.setText(answer1);
-            editQPanel.answer2.setText(answer2);
-            editQPanel.answer3.setText(answer3);
-            editQPanel.answer4.setText(answer4);
-            editQPanel.answer5.setText(answer5);
-            editQPanel.answer6.setText(answer6);
-    
-            editQPanel.answerID1 =  answerID1;
-            editQPanel.answerID2 =  answerID2;
-            editQPanel.answerID3 =  answerID3;  
-            editQPanel.answerID4 =  answerID4;
-            editQPanel.answerID5 =  answerID5;
-            editQPanel.answerID6 =  answerID6;
-            
-            
+
+
+
+                  counter++;
+
+                }
+                st.close();
+
+
+                editQPanel.answer1.setText(answer1);
+                editQPanel.answer2.setText(answer2);
+                editQPanel.answer3.setText(answer3);
+                editQPanel.answer4.setText(answer4);
+                editQPanel.answer5.setText(answer5);
+                editQPanel.answer6.setText(answer6);
+
+                editQPanel.answerID1 =  answerID1;
+                editQPanel.answerID2 =  answerID2;
+                editQPanel.answerID3 =  answerID3;  
+                editQPanel.answerID4 =  answerID4;
+                editQPanel.answerID5 =  answerID5;
+                editQPanel.answerID6 =  answerID6;
+
+                editQPanel.setVisible(true);
+             }  else {
+                // Pop up an error message is there is no question selected
+                JOptionPane.showMessageDialog(null, "Please select a question to edit!", "error", JOptionPane.ERROR_MESSAGE);
+             }
         } catch (SQLException ex) {
             Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            //close(st, rs);
-        }    
-       
-        
-        editQPanel.setVisible(true);
-        
-        
+            // Set the rowID back to 0 after the Edit panel was closed
+            rowID = "";
+        }     
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
