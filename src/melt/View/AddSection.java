@@ -165,7 +165,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
             JPanel parentJpanel=(JPanel)p1.getParent();
             parentJpanel.remove(p1);
             parentJpanel.setLayout(new BorderLayout());
-            parentJpanel.add(settingExamFrame.GetGUI());
+            parentJpanel.add(settingExamFrame.getGUI());
             parentJpanel.revalidate();
             //parentJpanel.repaint();
             

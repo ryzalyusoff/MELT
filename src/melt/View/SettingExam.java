@@ -60,7 +60,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         sectionPanel=new SectionPanel(numOfSub,examId);
         sectionPanel.getGUI(sectionName,timeLimit_h,timeLimit_m,timeLimit_s);
         
-        setContentPane(GetGUI());
+        setContentPane(getGUI());
         
         
     }
@@ -83,7 +83,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         sectionPanel=new SectionPanel(examId);
         sectionPanel.getGUI(sectionId);
         
-        setContentPane(GetGUI());
+        setContentPane(getGUI());
         
     }
     
@@ -91,7 +91,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
      *get the contentpanel
      * @return
      */
-    public JScrollPane GetGUI() {
+    public JScrollPane getGUI() {
         JPanel p999;
         
         GroupLayout groupLayout;
@@ -164,7 +164,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
                 //rootFrame.dispose();
                 //this.dispose();
                 Exam exam=new Exam(examId);
-                rootFrame.setContentPane(exam.GetGUI());
+                rootFrame.setContentPane(exam.getGUI());
                 rootFrame.revalidate();
                 rootFrame.repaint();
                 //exam.setVisible(true);
@@ -178,7 +178,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
                 //rootFrame.dispose();
                 //this.dispose();
                 Exam exam=new Exam(examId);
-                rootFrame.setContentPane(exam.GetGUI());
+                rootFrame.setContentPane(exam.getGUI());
                 rootFrame.revalidate();
                 rootFrame.repaint();
                 //exam.setVisible(true);

@@ -55,7 +55,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int) width, (int) height);
-        setContentPane(GetGUI());
+        setContentPane(getGUI());
         //MenuBar
         JMenuBar jMenuBar1 = new JMenuBar();
         JMenu jMenu1 = new JMenu("Set the exam, by adding Sections, Subsections and Questions");
@@ -65,7 +65,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         addWindowListener(this);
     }
 
-    public JPanel GetGUI() {
+    public JPanel getGUI() {
 
 //        welcomeLabel = new JLabel("....,Welcome!");
 //        timeLabel = new JLabel("dd-mm-yyyy hh:mm");
@@ -82,7 +82,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         backButton = new JButton("<<<Back to Exams");
         backButton.setMinimumSize(new Dimension(350, 20));
         backButton.addActionListener(this);
-        SetMainPanel();
+        setMainPanel();
         //Create buttonsPanel
         buttonsPanel = new JPanel();
 
@@ -140,9 +140,9 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         return rightPanel;
     }
 
-    private void SetMainPanel() {
+    private void setMainPanel() {
         //getsections according to examId
-        GetSections(examId);
+        getSections(examId);
 
         sectionChosen = new JCheckBox[sections.size()];
 
@@ -219,7 +219,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
      *
      * @param examId
      */
-    private void GetSections(int examId) {
+    private void getSections(int examId) {
         try {
             Section_DAO section_DAO = new Section_DAO();
             ResultSet rs = section_DAO.getList("Exam_ID='" + examId + "'");
@@ -263,7 +263,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
             ExamOverview examOverview = new ExamOverview();
             //examOverview.setVisible(true);
             JFrame fatherFrame = (JFrame) mainPanel.getRootPane().getParent();
-            fatherFrame.setContentPane(examOverview.GetGUI());
+            fatherFrame.setContentPane(examOverview.getGUI());
             fatherFrame.revalidate();
             fatherFrame.repaint();
 
@@ -291,7 +291,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 
                         mainPanel.removeAll();
 
-                        SetMainPanel();
+                        setMainPanel();
                     }
                 }
             }
@@ -308,7 +308,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
                         SettingExam settingExam = new SettingExam(section_ID);
                         contentPanel.removeAll();
                         contentPanel.setLayout(new BorderLayout());
-                        contentPanel.add(settingExam.GetGUI());
+                        contentPanel.add(settingExam.getGUI());
                         contentPanel.revalidate();
                         //contentPanel.repaint();
                         //settingExam.setVisible(true);

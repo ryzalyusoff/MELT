@@ -22,7 +22,7 @@ import javax.swing.LayoutStyle;
 import melt.DAO.Exam_DAO;
 
 /**
- * JFrame class for adding a exam can also use GetGUI to return its jpanel
+ * JFrame class for adding a exam can also use getGUI to return its jpanel
  * @author eddychou
  */
 public class AddExam extends JFrame implements ActionListener,WindowListener{
@@ -39,14 +39,14 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         setSize(400, 150);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
-        setContentPane(GetGUI());
+        setContentPane(getGUI());
     }
     
     /**
      *create the contentPane
      * @return
      */
-    public JPanel GetGUI(){
+    public JPanel getGUI(){
         
         
         //Create p1

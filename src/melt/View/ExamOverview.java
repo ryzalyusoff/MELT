@@ -47,7 +47,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int)width, (int)height);
-        setContentPane(GetGUI());
+        setContentPane(getGUI());
         JMenuBar jMenuBar1 = new JMenuBar();
         JMenu jMenu1 = new JMenu("Exam");
         jMenuBar1.add(jMenu1);
@@ -55,11 +55,11 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         addWindowListener(this);
     }
 
-    public JPanel GetGUI() {
+    public JPanel getGUI() {
 
         //create ExamListPanel
         ExamListPanel = new JPanel();
-        SetExamListPanel();
+        setExamListPanel();
 
         JButton EditButton = new JButton("Edit");
         EditButton.addActionListener(this);
@@ -119,9 +119,9 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         return lowerLeftPanel;
     }
 
-    private void SetExamListPanel() {
+    private void setExamListPanel() {
 
-        GetExams();
+        getExams();
 
         isPublicButtons = new JButton[exams.size()];
         examSelected = new JCheckBox[exams.size()];
@@ -216,9 +216,9 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 
     }
     /**
-     * GetExams from database
+     * getExams from database
      */
-    private void GetExams() {
+    private void getExams() {
         try {
             Exam_DAO exam_DAO = new Exam_DAO();
             ResultSet rs = exam_DAO.getList("");
@@ -251,7 +251,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
                     exam_ID = Integer.parseInt((examSelected[i].getName()));
                     Exam exam = new Exam(exam_ID);
                     JFrame fatherFrame=(JFrame)ExamListPanel.getRootPane().getParent();
-                    fatherFrame.setContentPane(exam.GetGUI());
+                    fatherFrame.setContentPane(exam.getGUI());
                     fatherFrame.revalidate();
                     fatherFrame.repaint();
             //exam.setVisible(true);
@@ -269,7 +269,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
             AddExam addExam = new AddExam();
             //settingSection.setVisible(true);
             contentPanel.removeAll();
-            JPanel temp = addExam.GetGUI();
+            JPanel temp = addExam.getGUI();
 
             contentPanel.setLayout(new BorderLayout());
             
@@ -288,7 +288,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
                     exam_DAO.makeItPublic(exam_ID);
             //update the panel
             ExamListPanel.removeAll();
-            SetExamListPanel();
+            setExamListPanel();
                 }
             }
             
@@ -309,7 +309,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 //            AddExam addExam=new AddExam();
 //            //settingSection.setVisible(true);
 //            contentPanel.removeAll();
-//            JPanel temp=addExam.GetGUI();
+//            JPanel temp=addExam.getGUI();
 //            
 //            contentPanel.setLayout(new BorderLayout());
 //            contentPanel.add(temp);
@@ -320,7 +320,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 //            int exam_ID=Integer.parseInt(((JButton)e.getSource()).getName());
 //            exam_DAO.makeItPublic(exam_ID);
 //            ExamListPanel.removeAll();
-//            SetExamListPanel();
+//            setExamListPanel();
 //        }
 //    }
     public static void main(String[] args) {
