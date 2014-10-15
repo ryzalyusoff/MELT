@@ -5,7 +5,6 @@
  */
 package melt.View;
 
-import com.mysql.jdbc.interceptors.ResultSetScannerInterceptor;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -39,7 +38,7 @@ import melt.Model.*;
 public class SectionPanel extends JPanel implements ActionListener {
 
     //components 
-    public JLabel sectionLabel, l1, l2;
+    public JLabel sectionLabel, l0,l1, l2;
     public JTextField sectionTimeField_h, sectionTimeField_m, sectionTimeField_s;
     public JButton sectionButton1, sectionButton2, sectionButton3;
     public JButton sectionSubmitButton;
@@ -55,13 +54,15 @@ public class SectionPanel extends JPanel implements ActionListener {
     public Section section;
 
     public int numOfSub;//number of subsections
+    int exam_ID;
 
-    public SectionPanel() {
-
+    public SectionPanel(int exam_ID) {
+        this.exam_ID=exam_ID;
     }
 
-    public SectionPanel(int numOfSub) {
+    public SectionPanel(int numOfSub,int exam_ID) {
         this.numOfSub = numOfSub;
+        this.exam_ID=exam_ID;
     }
 
     /**
@@ -81,6 +82,7 @@ public class SectionPanel extends JPanel implements ActionListener {
         if (section == null) {
             section = new Section();
             section.setSection_Name(sectionName);
+            
             try {
                 Date timeLimit = new SimpleDateFormat("HH:mm:ss").parse(timelimit_h + ":" + timelimit_m + ":" + timelimit_s);
                 section.setTimeLimit(timeLimit);
@@ -97,21 +99,37 @@ public class SectionPanel extends JPanel implements ActionListener {
         //sectionContentPanel.setBackground(Color.red);
         sectionContentPanel.setLayout(new BoxLayout(sectionContentPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < numOfSub; i++) {
-            SubsectionPanel subSectionPanel1 = new SubsectionPanel();
+            SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
 
             subSectionPanel1.getGUI();
             sectionContentPanel.add(subSectionPanel1);       
             sectionContentFlag = sectionContentState.TWOSUB;
         }
 
-        sectionLabel = new JLabel("Section1 " + sectionName);
-        l1 = new JLabel(":");
-        l2 = new JLabel(":");
-        sectionTimeField_h = new JTextField(timelimit_h + "");
+        sectionLabel = new JLabel("Section " + sectionName);
+        l0 = new JLabel("Hours");
+        l1 = new JLabel("Minutes");
+        l2 = new JLabel("Seconds");
+        String timelimit_hString = Integer.toString(timelimit_h);
+        String timelimit_mString = Integer.toString(timelimit_m);
+        String timelimit_sString = Integer.toString(timelimit_s);
+        if(timelimit_h == 0)
+        {
+            timelimit_hString = "00";
+        }
+        if(timelimit_m == 0)
+        {
+            timelimit_mString = "00";
+        }
+        if(timelimit_s == 0)
+        {
+            timelimit_sString = "00";
+        }
+        sectionTimeField_h = new JTextField(timelimit_hString + "");
         sectionTimeField_h.setMaximumSize(new Dimension(30, 4));
-        sectionTimeField_m = new JTextField(timelimit_m + "");
+        sectionTimeField_m = new JTextField(timelimit_mString + "");
         sectionTimeField_m.setMaximumSize(new Dimension(30, 4));
-        sectionTimeField_s = new JTextField(timelimit_s + "");
+        sectionTimeField_s = new JTextField(timelimit_sString + "");
         sectionTimeField_s.setMaximumSize(new Dimension(30, 4));
         sectionButton1 = new JButton("Add a Subsection");
         sectionButton2 = new JButton("Add a Question");
@@ -133,6 +151,7 @@ public class SectionPanel extends JPanel implements ActionListener {
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(sectionLabel)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(l0)
                 .addComponent(sectionTimeField_h)
                 .addComponent(l1)
                 .addComponent(sectionTimeField_m)
@@ -143,8 +162,9 @@ public class SectionPanel extends JPanel implements ActionListener {
                 .addGroup(groupLayout.createSequentialGroup()
                         .addGap(20)
                         .addComponent(sectionContentPanel));
-        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(sectionLabel)
+                .addComponent(l0)
                 .addComponent(sectionTimeField_h)
                 .addComponent(l1)
                 .addComponent(sectionTimeField_m)
@@ -204,8 +224,8 @@ public class SectionPanel extends JPanel implements ActionListener {
                 //if the subsectionname equals 0 means this section will have no subsection and have only one type of question
 
                 //getquestions
-                Question_DAO question_DAO = new Question_DAO();
-                ResultSet rs1 = question_DAO.getList("subsection_ID='" + subSection.getSubSection_ID() + "'");
+                SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
+                ResultSet rs1 = subsectionQuestion_DAO.getList("subsection_ID='" + subSection.getSubSection_ID() + "'");
                 try {
                     while (rs1.next()) {
                         MCQPanel mCQPanel = new MCQPanel(rs1.getInt("Question_ID"));
@@ -218,7 +238,7 @@ public class SectionPanel extends JPanel implements ActionListener {
 
             } else {
                 //on the condition has two subsection but only add a subsection
-                SubsectionPanel subSectionPanel1 = new SubsectionPanel();
+                SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
 
                 subSectionPanel1.getGUI(subSections.get(0));
                 //add subSectionPanel1 and set the flag of section
@@ -228,8 +248,8 @@ public class SectionPanel extends JPanel implements ActionListener {
 
         } else if (subSections.size() == 2) {
             //create two panels
-            SubsectionPanel subSectionPanel1 = new SubsectionPanel();
-            SubsectionPanel subSectionPanel2 = new SubsectionPanel();
+            SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
+            SubsectionPanel subSectionPanel2 = new SubsectionPanel(exam_ID);
 
             subSectionPanel1.getGUI(subSections.get(0));
             subSectionPanel2.getGUI(subSections.get(1));
@@ -268,8 +288,9 @@ public class SectionPanel extends JPanel implements ActionListener {
             //on the condition that section has no subsection
             Section_DAO section_DAO = new Section_DAO();
             Subsection_DAO subsection_DAO = new Subsection_DAO();
-            Question_DAO question_DAO = new Question_DAO();
-            MCQ_DAO mcq_dao = new MCQ_DAO();
+//            Question_DAO question_DAO = new Question_DAO();
+//            MCQ_DAO mcq_dao = new MCQ_DAO();
+            SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
 
             // get timelimit
             String final_timelimit_h = sectionTimeField_h.getText();
@@ -297,8 +318,9 @@ public class SectionPanel extends JPanel implements ActionListener {
                 if (component instanceof MCQPanel) {
                     //System.out.println(((JPanel)component).getName());
 
-                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
-                    mcq_dao.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
+//                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
+//                    mcq_dao.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
+                    subsectionQuestion_DAO.add(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
                 }
 
             }
@@ -321,6 +343,7 @@ public class SectionPanel extends JPanel implements ActionListener {
                 Logger.getLogger(SectionPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             section.setTimeLimit(timeLimit);
+            section.setExam_ID(exam_ID);
 
             int section_ID = section_DAO.add(section);
             //get subsection and add to the database
@@ -341,12 +364,13 @@ public class SectionPanel extends JPanel implements ActionListener {
                             Component[] components3 = ((JPanel) component2).getComponents();  //SubsectionQuestion
                             for (Component component3 : components3) {
                                 if (component3 instanceof MCQPanel) {
-                                    Question_DAO question_DAO = new Question_DAO();
-                                    MCQ_DAO mcq_dao = new MCQ_DAO();
-
-                                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
-                                    mcq_dao.update(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
-
+//                                    Question_DAO question_DAO = new Question_DAO();
+//                                    MCQ_DAO mcq_dao = new MCQ_DAO();
+//
+//                                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
+//                                    mcq_dao.update(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
+                                    SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
+                                    subsectionQuestion_DAO.add(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
                                 }
                             }
                         }
@@ -369,14 +393,17 @@ public class SectionPanel extends JPanel implements ActionListener {
      * @return
      */
     public boolean updateSection() {
-        MCQ_DAO mcq_DAO = new MCQ_DAO();
-        Question_DAO question_DAO = new Question_DAO();
+//        MCQ_DAO mcq_DAO = new MCQ_DAO();
+//        Question_DAO question_DAO = new Question_DAO();
+        SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
         Subsection_DAO subsection_DAO = new Subsection_DAO();
         Section_DAO section_DAO = new Section_DAO();
 
         int section_ID = section.getSection_ID();
-        mcq_DAO.cancelRWithSubSec(section_ID);
-        question_DAO.cancelRWithSubSec(section_ID);
+//        mcq_DAO.cancelRWithSubSec(section_ID);
+//        question_DAO.cancelRWithSubSec(section_ID);
+        subsectionQuestion_DAO.cancelRWithSubSec(section_ID);
+        
         subsection_DAO.delete("Section_ID='" + section_ID + "'");
         section_DAO.delete("Section_ID='" + section_ID + "'");
 
@@ -397,7 +424,7 @@ public class SectionPanel extends JPanel implements ActionListener {
 
             } else {
                 //add the subsections to the contentpanel
-                SubsectionPanel subSectionPanel1 = new SubsectionPanel();
+                SubsectionPanel subSectionPanel1 = new SubsectionPanel(exam_ID);
 
                 subSectionPanel1.getGUI();
                 sectionContentPanel.add(subSectionPanel1);
@@ -413,7 +440,7 @@ public class SectionPanel extends JPanel implements ActionListener {
             } else {
                 //set the contentflag and open the choose question panel
                 sectionContentFlag = sectionContentState.NOSUB;
-                ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel(this);
+                ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel((SectionPanel)this);
                 chooseQuestionsPanel.setVisible(true);
             }
 

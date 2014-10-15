@@ -1,5 +1,7 @@
 package melt.DAO;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,35 +9,62 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import melt.getQuestion;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import melt.Util.SQLHelper;
+import melt.View.SettingQuestion;
 
 public class QuestionDAO {
  
+    public static String url;
+    public static String user;
+    public static String password;
+    public static String driver;
+    
     private Connection con;
     private Statement st;
     private ResultSet rs;
     
-    public QuestionDAO(){
-         connectDb();
-    }
-    
     // Make connection to database
-    public void connectDb() {
+       public void startSQL() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
-            st = con.createStatement();
-            
-        } catch(Exception ex) {
-            System.out.println("Erro: "+ex);
+
+            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            Properties pp = new Properties();
+            pp.load(in);
+            url = pp.getProperty("jdbc.url");
+            user = pp.getProperty("jdbc.username");
+            password = pp.getProperty("jdbc.password");
+            driver = pp.getProperty("jdbc.driver");
+
+        } catch (IOException ex) {
+            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    // Get all Question
-    public List<getQuestion> getAllQuestion() throws Exception {
+    public void connectDb() {
+        startSQL(); 
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection(url, user, password);
+            
+            st = con.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
-        List<getQuestion> list = new ArrayList<>();
+    public QuestionDAO(){
+         startSQL();
+         connectDb();
+    }
+    
+    
+    // Get all Question
+    public List<SettingQuestion> getAllQuestion() throws Exception {
+    
+        List<SettingQuestion> list = new ArrayList<>();
         
         Statement myStmt = null;
         ResultSet myRs = null;
@@ -48,12 +77,13 @@ public class QuestionDAO {
             myRs = st.executeQuery("SELECT * FROM mcq");
             
         
-            int count = 1;
+            int counter = 1;
+            int theid = 0;
             while (myRs.next()) {
-                getQuestion tempQuestion = convertRowToQuestion(myRs, count);
+                SettingQuestion tempQuestion = convertRowToQuestion(counter, theid, myRs);
                 list.add(tempQuestion);
                 
-                count++;
+                counter++;
             }
             return list;
         
@@ -62,15 +92,15 @@ public class QuestionDAO {
         }    
     }
     
-    private getQuestion convertRowToQuestion(ResultSet myRs, int counter) throws SQLException {
+    private SettingQuestion convertRowToQuestion(int counter, int theid, ResultSet myRs ) throws SQLException {
 
             int id = myRs.getInt("Question_ID");
-            //int id = counter;
+            int count = counter;
             
             String question = myRs.getString("Question_Text");
             //String answer = myRs.getString("answer");
 
-            getQuestion tempQuestion = new getQuestion(id, question);
+            SettingQuestion tempQuestion = new SettingQuestion(count, id, question );
 
             return tempQuestion;
     }

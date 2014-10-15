@@ -57,7 +57,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         this.timeLimit_s=timeLimit_s;
         this.numOfSub=numOfSub;
         
-        sectionPanel1=new SectionPanel(numOfSub);
+        sectionPanel1=new SectionPanel(numOfSub,exam_ID);
         sectionPanel1.getGUI(sectionName,timeLimit_h,timeLimit_m,timeLimit_s);
         
         setContentPane(getGUI());
@@ -76,12 +76,12 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
 
-        sectionPanel1=new SectionPanel();
-        sectionPanel1.getGUI(section_ID);
-        
         Section_DAO section_DAO=new Section_DAO();
         Section section=section_DAO.getModel(section_ID);
         this.exam_ID=section.getExam_ID();
+        
+        sectionPanel1=new SectionPanel(exam_ID);
+        sectionPanel1.getGUI(section_ID);
         
         setContentPane(getGUI());
         
@@ -99,11 +99,11 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         GroupLayout.SequentialGroup verticalGroup_S;
 
         
-        submitButton=new JButton("submit");
+        submitButton=new JButton("Create Section");
         submitButton.addActionListener(this);
-        updateButton=new JButton("update");
+        updateButton=new JButton("Update Section");
         updateButton.addActionListener(this);
-        cancelButton=new JButton("cancel");
+        cancelButton=new JButton("Cancel");
         cancelButton.addActionListener(this);
 
         

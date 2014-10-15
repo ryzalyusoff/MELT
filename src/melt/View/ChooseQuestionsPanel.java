@@ -30,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import melt.DAO.MCQ_DAO;
 import melt.DAO.Question_DAO;
 
 /**
@@ -44,6 +45,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
     double width;
+    int exam_ID;
     /**
      * initialize the ChooseQuestionPanel a
      *
@@ -65,6 +67,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
      */
     public ChooseQuestionsPanel(SectionPanel fatherPanel) {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        this.exam_ID=((SectionPanel)fatherPanel).exam_ID;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         double height = screenSize.getHeight();
@@ -72,10 +75,12 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
         this.fatherPanel = fatherPanel;
+        
         fatherPanelState=0;
     }
     public ChooseQuestionsPanel(SubsectionPanel fatherPanel) {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        this.exam_ID=((SubsectionPanel)fatherPanel).exam_ID;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         double height = screenSize.getHeight();
@@ -83,6 +88,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
         this.fatherPanel = fatherPanel;
+        
         fatherPanelState=1;
     }
      /**
@@ -132,7 +138,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 
                 JCheckBox ck = new JCheckBox();
-                ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));  
+            ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));      
                 ck.setSelected(isSelected);
                 ck.setHorizontalAlignment(0);
                 return ck;
@@ -160,15 +166,15 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
      */
     public Object[][] getData() {
         try {
-            Question_DAO question_DAO = new Question_DAO();
+            MCQ_DAO mcq_DAO = new MCQ_DAO();
             //get question
-            ResultSet rs = question_DAO.getList("");
+            ResultSet rs = mcq_DAO.getList("question_ID not in (select question_ID from QuestionsByExamID where Exam_ID='"+exam_ID+"') ");
             ArrayList<Object[]> objectArraylist = new ArrayList<Object[]>();
             //store data into arraylist
             while (rs.next()) {
                 Object[] col = new Object[3];
                 col[0] = rs.getInt(1);
-                col[1] = rs.getString(4);
+                col[1] = rs.getString(3);
                 col[2] = false;
                 objectArraylist.add(col);
                 

@@ -5,12 +5,23 @@
  */
 package melt;
 
+import melt.View.AddQuestion;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import static melt.View.AddQuestion.driver;
+import static melt.View.AddQuestion.password;
+import static melt.View.AddQuestion.url;
+import static melt.View.AddQuestion.user;
+import melt.Util.SQLHelper;
 
 /**
  *
@@ -35,6 +46,39 @@ public class EditQuestion extends javax.swing.JFrame {
     public int answerID6 = 0;
     
     private AddQuestion AddQuestionPanel;
+
+    public static String url;
+    public static String user;
+    public static String password;
+    public static String driver;
+    
+    public void startSQL() {
+        try {
+
+            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            Properties pp = new Properties();
+            pp.load(in);
+            url = pp.getProperty("jdbc.url");
+            user = pp.getProperty("jdbc.username");
+            password = pp.getProperty("jdbc.password");
+            driver = pp.getProperty("jdbc.driver");
+
+        } catch (IOException ex) {
+            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void connectDb() {
+        startSQL(); 
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection(url, user, password);
+            
+            st = con.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Creates new form startupPanel
@@ -42,10 +86,6 @@ public class EditQuestion extends javax.swing.JFrame {
     public EditQuestion() {
         initComponents();
         
-       
-        
-       //System.out.println("Queston is: "+question);
-     
     }
 
     /**
@@ -78,6 +118,7 @@ public class EditQuestion extends javax.swing.JFrame {
         choice6 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         jLabel4.setText("Correct Answer");
 
@@ -144,6 +185,13 @@ public class EditQuestion extends javax.swing.JFrame {
 
         jLabel5.setText("Answer Text");
 
+        jButton1.setText("CANCEL");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout startupPanelLayout = new javax.swing.GroupLayout(startupPanel);
         startupPanel.setLayout(startupPanelLayout);
         startupPanelLayout.setHorizontalGroup(
@@ -153,7 +201,6 @@ public class EditQuestion extends javax.swing.JFrame {
                 .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(updateBtn)
                         .addGroup(startupPanelLayout.createSequentialGroup()
                             .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,7 +221,11 @@ public class EditQuestion extends javax.swing.JFrame {
                                 .addComponent(answer3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(answer4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addComponent(answer6, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(answer5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(answer5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(startupPanelLayout.createSequentialGroup()
+                            .addComponent(updateBtn)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton1)))
                     .addGroup(startupPanelLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(104, 104, 104)
@@ -219,7 +270,9 @@ public class EditQuestion extends javax.swing.JFrame {
                     .addComponent(answer6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(choice6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addComponent(updateBtn)
+                .addGroup(startupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateBtn)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -388,7 +441,6 @@ public class EditQuestion extends javax.swing.JFrame {
 
                            if (errors == 0) {
                               JOptionPane.showMessageDialog(null, "Question was successfully updated!");
-
                            } else {
                                JOptionPane.showMessageDialog(null, "ERROR in updating question!!", "error", JOptionPane.ERROR_MESSAGE);
                            }
@@ -422,18 +474,11 @@ public class EditQuestion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_answer6ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     
-      public void connectDb() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
-            st = con.createStatement();
-            
-        } catch(Exception ex) {
-            System.out.println("Erro: "+ex);
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField answer1;
@@ -448,6 +493,7 @@ public class EditQuestion extends javax.swing.JFrame {
     public javax.swing.JCheckBox choice4;
     public javax.swing.JCheckBox choice5;
     public javax.swing.JCheckBox choice6;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
