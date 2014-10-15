@@ -495,44 +495,36 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
             }
         });
         
-        
+        // Get the selected row
         int selectedRow = questionTable.getSelectedRow();
+        
+        // Get & set the question at column number 2 (from the table)
         String rowQuestion = (questionTable.getModel().getValueAt(selectedRow,2).toString());
         
+        // Get & set the id at column number 1 (from the table)
+        rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
         
-        
-        int rowSelected = questionTable.getSelectedRow();
-        rowID = (questionTable.getModel().getValueAt(rowSelected,1).toString());
         editQPanel.questionID = rowID;
         
+        // Set the Question field on the edit panel based on the selected row
         editQPanel.questionField.setText(rowQuestion);
-        
-        // Get all the answers
-        String questionID = rowID;
         
         
         connectDb();
-        //String st = "SELECT * FROM questions WHERE id='"+rowID+"'";
-        
         
         try {
             
-            // create our mysql database connection
-            String myDriver = "com.mysql.jdbc.Driver";
-            String myUrl = "jdbc:mysql://localhost:3306/meltsystem";
-            Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "");
 
-            rowID = (questionTable.getModel().getValueAt(rowSelected,1).toString());
+            rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
             
             String query = "SELECT * FROM mcqoption WHERE Question_ID='"+rowID+"' ";
             
             
             // create the java statement
-            Statement st = conn.createStatement();
+             st = con.createStatement();
 
             // execute the query, and get a java resultset
-            ResultSet rs = st.executeQuery(query);
+             rs = st.executeQuery(query);
             
             String answer1 = "";
             String answer2 = "";
@@ -634,8 +626,6 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close(st, rs);
