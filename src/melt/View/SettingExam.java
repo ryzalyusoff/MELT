@@ -161,10 +161,13 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         if (e.getSource()==submitButton) {
             if (sectionPanel1.submitSection()) {//if submit succeed
                 JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
-                rootFrame.dispose();
+                //rootFrame.dispose();
                 //this.dispose();
                 Exam exam=new Exam(exam_ID);
-                exam.setVisible(true);
+                rootFrame.setContentPane(exam.getGUI());
+                rootFrame.revalidate();
+                rootFrame.repaint();
+                //exam.setVisible(true);
             }
 
             
@@ -172,10 +175,13 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
             if (sectionPanel1.updateSection()) {//if update succeed
               
                 JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
-                rootFrame.dispose();
+                //rootFrame.dispose();
                 //this.dispose();
                 Exam exam=new Exam(exam_ID);
-                exam.setVisible(true);
+                rootFrame.setContentPane(exam.getGUI());
+                rootFrame.revalidate();
+                rootFrame.repaint();
+                //exam.setVisible(true);
             }
         }else if (e.getSource()==cancelButton) {
             //remove current panel when calbutton
