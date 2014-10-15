@@ -1,6 +1,7 @@
 package melt;
 
 import java.util.List;
+import melt.View.AddQuestion;
 
 public class Main {
     
@@ -40,7 +41,7 @@ public class Main {
             public void run() {
 
                 //new AddQuestion().setVisible(true);
-                new startupPanel().setVisible(true);
+                new melt.View.startupPanel().setVisible(true);
 
                 
             }

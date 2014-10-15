@@ -32,7 +32,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import melt.AddQuestion;
+import melt.View.AddQuestion;
 import melt.DAO.MCQ_DAO;
 import melt.DAO.Question_DAO;
 

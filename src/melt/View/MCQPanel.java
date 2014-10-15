@@ -55,12 +55,16 @@ public class MCQPanel extends JPanel implements ActionListener{
         
         
         for(int i=0;i<mCQOptions.length;i++){
+//            if(mCQOptions[i].getContent().trim().isEmpty()){
+//                break;
+//            }
             if(i == 0) choices[i]=new JLabel("A.  " + mCQOptions[i].getContent());            
             if(i == 1) choices[i]=new JLabel("B.  " + mCQOptions[i].getContent());            
             if(i == 2) choices[i]=new JLabel("C.  " + mCQOptions[i].getContent());
             if(i == 3) choices[i]=new JLabel("D.  " + mCQOptions[i].getContent());
             if(i == 4) choices[i]=new JLabel("E.  " + mCQOptions[i].getContent());
             if(i == 5) choices[i]=new JLabel("F.  " + mCQOptions[i].getContent());
+            
             
         }
    
