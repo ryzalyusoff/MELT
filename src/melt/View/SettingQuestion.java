@@ -7,10 +7,6 @@ public class SettingQuestion {
     private int counter;
     
 
-
-    private char correctAnswer;
-    
-
     public SettingQuestion(int counter, int id, String question) {
         super();
         this.id = id;

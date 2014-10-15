@@ -495,8 +495,11 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
             }
         });
         
+        
         int selectedRow = questionTable.getSelectedRow();
         String rowQuestion = (questionTable.getModel().getValueAt(selectedRow,2).toString());
+        
+        
         
         int rowSelected = questionTable.getSelectedRow();
         rowID = (questionTable.getModel().getValueAt(rowSelected,1).toString());
@@ -506,6 +509,8 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
         
         // Get all the answers
         String questionID = rowID;
+        
+        
         connectDb();
         //String st = "SELECT * FROM questions WHERE id='"+rowID+"'";
         
@@ -836,7 +841,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
     @Override
     public void windowClosing(WindowEvent e) {
         this.dispose();
-        new melt.View.startupPanel().setVisible(true);
+        new melt.View.StartupPanel().setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -32,7 +32,6 @@ public class EditQuestion extends javax.swing.JFrame {
     public String questionID;
     
     public String question = "";
-    public ButtonGroup choices;
     
     private Connection con;
     private Statement st;
