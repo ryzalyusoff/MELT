@@ -33,7 +33,7 @@ public class SQLHelper {
     /**
      *read properties from jdbc.properties
      */
-    public SQLHelper() {
+        public SQLHelper() {
         try {
 
             InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");

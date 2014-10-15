@@ -28,8 +28,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import melt.View.AddQuestion;
 import melt.DAO.MCQ_DAO;
 import melt.DAO.Question_DAO;
 
@@ -103,16 +106,15 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         button1.addActionListener(this);
         //columnNames for the table
         String[] columnNames = {
-            "Question ID",
+            "ID",
             "Question",
             ""};
          //get data from database
         Object[][] data = getData();
         //create jtable
         table1 = new JTable(data, columnNames);
+        
         table1.setShowHorizontalLines(true);
-        table1.getColumnModel().getColumn(0).setMaxWidth(70);
-        table1.getColumnModel().getColumn(0).setMinWidth(50);
         table1.getColumnModel().getColumn(2).setMaxWidth(50);
         
         table1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
@@ -121,32 +123,77 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         public Component getTableCellRendererComponent(JTable table, 
                 Object value, boolean isSelected, boolean hasFocus,
                 int row, int column) {
+            try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(
+            UIManager.getSystemLookAndFeelClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+
+
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        }
             Component c = super.getTableCellRendererComponent(table, 
                 value, isSelected, hasFocus, row, column);
-            c.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));                        
+            c.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159)); 
             return c;
         };
     });
                  
         //set selectionMode
-        table1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION); 
         //turn the last column from text to checkbox
         table1.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
-            
+        
+         
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
-                
+                try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(
+            UIManager.getSystemLookAndFeelClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+
+
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        }
                 JCheckBox ck = new JCheckBox();
-            ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));      
+                ck.setBackground(row%2==0 ? Color.lightGray : new Color(163, 159, 159));      
                 ck.setSelected(isSelected);
                 ck.setHorizontalAlignment(0);
+                table.setShowHorizontalLines(true);  
                 return ck;
             }
         });
         
         p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+        table1.setShowVerticalLines(true);        
+        table1.getColumnModel().getColumn(0).setMaxWidth(70);
+        table1.getColumnModel().getColumn(0).setMinWidth(50);
+        table1.getColumnModel().getColumn(0).setPreferredWidth(60);
         p1.add(new JScrollPane(table1));
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
