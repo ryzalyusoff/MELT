@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import melt.EditQuestion;
 import melt.Util.SQLHelper;
 import static melt.Util.SQLHelper.driver;
 import static melt.Util.SQLHelper.password;
@@ -509,7 +510,11 @@ public class AddQuestion extends javax.swing.JFrame {
         
         try {
             
-            connectDb();
+            // create our mysql database connection
+            String myDriver = "com.mysql.jdbc.Driver";
+            String myUrl = "jdbc:mysql://localhost:3306/meltsystem";
+            Class.forName(myDriver);
+            Connection conn = DriverManager.getConnection(myUrl, "root", "");
 
             rowID = (questionTable.getModel().getValueAt(rowSelected,1).toString());
             
@@ -517,7 +522,7 @@ public class AddQuestion extends javax.swing.JFrame {
             
             
             // create the java statement
-            Statement st = con.createStatement();
+            Statement st = conn.createStatement();
 
             // execute the query, and get a java resultset
             ResultSet rs = st.executeQuery(query);
@@ -622,6 +627,8 @@ public class AddQuestion extends javax.swing.JFrame {
             
             
         } catch (SQLException ex) {
+            Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close(st, rs);
