@@ -163,6 +163,7 @@ public class startupPanel extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         examPanel = new melt.View.ExamOverview();
         examPanel.setVisible(true);
         examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
