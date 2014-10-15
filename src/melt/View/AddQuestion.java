@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-import melt.EditQuestion;
+import melt.View.EditQuestion;
 import melt.Util.SQLHelper;
 import static melt.Util.SQLHelper.driver;
 import static melt.Util.SQLHelper.password;
