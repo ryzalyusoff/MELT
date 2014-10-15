@@ -296,7 +296,19 @@ public class SectionPanel extends JPanel implements ActionListener {
             String final_timelimit_h = sectionTimeField_h.getText();
             String final_timelimit_m = sectionTimeField_m.getText();
             String final_timelimit_s = sectionTimeField_s.getText();
-
+            int timeLimit_h = 0;
+            int timeLimit_m = 0;
+            int timeLimit_s = 0;
+            try{
+            timeLimit_h=Integer.parseInt(final_timelimit_h);
+            timeLimit_m=Integer.parseInt(final_timelimit_m);
+            timeLimit_s=Integer.parseInt(final_timelimit_s);
+            }catch(Exception exception){JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
+            return false;}
+            if(timeLimit_h >24 || timeLimit_h <00 || timeLimit_m > 60 || timeLimit_m < 0 || timeLimit_s > 60 || timeLimit_s <0 || (timeLimit_h == 0 && timeLimit_m == 0 && timeLimit_s == 0))
+            {JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
+            return false;}
+            
             Date timeLimit = new Date();
             try {
                 timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
@@ -335,7 +347,18 @@ public class SectionPanel extends JPanel implements ActionListener {
             String final_timelimit_h = sectionTimeField_h.getText();
             String final_timelimit_m = sectionTimeField_m.getText();
             String final_timelimit_s = sectionTimeField_s.getText();
-
+            int timeLimit_h = 0;
+            int timeLimit_m = 0;
+            int timeLimit_s = 0;
+            try{
+            timeLimit_h=Integer.parseInt(final_timelimit_h);
+            timeLimit_m=Integer.parseInt(final_timelimit_m);
+            timeLimit_s=Integer.parseInt(final_timelimit_s);
+            }catch(Exception exception){JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
+            return false;}
+            if(timeLimit_h >24 || timeLimit_h <00 || timeLimit_m > 60 || timeLimit_m < 0 || timeLimit_s > 60 || timeLimit_s <0 || (timeLimit_h == 0 && timeLimit_m == 0 && timeLimit_s == 0))
+            {JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
+            return false;}
             Date timeLimit = new Date();
             try {
                 timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
