@@ -12,7 +12,7 @@ import java.awt.Toolkit;
  *
  * @author ryzal_000
  */
-public class startupPanel extends javax.swing.JFrame {
+public class StartupPanel extends javax.swing.JFrame {
 
     
     AddQuestion questionPanel; 
@@ -21,7 +21,7 @@ public class startupPanel extends javax.swing.JFrame {
     /**
      * Creates new form startupPanel
      */
-    public startupPanel() {
+    public StartupPanel() {
         initComponents();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
@@ -157,17 +157,14 @@ public class startupPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
         questionPanel = new AddQuestion();
         questionPanel.setVisible(true);
-        questionPanel.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        this.dispose();
+        questionPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         examPanel = new melt.View.ExamOverview();
         examPanel.setVisible(true);
-        //examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
-        this.dispose();
-
+        examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
