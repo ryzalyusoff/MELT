@@ -28,10 +28,10 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
     public String sectionName;
     public int timeLimit_h,timeLimit_m,timeLimit_s,numOfSub;
     public JButton submitButton,updateButton,cancelButton;
-    public SectionPanel sectionPanel1;
+    public SectionPanel sectionPanel;
     public boolean isUpdate; 
-    JScrollPane p1000;
-    int exam_ID;
+    JScrollPane scrollPane;
+    int examId;
 
     /**
      * when a new Exam is going to be set
@@ -40,11 +40,11 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
      * @param timeLimit_m
      * @param timeLimit_s
      * @param numOfSub
-     * @param exam_ID
+     * @param examId
      */
-    public SettingExam(String sectionName,int timeLimit_h,int timeLimit_m, int timeLimit_s,int numOfSub,int exam_ID)  {
+    public SettingExam(String sectionName,int timeLimit_h,int timeLimit_m, int timeLimit_s,int numOfSub,int examId)  {
         
-        this.exam_ID=exam_ID;
+        this.examId=examId;
         isUpdate=false;
         this.setLocationRelativeTo(null);  //make window in the center of desktop
         setSize(640, 500);
@@ -57,19 +57,19 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         this.timeLimit_s=timeLimit_s;
         this.numOfSub=numOfSub;
         
-        sectionPanel1=new SectionPanel(numOfSub,exam_ID);
-        sectionPanel1.getGUI(sectionName,timeLimit_h,timeLimit_m,timeLimit_s);
+        sectionPanel=new SectionPanel(numOfSub,examId);
+        sectionPanel.getGUI(sectionName,timeLimit_h,timeLimit_m,timeLimit_s);
         
-        setContentPane(getGUI());
+        setContentPane(GetGUI());
         
         
     }
 
     /**
      *when an old exam is going to be edited
-     * @param section_ID
+     * @param sectionId
      */
-    public SettingExam(int section_ID)  {
+    public SettingExam(int sectionId)  {
         isUpdate=true;//Edit or Update Mode
         this.setLocationRelativeTo(null);  //make window in the center of desktop
         setSize(640, 500);
@@ -77,13 +77,13 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         addWindowListener(this);
 
         Section_DAO section_DAO=new Section_DAO();
-        Section section=section_DAO.getModel(section_ID);
-        this.exam_ID=section.getExam_ID();
+        Section section=section_DAO.getModel(sectionId);
+        this.examId=section.getExam_ID();
         
-        sectionPanel1=new SectionPanel(exam_ID);
-        sectionPanel1.getGUI(section_ID);
+        sectionPanel=new SectionPanel(examId);
+        sectionPanel.getGUI(sectionId);
         
-        setContentPane(getGUI());
+        setContentPane(GetGUI());
         
     }
     
@@ -91,7 +91,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
      *get the contentpanel
      * @return
      */
-    public JScrollPane getGUI() {
+    public JScrollPane GetGUI() {
         JPanel p999;
         
         GroupLayout groupLayout;
@@ -115,12 +115,12 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         horizontalGroup_P = groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER);
         verticalGroup_S = groupLayout.createSequentialGroup();
      
-        horizontalGroup_P.addComponent(sectionPanel1);
+        horizontalGroup_P.addComponent(sectionPanel);
                 
         
                 
 
-        verticalGroup_S.addComponent(sectionPanel1);
+        verticalGroup_S.addComponent(sectionPanel);
         
         //when update shows the update button and when add shows the submit button
         if (isUpdate) {
@@ -147,24 +147,24 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         /*add p999 to a jscrollpane so that there will 
         **have a scroll bar when we cannot see all thw content
         */
-        p1000=new JScrollPane(p999);
-        p1000.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        p1000.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane=new JScrollPane(p999);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         
         
         
-        return p1000;
+        return scrollPane;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==submitButton) {
-            if (sectionPanel1.submitSection()) {//if submit succeed
-                JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
+            if (sectionPanel.submitSection()) {//if submit succeed
+                JFrame rootFrame=(JFrame)scrollPane.getRootPane().getParent();
                 //rootFrame.dispose();
                 //this.dispose();
-                Exam exam=new Exam(exam_ID);
-                rootFrame.setContentPane(exam.getGUI());
+                Exam exam=new Exam(examId);
+                rootFrame.setContentPane(exam.GetGUI());
                 rootFrame.revalidate();
                 rootFrame.repaint();
                 //exam.setVisible(true);
@@ -172,22 +172,22 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
 
             
         }else if (e.getSource()==updateButton) {
-            if (sectionPanel1.updateSection()) {//if update succeed
+            if (sectionPanel.updateSection()) {//if update succeed
               
-                JFrame rootFrame=(JFrame)p1000.getRootPane().getParent();
+                JFrame rootFrame=(JFrame)scrollPane.getRootPane().getParent();
                 //rootFrame.dispose();
                 //this.dispose();
-                Exam exam=new Exam(exam_ID);
-                rootFrame.setContentPane(exam.getGUI());
+                Exam exam=new Exam(examId);
+                rootFrame.setContentPane(exam.GetGUI());
                 rootFrame.revalidate();
                 rootFrame.repaint();
                 //exam.setVisible(true);
             }
         }else if (e.getSource()==cancelButton) {
             //remove current panel when calbutton
-            p1000.setVisible(false);
-            p1000.getParent().remove(p1000);
-            p1000.invalidate();
+            scrollPane.setVisible(false);
+            scrollPane.getParent().remove(scrollPane);
+            scrollPane.invalidate();
                 
               
         }

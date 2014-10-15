@@ -33,12 +33,11 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
     public ArrayList<melt.Model.Exam> exams;
     public JLabel[] examLabels;
     JButton addExamButton,backButton;
-    public JButton[] buttons, isPublicButtons;
-    public JCheckBox[] checkbox;
+    public JButton[] isPublicButtons;
+    public JCheckBox[] examSelected;
     JPanel contentPanel;
-    JPanel p1, p2, p3, p4, p5;
-    JScrollPane jspane;
-    public boolean checkboxSelected;
+    JPanel ExamListPanel, buttonsPanel, lowerLeftPanel;
+    JScrollPane scrollPane;
 
     public ExamOverview() {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
@@ -48,7 +47,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int)width, (int)height);
-        setContentPane(getGUI());
+        setContentPane(GetGUI());
         JMenuBar jMenuBar1 = new JMenuBar();
         JMenu jMenu1 = new JMenu("Exam");
         jMenuBar1.add(jMenu1);
@@ -56,13 +55,11 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         addWindowListener(this);
     }
 
-    public JPanel getGUI() {
+    public JPanel GetGUI() {
 
-        //create p2
-        p2 = new JPanel();
-        setP2();
-        //Create p3
-        p3 = new JPanel();
+        //create ExamListPanel
+        ExamListPanel = new JPanel();
+        SetExamListPanel();
 
         JButton EditButton = new JButton("Edit");
         EditButton.addActionListener(this);
@@ -76,19 +73,18 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         backButton=new JButton("<<<Back to Main menu");
         backButton.addActionListener(this);
         
-        //Create p4
-        p4 = new JPanel();
-        p4.setMaximumSize(new Dimension(100,1000));
-        p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
+        //Create buttonsPanel
+        buttonsPanel = new JPanel();
+        buttonsPanel.setMaximumSize(new Dimension(100,1000));
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
         
-        jspane=new JScrollPane(p2);
-        jspane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        p4.add(backButton);
-        p4.add(jspane);
+        scrollPane=new JScrollPane(ExamListPanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        buttonsPanel.add(backButton);
+        buttonsPanel.add(scrollPane);
         
         JPanel pTempOuter = new JPanel(new BorderLayout());
         pTempOuter.setBackground(new Color(153, 153, 153));
-        //p3.add(new JLabel("Overall   6.0/30.0"));
         JPanel pTemp = new JPanel(new GridLayout(3, 1));
         pTempOuter.setMaximumSize(new Dimension(100,200));
         pTemp.setMaximumSize(new Dimension(100,200));
@@ -100,37 +96,35 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         
         pTempOuter.setAlignmentX( Component.LEFT_ALIGNMENT );
         pTemp.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p4.setAlignmentX( Component.LEFT_ALIGNMENT );
+        buttonsPanel.setAlignmentX( Component.LEFT_ALIGNMENT );
         
        // pTempOuter.add(pTemp);
-        p4.add(pTemp);
+        buttonsPanel.add(pTemp);
         
 
-        //create p5
-        p5 = new JPanel();
-        p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
-        p5.add(p4);
+        //create lowerLeftPanel
+        lowerLeftPanel = new JPanel();
+        lowerLeftPanel.setLayout(new BoxLayout(lowerLeftPanel, BoxLayout.X_AXIS));
+        lowerLeftPanel.add(buttonsPanel);
         contentPanel = new JPanel();
         contentPanel.setLayout(new BorderLayout());
-        p5.add(contentPanel);
+        lowerLeftPanel.add(contentPanel);
         
         //set the color of the left part
-        p2.setBackground(new Color(153, 153, 153));
-        p3.setBackground(new Color(153, 153, 153));
-        p4.setBackground(new Color(153, 153, 153));
+        ExamListPanel.setBackground(new Color(153, 153, 153));
+        buttonsPanel.setBackground(new Color(153, 153, 153));
 
-        p4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Exam Overview"));
+        buttonsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Exam Overview"));
 
-        return p5;
+        return lowerLeftPanel;
     }
 
-    private void setP2() {
+    private void SetExamListPanel() {
 
-        getExams();
+        GetExams();
 
-        buttons = new JButton[exams.size()];
         isPublicButtons = new JButton[exams.size()];
-        checkbox = new JCheckBox[exams.size()];
+        examSelected = new JCheckBox[exams.size()];
 
         examLabels = new JLabel[exams.size()];
 
@@ -139,21 +133,21 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 
             examLabels[i - 1] = new JLabel("Exam" + i);
             //Checkboxes
-            checkbox[i - 1] = new JCheckBox();
-            checkbox[i - 1].setName(exam.getExam_ID() + "");
-            checkbox[i - 1].addActionListener(new ActionListener() {
+            examSelected[i - 1] = new JCheckBox();
+            examSelected[i - 1].setName(exam.getExam_ID() + "");
+            examSelected[i - 1].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     JCheckBox cbLog = (JCheckBox) e.getSource();
 
                     if (cbLog.isSelected()) {
-                        for (int i = 0; i < checkbox.length; i++) {
-                            if (!(checkbox[i] == e.getSource())) {
-                                checkbox[i].setEnabled(false);
+                        for (int i = 0; i < examSelected.length; i++) {
+                            if (!(examSelected[i] == e.getSource())) {
+                                examSelected[i].setEnabled(false);
                             }
                         }
                     } else {
-                        for (int i = 0; i < checkbox.length; i++) {
-                            checkbox[i].setEnabled(true);
+                        for (int i = 0; i < examSelected.length; i++) {
+                            examSelected[i].setEnabled(true);
                         }
                     }
                 }
@@ -182,7 +176,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         GroupLayout.ParallelGroup horizontalGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S;
 
-        groupLayout = new GroupLayout(p2);
+        groupLayout = new GroupLayout(ExamListPanel);
 
         groupLayout.setAutoCreateContainerGaps(
                 true);
@@ -195,17 +189,17 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         for (int i = 0;
                 i < exams.size();
                 i++) {
-//            p2.add(sectionLabels[i]);
-//            p2.add(buttons[i]);
-//            p2.add(deleteButtons[i]);
+//            ExamListPanel.add(sectionLabels[i]);
+//            ExamListPanel.add(buttons[i]);
+//            ExamListPanel.add(deleteButtons[i]);
             horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
-                    .addComponent(checkbox[i])
+                    .addComponent(examSelected[i])
                     .addComponent(examLabels[i])
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                     .addComponent(isPublicButtons[i]));
 
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                    .addComponent(checkbox[i])
+                    .addComponent(examSelected[i])
                     .addComponent(examLabels[i])
                     .addComponent(isPublicButtons[i])
                     .addGap(40));
@@ -215,16 +209,16 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 
         groupLayout.setVerticalGroup(verticalGroup_S);
 
-        p2.setLayout(groupLayout);
+        ExamListPanel.setLayout(groupLayout);
 
-        p2.revalidate();
+        ExamListPanel.revalidate();
         //p2.repaint();
 
     }
     /**
-     * getExams from database
+     * GetExams from database
      */
-    private void getExams() {
+    private void GetExams() {
         try {
             Exam_DAO exam_DAO = new Exam_DAO();
             ResultSet rs = exam_DAO.getList("");
@@ -247,17 +241,17 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
     public void actionPerformed(ActionEvent e) {
         
         if (((JButton) e.getSource()).getText().equals("Edit")) {  //Edit Button
-            if(checkbox.length>0)
+            if(examSelected.length>0)
             {
             
             int exam_ID = 0;
-            for (int i = 0; i < checkbox.length; i++) {
-                if (checkbox[i].isSelected()) {
+            for (int i = 0; i < examSelected.length; i++) {
+                if (examSelected[i].isSelected()) {
                     //this.dispose();
-                    exam_ID = Integer.parseInt((checkbox[i].getName()));
+                    exam_ID = Integer.parseInt((examSelected[i].getName()));
                     Exam exam = new Exam(exam_ID);
-                    JFrame fatherFrame=(JFrame)p2.getRootPane().getParent();
-                    fatherFrame.setContentPane(exam.getGUI());
+                    JFrame fatherFrame=(JFrame)ExamListPanel.getRootPane().getParent();
+                    fatherFrame.setContentPane(exam.GetGUI());
                     fatherFrame.revalidate();
                     fatherFrame.repaint();
             //exam.setVisible(true);
@@ -275,7 +269,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
             AddExam addExam = new AddExam();
             //settingSection.setVisible(true);
             contentPanel.removeAll();
-            JPanel temp = addExam.getGUI();
+            JPanel temp = addExam.GetGUI();
 
             contentPanel.setLayout(new BorderLayout());
             
@@ -284,17 +278,17 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
             contentPanel.revalidate();
         } else if (((JButton) e.getSource()).getText().equals("Activate")) {
             //isPublicButtons
-            if(checkbox.length>0)
+            if(examSelected.length>0)
             {
             Exam_DAO exam_DAO = new Exam_DAO();
             int exam_ID = 0;
-            for (int i = 0; i < checkbox.length; i++) {
-                if (checkbox[i].isSelected()) {
-                    exam_ID = Integer.parseInt((checkbox[i].getName()));
+            for (int i = 0; i < examSelected.length; i++) {
+                if (examSelected[i].isSelected()) {
+                    exam_ID = Integer.parseInt((examSelected[i].getName()));
                     exam_DAO.makeItPublic(exam_ID);
             //update the panel
-            p2.removeAll();
-            setP2();
+            ExamListPanel.removeAll();
+            SetExamListPanel();
                 }
             }
             
@@ -315,7 +309,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 //            AddExam addExam=new AddExam();
 //            //settingSection.setVisible(true);
 //            contentPanel.removeAll();
-//            JPanel temp=addExam.getGUI();
+//            JPanel temp=addExam.GetGUI();
 //            
 //            contentPanel.setLayout(new BorderLayout());
 //            contentPanel.add(temp);
@@ -325,8 +319,8 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 //            Exam_DAO exam_DAO=new Exam_DAO();
 //            int exam_ID=Integer.parseInt(((JButton)e.getSource()).getName());
 //            exam_DAO.makeItPublic(exam_ID);
-//            p2.removeAll();
-//            setP2();
+//            ExamListPanel.removeAll();
+//            SetExamListPanel();
 //        }
 //    }
     public static void main(String[] args) {

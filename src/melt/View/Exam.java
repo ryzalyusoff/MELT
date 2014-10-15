@@ -40,15 +40,14 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     public JButton addSectionButton, deleteButton, editButton, backButton;
     public ArrayList<Section> sections;
     public JLabel[] sectionLabels;
-    public JButton[] buttons, deleteButtons;
-    public JCheckBox[] checkbox;
+    public JCheckBox[] sectionChosen;
     public JPanel contentPanel;
-    public JPanel p1, p2, p3, p4, p5;
-    public JScrollPane jspane;
-    public int exam_ID;
+    public JPanel mainPanel, buttonsPanel, leftPanel, rightPanel;
+    public JScrollPane scrollPane;
+    public int examId;
 
-    public Exam(int exam_ID) {
-        this.exam_ID = exam_ID;
+    public Exam(int examId) {
+        this.examId = examId;
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
         setTitle("MELTSystem");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -56,7 +55,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int) width, (int) height);
-        setContentPane(getGUI());
+        setContentPane(GetGUI());
         //MenuBar
         JMenuBar jMenuBar1 = new JMenuBar();
         JMenu jMenu1 = new JMenu("Set the exam, by adding Sections, Subsections and Questions");
@@ -66,7 +65,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         addWindowListener(this);
     }
 
-    public JPanel getGUI() {
+    public JPanel GetGUI() {
 
 //        welcomeLabel = new JLabel("....,Welcome!");
 //        timeLabel = new JLabel("dd-mm-yyyy hh:mm");
@@ -78,14 +77,14 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 //        p1.add(welcomeLabel);
 //        p1.add(new JPanel());
 //        p1.add(timeLabel);
-        //create p2(p2 is the main part to show the sections and its subsec and questions)
-        p2 = new JPanel();
+        //create mainPanel(mainPanel is the main part to show the sections and its subsec and questions)
+        mainPanel = new JPanel();
         backButton = new JButton("<<<Back to Exams");
         backButton.setMinimumSize(new Dimension(350, 20));
         backButton.addActionListener(this);
-        setP2();
-        //Create p3
-        p3 = new JPanel();
+        SetMainPanel();
+        //Create buttonsPanel
+        buttonsPanel = new JPanel();
 
         editButton = new JButton("Edit");
         editButton.addActionListener(this);
@@ -96,7 +95,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         addSectionButton = new JButton("Add a Section");
         addSectionButton.addActionListener(this);
 
-        p3.setLayout(new BorderLayout());
+        buttonsPanel.setLayout(new BorderLayout());
         //p3.add(new JLabel("Overall   6.0/30.0"));
         JPanel pTemp = new JPanel(new BorderLayout());
 
@@ -107,45 +106,45 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         pTemp.add(deleteButton, BorderLayout.CENTER);
         pTemp.add(addSectionButton, BorderLayout.SOUTH);
 
-        p3.add(pTemp, BorderLayout.SOUTH);
+        buttonsPanel.add(pTemp, BorderLayout.SOUTH);
 
-        //Create p4
-        p4 = new JPanel();
-        p4.setMaximumSize(new Dimension(100, 1000));
-        p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
-        //add p2 to a scrollpane and set scrollbarpolicy
-        jspane = new JScrollPane(p2);
-        jspane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        p4.add(backButton);
-        p4.add(jspane);
-        p4.add(p3);
+        //Create leftPanel
+        leftPanel = new JPanel();
+        leftPanel.setMaximumSize(new Dimension(100, 1000));
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        //add mainPanel to a scrollpane and set scrollbarpolicy
+        scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        leftPanel.add(backButton);
+        leftPanel.add(scrollPane);
+        leftPanel.add(buttonsPanel);
 
-        //create p5 (right part)
-        p5 = new JPanel();
-        p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
-        p5.add(p4);
+        //create rightPanel (right part)
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.X_AXIS));
+        rightPanel.add(leftPanel);
         contentPanel = new JPanel();
         //contentPanel.setBackground(Color.red);
         contentPanel.setLayout(new FlowLayout());
-        p5.add(contentPanel);
+        rightPanel.add(contentPanel);
 
         //set the background color of the leftpart
-        p2.setBackground(new Color(153, 153, 153));
-        p3.setBackground(new Color(153, 153, 153));
-        p4.setBackground(new Color(153, 153, 153));
+        mainPanel.setBackground(new Color(153, 153, 153));
+        buttonsPanel.setBackground(new Color(153, 153, 153));
+        leftPanel.setBackground(new Color(153, 153, 153));
 
-        String examName = "Exam " + exam_ID;
+        String examName = "Exam " + examId;
 
-        p4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), examName));
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), examName));
 
-        return p5;
+        return rightPanel;
     }
 
-    private void setP2() {
-        //getsections according to exam_ID
-        getSections(exam_ID);
+    private void SetMainPanel() {
+        //getsections according to examId
+        GetSections(examId);
 
-        checkbox = new JCheckBox[sections.size()];
+        sectionChosen = new JCheckBox[sections.size()];
 
         sectionLabels = new JLabel[sections.size()];
 
@@ -158,21 +157,21 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
             //Edit Button
 
             //Checkboxes
-            checkbox[i - 1] = new JCheckBox();
-            checkbox[i - 1].setName(section.getSection_ID() + "");
-            checkbox[i - 1].addActionListener(new ActionListener() {
+            sectionChosen[i - 1] = new JCheckBox();
+            sectionChosen[i - 1].setName(section.getSection_ID() + "");
+            sectionChosen[i - 1].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     JCheckBox cbLog = (JCheckBox) e.getSource();
 
                     if (cbLog.isSelected()) {
-                        for (int i = 0; i < checkbox.length; i++) {
-                            if (!(checkbox[i] == e.getSource())) {
-                                checkbox[i].setEnabled(false);
+                        for (int i = 0; i < sectionChosen.length; i++) {
+                            if (!(sectionChosen[i] == e.getSource())) {
+                                sectionChosen[i].setEnabled(false);
                             }
                         }
                     } else {
-                        for (int i = 0; i < checkbox.length; i++) {
-                            checkbox[i].setEnabled(true);
+                        for (int i = 0; i < sectionChosen.length; i++) {
+                            sectionChosen[i].setEnabled(true);
                         }
                     }
                 }
@@ -186,7 +185,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         GroupLayout.ParallelGroup horizontalGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S;
 
-        groupLayout = new GroupLayout(p2);
+        groupLayout = new GroupLayout(mainPanel);
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
 
@@ -194,23 +193,23 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         verticalGroup_S = groupLayout.createSequentialGroup();
 
         for (int i = 0; i < sections.size(); i++) {
-//            p2.add(sectionLabels[i]);
-//            p2.add(buttons[i]);
-//            p2.add(deleteButtons[i]);
+//            mainPanel.add(sectionLabels[i]);
+//            mainPanel.add(buttons[i]);
+//            mainPanel.add(deleteButtons[i]);
             horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
-                    .addComponent(checkbox[i])
+                    .addComponent(sectionChosen[i])
                     .addComponent(sectionLabels[i])
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE));
 
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                    .addComponent(checkbox[i])
+                    .addComponent(sectionChosen[i])
                     .addComponent(sectionLabels[i]));
 
         }
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
-        p2.setLayout(groupLayout);
-        p2.revalidate();
+        mainPanel.setLayout(groupLayout);
+        mainPanel.revalidate();
         //p2.repaint();
 
     }
@@ -218,17 +217,17 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     /**
      * get sections according to exam
      *
-     * @param exam_ID
+     * @param examId
      */
-    private void getSections(int exam_ID) {
+    private void GetSections(int examId) {
         try {
             Section_DAO section_DAO = new Section_DAO();
-            ResultSet rs = section_DAO.getList("Exam_ID='" + exam_ID + "'");
+            ResultSet rs = section_DAO.getList("Exam_ID='" + examId + "'");
 
             sections = new ArrayList<Section>();
             while (rs.next()) {
                 Section section = new Section();
-                section.setExam_ID(exam_ID);
+                section.setExam_ID(examId);
                 section.setSection_ID(rs.getInt("Section_ID"));
                 section.setSection_Name(rs.getString("Section_Name"));
                 section.setTimeLimit(new SimpleDateFormat("HH:mm:ss").parse(rs.getString("TimeLimit")));
@@ -246,16 +245,16 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addSectionButton) {
             //add settingSection panel to the right panel
-            AddSection settingSection = new AddSection(exam_ID);
+            AddSection settingSection = new AddSection(examId);
             contentPanel.removeAll();
             JPanel temp = settingSection.getGUI();
 
             contentPanel.setLayout(new FlowLayout());
             contentPanel.add(temp);
             contentPanel.revalidate();
-            for (int i = 0; i < checkbox.length; i++) {
-                checkbox[i].setSelected(false);
-                checkbox[i].setEnabled(true);
+            for (int i = 0; i < sectionChosen.length; i++) {
+                sectionChosen[i].setSelected(false);
+                sectionChosen[i].setEnabled(true);
             }
             //contentPanel.repaint();
 
@@ -263,18 +262,18 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
             //this.dispose();
             ExamOverview examOverview = new ExamOverview();
             //examOverview.setVisible(true);
-            JFrame fatherFrame = (JFrame) p2.getRootPane().getParent();
-            fatherFrame.setContentPane(examOverview.getGUI());
+            JFrame fatherFrame = (JFrame) mainPanel.getRootPane().getParent();
+            fatherFrame.setContentPane(examOverview.GetGUI());
             fatherFrame.revalidate();
             fatherFrame.repaint();
 
         } else if (((JButton) e.getSource()).getText().equals("Delete")) {
             //set section_ID
-            if (checkbox.length > 0) {
+            if (sectionChosen.length > 0) {
                 int section_ID = 0;
-                for (int i = 0; i < checkbox.length; i++) {
-                    if (checkbox[i].isSelected()) {
-                        section_ID = Integer.parseInt((checkbox[i].getName()));
+                for (int i = 0; i < sectionChosen.length; i++) {
+                    if (sectionChosen[i].isSelected()) {
+                        section_ID = Integer.parseInt((sectionChosen[i].getName()));
                         //get settingExamPanel and add to right panel
                         //create and intialize the DAOs
                         //MCQ_DAO mcq_DAO=new MCQ_DAO();
@@ -290,26 +289,26 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
                         subsection_DAO.delete("Section_ID='" + section_ID + "'");
                         section_DAO.delete("Section_ID='" + section_ID + "'");
 
-                        p2.removeAll();
+                        mainPanel.removeAll();
 
-                        setP2();
+                        SetMainPanel();
                     }
                 }
             }
 
         } else if (((JButton) e.getSource()).getText().equals("Edit")) {  //Edit Button
             // this.dispose();
-            if (checkbox.length > 0) {
+            if (sectionChosen.length > 0) {
                 int section_ID = 0;
-                for (int i = 0; i < checkbox.length; i++) {
-                    if (checkbox[i].isSelected()) {
-                        section_ID = Integer.parseInt((checkbox[i].getName()));
+                for (int i = 0; i < sectionChosen.length; i++) {
+                    if (sectionChosen[i].isSelected()) {
+                        section_ID = Integer.parseInt((sectionChosen[i].getName()));
 
                         //get settingExamPanel and add to right panel
                         SettingExam settingExam = new SettingExam(section_ID);
                         contentPanel.removeAll();
                         contentPanel.setLayout(new BorderLayout());
-                        contentPanel.add(settingExam.getGUI());
+                        contentPanel.add(settingExam.GetGUI());
                         contentPanel.revalidate();
                         //contentPanel.repaint();
                         //settingExam.setVisible(true);

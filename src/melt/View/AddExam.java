@@ -22,16 +22,16 @@ import javax.swing.LayoutStyle;
 import melt.DAO.Exam_DAO;
 
 /**
- * JFrame class for adding a exam can also use getGUI to return its jpanel
+ * JFrame class for adding a exam can also use GetGUI to return its jpanel
  * @author eddychou
  */
 public class AddExam extends JFrame implements ActionListener,WindowListener{
     
-    public JLabel l1,l2,l3,l4,l5;
-    public JTextArea ta1;
-    public JComboBox cb1;
-    public JButton button1,button2;
-    public JPanel p1;
+    public JLabel instructions;
+    public JTextArea instructionsText;
+    public JComboBox examChoice;
+    public JButton cancelButton,okButton;
+    public JPanel examPanel;
     
 
     public AddExam() {
@@ -39,29 +39,29 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         setSize(400, 150);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
-        setContentPane(getGUI());
+        setContentPane(GetGUI());
     }
     
     /**
      *create the contentPane
      * @return
      */
-    public JPanel getGUI(){
+    public JPanel GetGUI(){
         
         
         //Create p1
-        p1=new JPanel();
+        examPanel=new JPanel();
         
-        l1=new JLabel("Instructions");
-        ta1=new JTextArea();
-        JScrollPane sp = new JScrollPane(ta1);
-        ta1.setMinimumSize(new Dimension(500, 100));
+        instructions=new JLabel("Instructions");
+        instructionsText=new JTextArea();
+        JScrollPane sp = new JScrollPane(instructionsText);
+        instructionsText.setMinimumSize(new Dimension(500, 100));
         sp.setMinimumSize(new Dimension(500, 500)); 
-        button1=new JButton("Cancel");
-        button2=new JButton("   OK   ");
+        cancelButton=new JButton("Cancel");
+        okButton=new JButton("   OK   ");
         
-        button1.addActionListener(this);
-        button2.addActionListener(this);
+        cancelButton.addActionListener(this);
+        okButton.addActionListener(this);
         
 
         
@@ -69,7 +69,7 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         GroupLayout.ParallelGroup horizontalGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S; 
         
-        groupLayout=new GroupLayout(p1);
+        groupLayout=new GroupLayout(examPanel);
         //set suto gaps in the grouplayout
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
@@ -80,54 +80,54 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         
         //Set horizontalGroup and verticalGroup
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(l1)
+                            .addComponent(instructions)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED,10,Short.MAX_VALUE))
                         .addComponent(sp)
                         .addGroup(groupLayout.createSequentialGroup()
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                            .addComponent(button1)
-                            .addComponent(button2));
+                            .addComponent(cancelButton)
+                            .addComponent(okButton));
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                            .addComponent(l1))
+                            .addComponent(instructions))
                 .addComponent(sp)
                 .addGroup(groupLayout.createParallelGroup()
-                            .addComponent(button1)
-                            .addComponent(button2));
+                            .addComponent(cancelButton)
+                            .addComponent(okButton));
                                                 
                            
         //set grouplayout
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
         //set p1's layout
-        p1.setLayout(groupLayout);
+        examPanel.setLayout(groupLayout);
         
-        return p1;
+        return examPanel;
         
         
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==button1) {//cancel button
+        if (e.getSource()==cancelButton) {//cancel button
             //Exam exam=new Exam();
             //exam.setVisible(true);
             //this.dispose();
-            p1.setVisible(false);
-            p1.getParent().remove(p1);
-            p1.invalidate();
+            examPanel.setVisible(false);
+            examPanel.getParent().remove(examPanel);
+            examPanel.invalidate();
             
-        }else if (e.getSource()==button2) {//submit button
+        }else if (e.getSource()==okButton) {//submit button
             
             //parentJpanel.repaint();
             melt.Model.Exam exam =new melt.Model.Exam();
-            exam.setInstructions(ta1.getText());
+            exam.setInstructions(instructionsText.getText());
             exam.setIsPublic(false);
             
             //initialize Exam_DAO and add exam into database
             Exam_DAO exam_DAO=new Exam_DAO();
             exam_DAO.add(exam);
             //close the parentFrame and reopen it
-            JFrame fatherFrame=(JFrame)p1.getRootPane().getParent();
+            JFrame fatherFrame=(JFrame)examPanel.getRootPane().getParent();
             fatherFrame.dispose();
             ExamOverview examOverview=new ExamOverview();
             examOverview.setVisible(true);
