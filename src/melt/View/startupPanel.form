@@ -127,14 +127,14 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/melt/question_icon.png"/>
+              <Image iconType="3" name="/img/question_icon.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/melt/exam_icon.png"/>
+              <Image iconType="3" name="/img/exam_icon.png"/>
             </Property>
           </Properties>
         </Component>
@@ -174,7 +174,7 @@
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/melt/melt-logo.png"/>
+                  <Image iconType="3" name="/img/melt-logo.png"/>
                 </Property>
               </Properties>
             </Component>

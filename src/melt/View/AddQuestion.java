@@ -1,8 +1,12 @@
-package melt;
+package melt.View;
 
+import melt.Model.QuestionTableModel;
+import java.awt.Dimension;
 import melt.DAO.QuestionDAO;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,14 +15,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.management.Query;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
-import melt.getQuestion;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import melt.Util.SQLHelper;
+import static melt.Util.SQLHelper.driver;
+import static melt.Util.SQLHelper.password;
+import static melt.Util.SQLHelper.url;
+import static melt.Util.SQLHelper.user;
+import melt.View.SettingQuestion;
 
 /**
  *
@@ -26,13 +39,10 @@ import melt.getQuestion;
  */
 public class AddQuestion extends javax.swing.JFrame {
 
+    
     private Connection con;
     private Statement st;
     private ResultSet rs;
-    
-    private Connection con2;
-    private Statement st2;
-    private ResultSet rs2;
     
     private QuestionDAO questionDAO;
     
@@ -51,6 +61,40 @@ public class AddQuestion extends javax.swing.JFrame {
     private String sql5;
     private String sql6;
     
+    public static String url;
+    public static String user;
+    public static String password;
+    public static String driver;
+    
+    
+    public void startSQL() {
+        try {
+
+            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            Properties pp = new Properties();
+            pp.load(in);
+            url = pp.getProperty("jdbc.url");
+            user = pp.getProperty("jdbc.username");
+            password = pp.getProperty("jdbc.password");
+            driver = pp.getProperty("jdbc.driver");
+
+        } catch (IOException ex) {
+            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void connectDb() {
+        startSQL(); 
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection(url, user, password);
+            
+            st = con.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     
     /**
      * Creates new form addQuestion
@@ -61,76 +105,71 @@ public class AddQuestion extends javax.swing.JFrame {
          try {
             questionDAO = new QuestionDAO();
             
-            List<getQuestion> questions = null;
+            List<SettingQuestion> questions = null;
 
             questions = questionDAO.getAllQuestion();
             
             QuestionTableModel model = new QuestionTableModel(questions);
             questionTable.setModel(model);
-            
-           
-          
-            
+    
         } catch (Exception exc) {
             JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE);
         }
     
+        // Set to full screen
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int)width, (int)height); 
+        
+        setTable();
+        
     }
+    
+    public void setTable() {
+    
+        // Centering the first two column's cell content
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        questionTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        questionTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+    
+        // Set the columns width
+        TableColumn column = null;
+        for (int i = 0; i < 3; i++) {
+            column = questionTable.getColumnModel().getColumn(i);
+            if (i == 0) {
+                column.setPreferredWidth(10); //sport column is bigger
+            } else if (i == 1) {
+                column.setPreferredWidth(30);
+            } else {
+                column.setPreferredWidth(780);
+            }
+        } 
+        
+    }  
       
     public void refresh(){
     
          try {
             questionDAO = new QuestionDAO();
             
-            List<getQuestion> questions = null;
+            List<SettingQuestion> questions = null;
 
             questions = questionDAO.getAllQuestion();
             QuestionTableModel model = new QuestionTableModel(questions);
             questionTable.setModel(model);
           
             
+            setTable();
+            
         } catch (Exception exc) {
             JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE);
         }
         
     }  
-    
-    public void close() {
-        //WindowEvent windClosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
-        //Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(windClosingEvent);
-        //this..setVisible(false);
-    }
-    
-    // THIS METHOD COULD BE USE to get Selected answer
-    /*
-    private JRadioButton getSelectedRadioButton(ButtonGroup buttonGroup) {
-
-        Enumeration<AbstractButton> abstractButtons = buttonGroup.getElements();
-        JRadioButton radioButton = null;
-
-        while (abstractButtons.hasMoreElements()) {
-            radioButton = (JRadioButton) abstractButtons.nextElement();
-            if (radioButton.isSelected()) {
-                break;
-            }
-        }
-        
-    return radioButton;
-    }
-    */
       
-    public void connectDb() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/meltsystem","root","");
-            st = con.createStatement();
-            
-        } catch(Exception ex) {
-            System.out.println("Erro: "+ex);
-        }
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,15 +210,6 @@ public class AddQuestion extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
 
         jScrollPane3.setViewportView(jEditorPane1);
 
@@ -323,17 +353,17 @@ public class AddQuestion extends javax.swing.JFrame {
 
         questionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Id", "Question"
+                "No", "Question ID", "Question"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -363,39 +393,6 @@ public class AddQuestion extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Questions");
-        jMenu2.setMargin(new java.awt.Insets(0, 10, 0, 0));
-
-        jMenuItem2.setText("Add questions");
-        jMenu2.add(jMenuItem2);
-
-        jMenuItem3.setText("Edit questions");
-        jMenu2.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Sections");
-        jMenu3.setMargin(new java.awt.Insets(0, 10, 0, 0));
-
-        jMenuItem4.setText("Add sections");
-        jMenu3.add(jMenuItem4);
-
-        jMenuItem5.setText("Edit sections");
-        jMenu3.add(jMenuItem5);
-
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("Tests");
-        jMenu4.setMargin(new java.awt.Insets(0, 10, 0, 0));
-
-        jMenuItem6.setText("Add test");
-        jMenu4.add(jMenuItem6);
-
-        jMenuItem7.setText("Edit tests");
-        jMenu4.add(jMenuItem7);
-
-        jMenuBar1.add(jMenu4);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -406,7 +403,7 @@ public class AddQuestion extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(editBtn)
@@ -445,50 +442,37 @@ public class AddQuestion extends javax.swing.JFrame {
              int selectedRow = questionTable.getSelectedRow();
              rowID = (questionTable.getModel().getValueAt(selectedRow,0).toString());
              
-             //String sql = "SELECT * FROM questions WHERE id='"+rowID+"' ";
              
-             int errors = 0;
+            int errors = 0;
+            
+            String deleteAnswer = "DELETE FROM mcqoption WHERE Question_ID='"+rowID+"'";
+            int rows1 = st.executeUpdate(deleteAnswer);
+            if (rows1 == 0) {
+                 errors++;
+            }
+            
              
-             
-             String deleteMCQ = "DELETE FROM mcq WHERE Question_ID='"+rowID+"'";
-             int rows = st.executeUpdate(deleteMCQ);
-             if (rows == 0) {
+            String deleteQuestion = "DELETE FROM question WHERE Question_ID='"+rowID+"'";
+            int rows2 = st.executeUpdate(deleteQuestion);
+             if (rows2 == 0) {
                  errors++;
              }
+            
              
-             String deleteQuestion = "DELETE FROM question WHERE Question_ID='"+rowID+"'";
-              rows = st.executeUpdate(deleteQuestion);
-             if (rows == 0) {
+            String deleteMCQ = "DELETE FROM mcq WHERE Question_ID='"+rowID+"'";
+            int rows3 = st.executeUpdate(deleteMCQ);
+            if (rows3 == 0) {
                  errors++;
-             }
+            } 
              
-             
-             String deleteAnswer = "DELETE FROM mcqoption WHERE Question_ID='"+rowID+"'";
-              rows = st.executeUpdate(deleteAnswer);
-             if (rows == 0) {
-                 errors++;
-             }
-             
-             
-             
-             if (errors == 0) {
+             if (errors != 0) {
                 JOptionPane.showMessageDialog(null, "Question was successfully deleted!"); 
                 refresh();
              } else {
-                 JOptionPane.showMessageDialog(null, "ERROR : delete was not successfull!");
+                 JOptionPane.showMessageDialog(null, "ERROR : Delete was not successfull!");
                  refresh();
              }
              
-             /*
-             Statement statement = con.createStatement();
-             ResultSet result = statement.executeQuery(sql);
-             String question = "";
-             while(result.next()) {
-              question = result.getString("question");
-             }
-             */
-             
-             //JOptionPane.showMessageDialog(null, question );
 
         }  catch (Exception exc) {
             exc.printStackTrace();
@@ -498,8 +482,6 @@ public class AddQuestion extends javax.swing.JFrame {
      
     
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        //JOptionPane.showMessageDialog(null, "new dialog will be opened!");     
-        //dispose();
         
         EditQuestion editQPanel = new EditQuestion();
         editQPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
@@ -511,16 +493,13 @@ public class AddQuestion extends javax.swing.JFrame {
         });
         
         int selectedRow = questionTable.getSelectedRow();
-        String rowQuestion = (questionTable.getModel().getValueAt(selectedRow,1).toString());
-        
-        String rowAnswer1 = (questionTable.getModel().getValueAt(selectedRow,2).toString());
+        String rowQuestion = (questionTable.getModel().getValueAt(selectedRow,2).toString());
         
         int rowSelected = questionTable.getSelectedRow();
-        rowID = (questionTable.getModel().getValueAt(rowSelected,0).toString());
+        rowID = (questionTable.getModel().getValueAt(rowSelected,1).toString());
         editQPanel.questionID = rowID;
         
         editQPanel.questionField.setText(rowQuestion);
-        editQPanel.answer1.setText(rowAnswer1);
         
         // Get all the answers
         String questionID = rowID;
@@ -530,25 +509,15 @@ public class AddQuestion extends javax.swing.JFrame {
         
         try {
             
-            // create our mysql database connection
-            String myDriver = "com.mysql.jdbc.Driver";
-            String myUrl = "jdbc:mysql://localhost:3306/meltsystem";
-            Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "");
+            connectDb();
 
-            // our SQL SELECT query. 
-            // if you only need a few columns, specify them by name instead of using "*"
-            
-            //int rowSelected = questionTable.getSelectedRow();
-            rowID = (questionTable.getModel().getValueAt(rowSelected,0).toString());
+            rowID = (questionTable.getModel().getValueAt(rowSelected,1).toString());
             
             String query = "SELECT * FROM mcqoption WHERE Question_ID='"+rowID+"' ";
             
-            //System.out.println("Question ID is: " + rowID + "\n\n");
-            //String query = "SELECT * FROM answers WHERE questionid='99' ";
             
             // create the java statement
-            Statement st = conn.createStatement();
+            Statement st = con.createStatement();
 
             // execute the query, and get a java resultset
             ResultSet rs = st.executeQuery(query);
@@ -643,18 +612,7 @@ public class AddQuestion extends javax.swing.JFrame {
             editQPanel.answer4.setText(answer4);
             editQPanel.answer5.setText(answer5);
             editQPanel.answer6.setText(answer6);
-            
- 
     
-            /*
-            System.out.println("ID 1: "+answerID1);
-            System.out.println("ID 2: "+answerID2);
-            System.out.println("ID 3: "+answerID3);
-            System.out.println("ID 4: "+answerID4);
-            System.out.println("ID 5: "+answerID5);
-            System.out.println("ID 6: "+answerID6);
-            */
-            
             editQPanel.answerID1 =  answerID1;
             editQPanel.answerID2 =  answerID2;
             editQPanel.answerID3 =  answerID3;  
@@ -664,8 +622,6 @@ public class AddQuestion extends javax.swing.JFrame {
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close(st, rs);
@@ -713,11 +669,8 @@ public class AddQuestion extends javax.swing.JFrame {
             st.executeUpdate(sql0);
 
             /////////////// INSERT the correct choice (of answer) to DB  ////////////////
-            //String selectedRadioButtonText = getSelectedRadioButton(choices).getText();
 
             char correctAnswer;
-
-            //System.out.println("Last id is: "+key);
 
             int isSelected = 0;
 
@@ -854,17 +807,8 @@ public class AddQuestion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

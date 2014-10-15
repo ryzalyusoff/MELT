@@ -1,5 +1,6 @@
 package melt;
 
+import melt.View.startupPanel;
 import java.util.List;
 
 public class Main {

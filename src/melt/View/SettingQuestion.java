@@ -1,21 +1,21 @@
-package melt;
+package melt.View;
 
-public class getQuestion {
+public class SettingQuestion {
     
     private int id;
     private String question;
-    private String answer;
+    private int counter;
     
 
 
     private char correctAnswer;
     
 
-    public getQuestion(int id, String question) {
+    public SettingQuestion(int counter, int id, String question) {
         super();
         this.id = id;
         this.question = question;
-        //this.answer = answer;
+        this.counter = counter;
     }
 
     public int getId() {
@@ -34,12 +34,13 @@ public class getQuestion {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return answer;
+    public int getCounter() {
+        return counter;
+    }
+    
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
     
 }

@@ -1,18 +1,19 @@
-package melt;
+package melt.Model;
 
+import melt.View.SettingQuestion;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class QuestionTableModel extends AbstractTableModel {
 
     private static final int NO_COL = 0;
-    private static final int QUESTION_COL = 1;
-    private static final int ANSWER_COL = 2;
+    private static final int ID_COL = 1;
+    private static final int QUESTION_COL = 2;
     
-    private String[] columnNames = { "No", "Question"};
-    private List<getQuestion> questions;
+    private String[] columnNames = { "No", "Question ID" ,"Question"};
+    private List<SettingQuestion> questions;
     
-    public QuestionTableModel(List<getQuestion> theQuestions) {
+    public QuestionTableModel(List<SettingQuestion> theQuestions) {
 		questions = theQuestions;
     }
     
@@ -34,16 +35,17 @@ public class QuestionTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		getQuestion tempQuestion = questions.get(row);
+		SettingQuestion tempQuestion = questions.get(row);
 
 		switch (col) {
                 case NO_COL:
-			return tempQuestion.getId();    
+			return tempQuestion.getCounter();
+                
+		case ID_COL:
+                        return tempQuestion.getId();
+    
 		case QUESTION_COL:
 			return tempQuestion.getQuestion();
-
-		//case ANSWER_COL:
-		//	return tempQuestion.getAnswer();
 
 		default:
 			return tempQuestion.getQuestion();
