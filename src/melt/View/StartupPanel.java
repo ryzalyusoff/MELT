@@ -190,6 +190,7 @@ public class StartupPanel extends javax.swing.JFrame {
         questionPanel = new AddQuestion();
         questionPanel.setVisible(true);
         questionPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -197,6 +198,7 @@ public class StartupPanel extends javax.swing.JFrame {
         examPanel = new melt.View.ExamOverview();
         examPanel.setVisible(true);
         examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void helpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpBtnActionPerformed

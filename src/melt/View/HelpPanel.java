@@ -34,6 +34,8 @@ public class HelpPanel extends javax.swing.JFrame {
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int)width, (int)height);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
         
     }
 

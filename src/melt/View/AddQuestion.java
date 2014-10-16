@@ -848,8 +848,8 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        this.dispose();
         new melt.View.StartupPanel().setVisible(true);
+        this.dispose();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
