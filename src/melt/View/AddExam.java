@@ -128,9 +128,12 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
             exam_DAO.add(exam);
             //close the parentFrame and reopen it
             JFrame fatherFrame=(JFrame)examPanel.getRootPane().getParent();
-            fatherFrame.dispose();
+            //fatherFrame.dispose();
             ExamOverview examOverview=new ExamOverview();
-            examOverview.setVisible(true);
+            fatherFrame.setContentPane(examOverview.getGUI());
+            fatherFrame.revalidate();
+            fatherFrame.repaint();
+            //examOverview.setVisible(true);
         }
     }
 
