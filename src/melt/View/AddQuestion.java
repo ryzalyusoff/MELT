@@ -448,7 +448,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
             
             connectDb();
              int selectedRow = questionTable.getSelectedRow();
-             rowID = (questionTable.getModel().getValueAt(selectedRow,0).toString());
+             rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
              
              
             int errors = 0;
