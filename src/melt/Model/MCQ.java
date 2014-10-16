@@ -14,46 +14,18 @@ public class MCQ extends Question{
     private String question_Text;
 
     /**
-     * @return the Question_ID
-     */
-    public int getQuestion_ID() {
-        return question_ID;
-    }
-
-    /**
-     * @param Question_ID the Question_ID to set
-     */
-    public void setQuestion_ID(int Question_ID) {
-        this.question_ID = Question_ID;
-    }
-
-
-    /**
-     * @return the Qtype_ID
-     */
-    public int getQtype_ID() {
-        return qtype_ID;
-    }
-
-    /**
-     * @param Qtype_ID the Qtype_ID to set
-     */
-    public void setQtype_ID(int Qtype_ID) {
-        this.qtype_ID = Qtype_ID;
-    }
-
-    /**
-     * @return the Question_Text
+     * @return the question_Text
      */
     public String getQuestion_Text() {
         return question_Text;
     }
 
     /**
-     * @param Question_Text the Question_Text to set
+     * @param question_Text the question_Text to set
      */
-    public void setQuestion_Text(String Question_Text) {
-        this.question_Text = Question_Text;
+    public void setQuestion_Text(String question_Text) {
+        this.question_Text = question_Text;
     }
-    
+
+        
 }
