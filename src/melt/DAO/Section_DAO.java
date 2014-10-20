@@ -69,7 +69,7 @@ public class Section_DAO {
         SQLHelper sQLHelper = new SQLHelper();
         sQLHelper.sqlConnect();
         ResultSet rs = sQLHelper.runQuery(sql.toString());
-        //sQLHelper.sqlClose();
+        sQLHelper.sqlClose();
         return rs;
     }
 

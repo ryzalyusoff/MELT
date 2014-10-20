@@ -44,7 +44,7 @@ import melt.DAO.Question_DAO;
 public class ChooseQuestionsPanel extends JDialog implements ActionListener {
     
     JTable table1;
-    JButton button1;
+    JButton button1,addquestionButton;
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
     double width;
@@ -104,6 +104,9 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         
         button1 = new JButton("Add Question");
         button1.addActionListener(this);
+        
+        addquestionButton=new JButton("Set a new Question");
+        addquestionButton.addActionListener(this);
         //columnNames for the table
         String[] columnNames = {
             "ID",
@@ -199,6 +202,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         p.setLayout(new FlowLayout());
         p.setMaximumSize(new Dimension((int)width,30));
         p.add(button1,CENTER_ALIGNMENT);
+        p.add(addquestionButton,CENTER_ALIGNMENT);
         p1.add(p);
         
         return p1;
@@ -226,6 +230,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
                 objectArraylist.add(col);
                 
             }
+            rs.close();
             //trun arraylist<object[]> to object[][]
             Object[][] datas = new Object[objectArraylist.size()][3];
             for (int i = 0; i < objectArraylist.size(); i++) {
@@ -236,6 +241,12 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             Logger.getLogger(ChooseQuestionsPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public void refresh(){
+        setContentPane(getGUI());
+        revalidate();
+        refresh();
     }
     
     public static void main(String[] args) {
@@ -260,6 +271,12 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             }
             this.dispose();
           
+        }else if(e.getSource()==addquestionButton){
+            AddQuestion addQuestion=new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS,this);
+            addQuestion.setVisible(true);
+            //this.setVisible(false);
+            
+        
         }
     }
     

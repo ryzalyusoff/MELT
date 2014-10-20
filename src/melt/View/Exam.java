@@ -37,7 +37,7 @@ import melt.Model.*;
 public class Exam extends JFrame implements ActionListener, WindowListener {
 
     public JLabel welcomeLabel, timeLabel;
-    public JButton addSectionButton, deleteButton, editButton, backButton;
+    public JButton addSectionButton, deleteButton, editButton, backButton,previewButton;
     public ArrayList<Section> sections;
     public JLabel[] sectionLabels;
     public JCheckBox[] sectionChosen;
@@ -82,6 +82,10 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         backButton = new JButton("<<<Back to Exams");
         backButton.setMinimumSize(new Dimension(350, 20));
         backButton.addActionListener(this);
+        
+        previewButton=new JButton("Preview");
+        previewButton.addActionListener(this);
+        
         setMainPanel();
         //Create buttonsPanel
         buttonsPanel = new JPanel();
@@ -116,6 +120,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         scrollPane = new JScrollPane(mainPanel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         leftPanel.add(backButton);
+        leftPanel.add(previewButton);
         leftPanel.add(scrollPane);
         leftPanel.add(buttonsPanel);
 
@@ -233,6 +238,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
                 section.setTimeLimit(new SimpleDateFormat("HH:mm:ss").parse(rs.getString("TimeLimit")));
                 sections.add(section);
             }
+            
         } catch (SQLException ex) {
             Logger.getLogger(Exam.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -266,6 +272,16 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
             fatherFrame.setContentPane(examOverview.getGUI());
             fatherFrame.revalidate();
             fatherFrame.repaint();
+
+        } else if (e.getSource() == previewButton) {
+            //this.dispose();
+            ExamPreview examPreview=new ExamPreview(examId);
+            
+            //examOverview.setVisible(true);
+            contentPanel.removeAll();
+            contentPanel.setLayout(new BorderLayout());
+            contentPanel.add(examPreview.getGUI());
+            contentPanel.revalidate();
 
         } else if (((JButton) e.getSource()).getText().equals("Delete")) {
             //set section_ID
