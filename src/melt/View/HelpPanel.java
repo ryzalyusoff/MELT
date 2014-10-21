@@ -34,6 +34,8 @@ public class HelpPanel extends javax.swing.JFrame {
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int)width, (int)height);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
         
     }
 
@@ -51,6 +53,7 @@ public class HelpPanel extends javax.swing.JFrame {
         help2 = new javax.swing.JButton();
         help3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        help4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         instructionPane = new javax.swing.JEditorPane();
@@ -90,17 +93,29 @@ public class HelpPanel extends javax.swing.JFrame {
             }
         });
 
+        help4.setText("Detailed Instructions");
+        help4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        help4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                help4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(help1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-            .addComponent(help2, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-            .addComponent(help3, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+            .addComponent(help1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+            .addComponent(help2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+            .addComponent(help3, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(help4, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,7 +126,9 @@ public class HelpPanel extends javax.swing.JFrame {
                 .addComponent(help2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(help3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(help4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(64, 64, 64))
         );
@@ -123,7 +140,7 @@ public class HelpPanel extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,6 +180,11 @@ public class HelpPanel extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void help4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_help4ActionPerformed
+        // TODO add your handling code here:
+        displayPage("../../pages/help4.txt");
+    }//GEN-LAST:event_help4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,6 +236,7 @@ public class HelpPanel extends javax.swing.JFrame {
     private javax.swing.JButton help1;
     private javax.swing.JButton help2;
     private javax.swing.JButton help3;
+    private javax.swing.JButton help4;
     private javax.swing.JEditorPane instructionPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;

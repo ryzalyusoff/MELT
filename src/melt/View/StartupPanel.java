@@ -203,6 +203,7 @@ public class StartupPanel extends javax.swing.JFrame {
         examPanel = new melt.View.ExamOverview();
         examPanel.setVisible(true);
         examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void helpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpBtnActionPerformed

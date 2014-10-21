@@ -16,6 +16,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
 import melt.DAO.SubsectionQuestion_DAO;
 import melt.Model.*;
@@ -60,6 +61,8 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         
         subsectionButton1.addActionListener(this);
         subsectionButton2.addActionListener(this);
+        
+        JSeparator jSeparator=new JSeparator();
 
         groupLayout = new GroupLayout(this);
         groupLayout.setAutoCreateContainerGaps(true);
@@ -74,13 +77,15 @@ public class SubsectionPanel extends JPanel implements ActionListener{
                 .addComponent(subsectionButton2))
             .addGroup(groupLayout.createSequentialGroup()
                 .addGap(20)
-                .addComponent(subsectionQuestionPanel));
+                .addComponent(subsectionQuestionPanel))
+                .addComponent(jSeparator);
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                 .addComponent(subsectionLabel1)
                 .addComponent(subsectionButton1)
                 .addComponent(subsectionButton2))
-                .addComponent(subsectionQuestionPanel);
+                .addComponent(subsectionQuestionPanel)
+                .addComponent(jSeparator);
                 
 
         groupLayout.setHorizontalGroup(horizontalGroup_P);
