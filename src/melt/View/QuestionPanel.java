@@ -5,6 +5,9 @@
  */
 package melt.View;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
@@ -12,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
 import melt.DAO.*;
@@ -21,18 +25,19 @@ import melt.Model.*;
  * the panel of MCQ
  * @author Aote Zhou
  */
-public class MCQPanel extends JPanel implements ActionListener{
+public class QuestionPanel extends JPanel implements ActionListener{
     JPanel p3;
     //components in p3
     JLabel questionLabel, questionContent;
     JButton questionDeleteButton;
     JLabel[] choices;
-    int Q_ID;
+    int Q_ID,Q_Type;
     Question question;
     MCQOption[] mCQOptions;
-    public MCQPanel(int Q_ID){
+    public QuestionPanel(int Q_ID, int Q_Type){
         super();
         this.Q_ID=Q_ID;
+        this.Q_Type=Q_Type;
     }
     /**
      * set the contentpanel
@@ -51,6 +56,8 @@ public class MCQPanel extends JPanel implements ActionListener{
 //        p3.setBackground(Color.cyan);
 
         getQ(Q_ID);
+        if(Q_Type == 1)
+        {
         questionLabel = new JLabel("");
         questionDeleteButton = new JButton("Delete");
         questionContent = new JLabel(((MCQ)question).getQuestion_Text());
@@ -115,6 +122,62 @@ public class MCQPanel extends JPanel implements ActionListener{
         groupLayout.setVerticalGroup(verticalGroup_S);
 
         this.setLayout(groupLayout);
+        }
+        if(Q_Type == 2)
+        {
+            questionLabel = new JLabel(((FIB)question).getQuestionInstructions());
+        questionDeleteButton = new JButton("Delete");
+        String rawQuestion = ((FIB)question).getQuestionText();
+        JPanel fibPanel = new JPanel();
+        fibPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        
+        while(rawQuestion.contains("<"))
+        {
+            int startIndex = rawQuestion.indexOf("<");
+            fibPanel.add(new JLabel(rawQuestion.substring(0, startIndex)));
+            JTextField blank = new JTextField();
+            blank.setPreferredSize(new Dimension(80,25));
+            fibPanel.add(blank);
+            rawQuestion = rawQuestion.substring(rawQuestion.indexOf(">")+1);            
+        }
+        if(!(rawQuestion.isEmpty()))
+        {
+            fibPanel.add(new JLabel(rawQuestion));
+        }
+        
+        
+        
+        questionDeleteButton.addActionListener(this);
+
+        groupLayout = new GroupLayout(this);
+        groupLayout.setAutoCreateContainerGaps(true);
+        groupLayout.setAutoCreateGaps(true);
+        horizontalContentGroup_P=groupLayout.createParallelGroup();
+        horizontalGroup_S = groupLayout.createSequentialGroup();
+        verticalGroup_S = groupLayout.createSequentialGroup();
+        
+        
+        //group for horizontal
+        horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
+                .addComponent(questionLabel)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addComponent(questionDeleteButton));
+        horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
+                .addComponent(fibPanel));
+        horizontalGroup_S.addGap(0).addGroup(horizontalContentGroup_P);
+        //group for vertical
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+                .addComponent(questionDeleteButton)
+                .addComponent(questionLabel));
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+                .addComponent(fibPanel));
+
+        
+        groupLayout.setHorizontalGroup(horizontalGroup_S);
+        groupLayout.setVerticalGroup(verticalGroup_S);
+
+        this.setLayout(groupLayout);
+        }
         
         //return p3;
     }
@@ -124,11 +187,16 @@ public class MCQPanel extends JPanel implements ActionListener{
      */
     public void getQ(int questionID){
         //Question_DAO question_DAO=new Question_DAO();
-        MCQ_DAO mcq_dao=new MCQ_DAO();
+        MCQ_DAO mcq_dao=new MCQ_DAO();        
         MCQOption_DAO mCQOption_DAO=new MCQOption_DAO();
         
         question=mcq_dao.getModel(questionID);
-        mCQOptions=mCQOption_DAO.getModel(questionID);    
+        mCQOptions=mCQOption_DAO.getModel(questionID);
+        
+        FIB_DAO fib_dao=new FIB_DAO();        
+        FIBAnswer_DAO fIBAnswer_DAO=new FIBAnswer_DAO();
+          
+        question=fib_dao.getModel(questionID);  
     }
     @Override
     public void actionPerformed(ActionEvent e) {

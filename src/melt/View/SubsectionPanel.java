@@ -16,6 +16,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
 import melt.DAO.SubsectionQuestion_DAO;
 import melt.Model.*;
@@ -60,6 +61,8 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         
         subsectionButton1.addActionListener(this);
         subsectionButton2.addActionListener(this);
+        
+        JSeparator jSeparator=new JSeparator();
 
         groupLayout = new GroupLayout(this);
         groupLayout.setAutoCreateContainerGaps(true);
@@ -74,13 +77,15 @@ public class SubsectionPanel extends JPanel implements ActionListener{
                 .addComponent(subsectionButton2))
             .addGroup(groupLayout.createSequentialGroup()
                 .addGap(20)
-                .addComponent(subsectionQuestionPanel));
+                .addComponent(subsectionQuestionPanel))
+                .addComponent(jSeparator);
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                 .addComponent(subsectionLabel1)
                 .addComponent(subsectionButton1)
                 .addComponent(subsectionButton2))
-                .addComponent(subsectionQuestionPanel);
+                .addComponent(subsectionQuestionPanel)
+                .addComponent(jSeparator);
                 
 
         groupLayout.setHorizontalGroup(horizontalGroup_P);
@@ -94,7 +99,7 @@ public class SubsectionPanel extends JPanel implements ActionListener{
 //        p1.add(p2);
 //        subsectionQuestionPanel=new JPanel();
 //        subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
-//        //subsectionQuestionPanel.add(new MCQPanel().getGUI());
+//        //subsectionQuestionPanel.add(new QuestionPanel().getGUI());
 //        p1.add(subsectionQuestionPanel);
 
         //return p2;
@@ -110,7 +115,7 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         ResultSet rs=subsectionQuestion_DAO.getList("subsection_ID='"+subSection.getSubSection_ID()+"'");
         try {
             while (rs.next()) {
-                MCQPanel mCQPanel=new MCQPanel(rs.getInt("Question_ID"));
+                QuestionPanel mCQPanel = new QuestionPanel(rs.getInt("SSQ.Question_ID"), rs.getInt("Q.QType_ID"));
                 addQ(mCQPanel);
             }
         } catch (SQLException ex) {
@@ -121,10 +126,10 @@ public class SubsectionPanel extends JPanel implements ActionListener{
     }
 
     /**
-     * add MCQPanel to subsectionQuestionPanel
+     * add QuestionPanel to subsectionQuestionPanel
      * @param mCQPanel
      */
-    public void addQ(MCQPanel mCQPanel){
+    public void addQ(QuestionPanel mCQPanel){
         mCQPanel.getGUI();
         subsectionQuestionPanel.add(mCQPanel);
     }

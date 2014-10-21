@@ -43,6 +43,7 @@ public class Main {
 
                 //new AddQuestion().setVisible(true);
                 new melt.View.StartupPanel().setVisible(true);
+                
 
                 
             }

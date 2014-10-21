@@ -228,7 +228,7 @@ public class SectionPanel extends JPanel implements ActionListener {
                 ResultSet rs1 = subsectionQuestion_DAO.getList("subsection_ID='" + subSection.getSubSection_ID() + "'");
                 try {
                     while (rs1.next()) {
-                        MCQPanel mCQPanel = new MCQPanel(rs1.getInt("Question_ID"));
+                        QuestionPanel mCQPanel = new QuestionPanel(rs1.getInt("SSQ.Question_ID"), rs1.getInt("Q.QType_ID"));
                         addQ(mCQPanel);
                     }
                 } catch (SQLException ex) {
@@ -266,7 +266,7 @@ public class SectionPanel extends JPanel implements ActionListener {
      *get GUI of mcqPanel and set it as content panel
      * @param mCQPanel
      */
-    public void addQ(MCQPanel mCQPanel) {
+    public void addQ(QuestionPanel mCQPanel) {
         mCQPanel.getGUI();
         sectionContentPanel.add(mCQPanel);
     }
@@ -327,7 +327,7 @@ public class SectionPanel extends JPanel implements ActionListener {
             int subsection_ID = subsection_DAO.add(subSection);
             Component[] components = sectionContentPanel.getComponents();
             for (Component component : components) {
-                if (component instanceof MCQPanel) {
+                if (component instanceof QuestionPanel) {
                     //System.out.println(((JPanel)component).getName());
 
 //                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
@@ -386,7 +386,7 @@ public class SectionPanel extends JPanel implements ActionListener {
                         if (component2 instanceof JPanel) {
                             Component[] components3 = ((JPanel) component2).getComponents();  //SubsectionQuestion
                             for (Component component3 : components3) {
-                                if (component3 instanceof MCQPanel) {
+                                if (component3 instanceof QuestionPanel) {
 //                                    Question_DAO question_DAO = new Question_DAO();
 //                                    MCQ_DAO mcq_dao = new MCQ_DAO();
 //

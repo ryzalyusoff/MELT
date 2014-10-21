@@ -262,9 +262,9 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         
 
         }else if(e.getSource()==backButton){
-            this.dispose();
             melt.View.StartupPanel startupPanel=new melt.View.StartupPanel();
             startupPanel.setVisible(true);
+            this.dispose();
         }else if (e.getSource() == addExamButton) {
             AddExam addExam = new AddExam();
             //settingSection.setVisible(true);
@@ -337,8 +337,8 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
 
     @Override
     public void windowClosing(WindowEvent e) {
-        dispose();
         new melt.View.StartupPanel().setVisible(true);
+        dispose();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

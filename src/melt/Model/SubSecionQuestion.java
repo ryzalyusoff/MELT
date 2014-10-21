@@ -7,7 +7,7 @@ package melt.Model;
 
 /**
  *
- * @author eddychou
+ * @author Aote Zhou
  */
 public class SubSecionQuestion {
     private int SubSection_ID;
