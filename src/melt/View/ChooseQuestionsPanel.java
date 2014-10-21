@@ -214,6 +214,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         p.setMaximumSize(new Dimension((int)width,30));
         p.add(button1,CENTER_ALIGNMENT);
         p1.add(p);
+        //ok
         
         return p1;
         
