@@ -282,6 +282,10 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
 //            addQuestion.setVisible(true);
 //            addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
             //this.setVisible(false);
+            
+            
+            
+            
 
         }
     }
