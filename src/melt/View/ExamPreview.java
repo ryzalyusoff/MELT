@@ -47,7 +47,7 @@ public class ExamPreview {
         GroupLayout.SequentialGroup verticalGroup_S = groupLayout.createSequentialGroup();
         
         for (int i = 0; i < sections.size(); i++) {
-            SectionPanel sectionPanel=new SectionPanel(exam_ID);
+            SectionPanel_Preview sectionPanel=new SectionPanel_Preview(exam_ID);
             sectionPanel.getGUI(((Section)sections.get(i)).getSection_ID());
             
             horizontalGroup_P.addComponent(sectionPanel);
