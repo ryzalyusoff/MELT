@@ -278,9 +278,9 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             //this.setVisible(false);
 
         }else if (e.getSource() == addquestionButton2) {
-            AddQuestion addQuestion = new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS, this);
-            addQuestion.setVisible(true);
-            addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+//            AddQuestion addQuestion = new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS, this);
+//            addQuestion.setVisible(true);
+//            addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
             //this.setVisible(false);
 
         }
