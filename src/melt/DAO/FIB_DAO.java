@@ -30,8 +30,8 @@ public class FIB_DAO {
         
     public FIB getModel(int Question_ID) {
     
-        try {
             FIB fibQuestion = new FIB();
+        try {
 
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT QuestionID,QuestionType,QuestionText, Instructions");
