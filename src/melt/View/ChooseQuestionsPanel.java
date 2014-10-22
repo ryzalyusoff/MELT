@@ -42,7 +42,7 @@ import melt.Model.MCQ;
 public class ChooseQuestionsPanel extends JDialog implements ActionListener {
 
     JTable table1;
-    JButton button1, addquestionButton;
+    JButton button1, addquestionButton1,addquestionButton2;
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
     double width;
@@ -107,8 +107,10 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         button1 = new JButton("Add Question");
         button1.addActionListener(this);
 
-        addquestionButton = new JButton("Set a new Question");
-        addquestionButton.addActionListener(this);
+        addquestionButton1 = new JButton("Set a MCQ Question");
+        addquestionButton1.addActionListener(this);
+        addquestionButton1 = new JButton("Set a FIB Question");
+        addquestionButton1.addActionListener(this);
         //columnNames for the table
         String[] columnNames = {
             "ID",
@@ -204,7 +206,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         p.setLayout(new FlowLayout());
         p.setMaximumSize(new Dimension((int) width, 30));
         p.add(button1, CENTER_ALIGNMENT);
-        p.add(addquestionButton, CENTER_ALIGNMENT);
+        p.add(addquestionButton1, CENTER_ALIGNMENT);
         p1.add(p);
 
         return p1;
@@ -269,7 +271,13 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             }
             this.dispose();
 
-        } else if (e.getSource() == addquestionButton) {
+        } else if (e.getSource() == addquestionButton1) {
+            AddQuestion addQuestion = new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS, this);
+            addQuestion.setVisible(true);
+            addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+            //this.setVisible(false);
+
+        }else if (e.getSource() == addquestionButton2) {
             AddQuestion addQuestion = new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS, this);
             addQuestion.setVisible(true);
             addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
