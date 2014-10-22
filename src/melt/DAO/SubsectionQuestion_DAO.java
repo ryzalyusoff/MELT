@@ -69,10 +69,11 @@ public class SubsectionQuestion_DAO {
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
-        sql.append("SELECT Question_ID,SubSection_ID");
-        sql.append(" FROM SubSectionQuestion");
+        sql.append("SELECT SSQ.Question_ID,SSQ.SubSection_ID, Q.QType_ID");
+        sql.append(" FROM SubSectionQuestion AS SSQ");
+        sql.append(" LEFT JOIN Question AS Q ON SSQ.Question_ID = Q.Question_ID ");
         if (whereString.trim() != "") {
-            sql.append(" where " + whereString);
+            sql.append(" where SSQ." + whereString);
         }
         SQLHelper sQLHelper = new SQLHelper();
         sQLHelper.sqlConnect();
