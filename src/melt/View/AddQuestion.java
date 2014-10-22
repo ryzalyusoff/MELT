@@ -811,6 +811,12 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                         answerField6.setText("");
 
                     refresh();
+                    if (addingFlag==addingState.WHENEDITSECTIONS) {
+                        fatherPanel.refresh();
+                        dispose();
+                        //fatherPanel.setVisible(true);
+                
+                    }
                     } else {
                         JOptionPane.showMessageDialog(null, "Please select at least one correct answer!", "error", JOptionPane.ERROR_MESSAGE);
                         String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
@@ -837,11 +843,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                 
             }
             
-            if (addingFlag==addingState.WHENEDITSECTIONS) {
-                fatherPanel.refresh();
-                //fatherPanel.setVisible(true);
-                
-            }
+            
             
 
         } catch (Exception exc) {
@@ -892,7 +894,9 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        new melt.View.StartupPanel().setVisible(true);
+        if (addingFlag!=addingState.WHENEDITSECTIONS) {
+            new melt.View.StartupPanel().setVisible(true);
+        }
         this.dispose();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

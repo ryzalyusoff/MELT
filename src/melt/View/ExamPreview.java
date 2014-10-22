@@ -5,13 +5,8 @@
  */
 package melt.View;
 
-import java.awt.BorderLayout;
-import java.awt.ScrollPane;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,24 +20,19 @@ import melt.Model.Section;
  */
 public class ExamPreview {
     private int exam_ID;
-    private ArrayList<Integer> section_IDList;
+    private ArrayList<Section>  sections;
     
     public ExamPreview(int exam_ID){
         this.exam_ID=exam_ID;
         getGUI();
     }
     private void getExam(){
-        try {
-            section_IDList=new ArrayList<Integer>();
-            Section_DAO section_DAO=new Section_DAO();
-            ResultSet rs=section_DAO.getList("exam_ID='"+exam_ID+"'");
-            while (rs.next()) {
-                section_IDList.add(rs.getInt("Section_ID"));
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ExamPreview.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        sections=new ArrayList<Section>();
+        Section_DAO section_DAO=new Section_DAO();
+        sections=section_DAO.getList("exam_ID='"+exam_ID+"'");
+            
+        
     }
     
     public JScrollPane getGUI(){
@@ -56,9 +46,9 @@ public class ExamPreview {
         GroupLayout.ParallelGroup horizontalGroup_P = groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER);
         GroupLayout.SequentialGroup verticalGroup_S = groupLayout.createSequentialGroup();
         
-        for (int i = 0; i < section_IDList.size(); i++) {
+        for (int i = 0; i < sections.size(); i++) {
             SectionPanel sectionPanel=new SectionPanel(exam_ID);
-            sectionPanel.getGUI(section_IDList.get(i));
+            sectionPanel.getGUI(((Section)sections.get(i)).getSection_ID());
             
             horizontalGroup_P.addComponent(sectionPanel);
             verticalGroup_S.addComponent(sectionPanel);

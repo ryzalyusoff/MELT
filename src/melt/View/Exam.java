@@ -225,25 +225,12 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
      * @param examId
      */
     private void getSections(int examId) {
-        try {
-            Section_DAO section_DAO = new Section_DAO();
-            ResultSet rs = section_DAO.getList("Exam_ID='" + examId + "'");
+       
+        Section_DAO section_DAO = new Section_DAO();
+        sections = section_DAO.getList("Exam_ID='" + examId + "'");
 
-            sections = new ArrayList<Section>();
-            while (rs.next()) {
-                Section section = new Section();
-                section.setExam_ID(examId);
-                section.setSection_ID(rs.getInt("Section_ID"));
-                section.setSection_Name(rs.getString("Section_Name"));
-                section.setTimeLimit(new SimpleDateFormat("HH:mm:ss").parse(rs.getString("TimeLimit")));
-                sections.add(section);
-            }
             
-        } catch (SQLException ex) {
-            Logger.getLogger(Exam.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Exam.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
     }
 
