@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Util.SQLHelper;
+import sols.Util.SQLHelper;
 
 /**
  *
@@ -42,7 +42,7 @@ public class Exam_DAO {
      * @param exam
      * @return
      */
-    public int add(melt.Model.Exam exam){
+    public int add(sols.Model.Exam exam){
         int generated_Exam_ID=-1;
         
         StringBuffer sql=new StringBuffer();

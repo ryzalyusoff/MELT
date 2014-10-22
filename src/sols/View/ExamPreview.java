@@ -11,8 +11,8 @@ import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import melt.DAO.*;
-import melt.Model.Section;
+import sols.DAO.*;
+import sols.Model.Section;
 
 /**
  *

@@ -12,8 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
-import melt.DAO.*;
-import melt.Model.*;
+import sols.DAO.*;
+import sols.Model.*;
 
 /**
  * the panel of MCQ

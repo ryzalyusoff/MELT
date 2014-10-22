@@ -9,14 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sols.Model.FIB;
+import sols.Model.Essay;
 import sols.Util.SQLHelper;
 
 /**
  *
  * @author Aote Zhou
  */
-public class FIB_DAO {
+public class Essay_DAO {
 
     /**
      * get mcq by question_ID
@@ -24,18 +24,13 @@ public class FIB_DAO {
      * @param Question_ID
      * @return
      */
-    
-    
-    FIB fibQuestion;
-        
-    public FIB getModel(int Question_ID) {
-    
-            FIB fibQuestion = new FIB();
+    public Essay getModel(int Question_ID) {
+        Essay essayQuestion = new Essay();
         try {
 
             StringBuffer sql = new StringBuffer("");
-            sql.append("SELECT QuestionID,QuestionType,QuestionText, Instructions");
-            sql.append(" FROM MELTSystem.`FIB`");
+            sql.append("SELECT QuestionID,QuestionType,noofwords, instructions");
+            sql.append(" FROM MELTSystem.`Essay`");
             sql.append(" where QuestionID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();
@@ -43,17 +38,17 @@ public class FIB_DAO {
             ResultSet rs = sQLHelper.runQuery(sql.toString());
             while (rs.next()) {
 
-                fibQuestion.setQtype_ID(rs.getInt("QuestionType"));
-                fibQuestion.setQuestion_ID(rs.getInt("QuestionID"));
-                fibQuestion.setQuestionText(rs.getString("QuestionText"));
-                fibQuestion.setQuestionInstructions(rs.getString("Instructions"));
+                essayQuestion.setQtype_ID(rs.getInt("QuestionType"));
+                essayQuestion.setQuestion_ID(rs.getInt("QuestionID"));
+                essayQuestion.setNoOfWords(rs.getString("noofwords"));
+                essayQuestion.setInstructions(rs.getString("instructions"));
                
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FIB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Essay.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return fibQuestion;
+        return essayQuestion;
     }
 
     /**
@@ -95,8 +90,8 @@ public class FIB_DAO {
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
-        sql.append("SELECT QuestionID,QuestionType,QuestionText, Instructions");
-        sql.append(" FROM MELTSystem.`FIB`");
+        sql.append("SELECT QuestionID,QuestionType,noofwords, instructions");
+        sql.append(" FROM MELTSystem.`Essay`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }

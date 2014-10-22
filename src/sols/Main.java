@@ -1,8 +1,8 @@
 package sols;
 
-import melt.View.StartupPanel;
+import sols.View.StartupPanel;
 import java.util.List;
-import melt.View.AddQuestion;
+import sols.View.AddQuestion;
 
 public class Main {
     
@@ -40,7 +40,7 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new melt.View.StartupPanel().setVisible(true);
+                new sols.View.StartupPanel().setVisible(true);
             }
         });
     }

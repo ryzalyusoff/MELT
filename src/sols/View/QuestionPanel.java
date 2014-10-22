@@ -15,11 +15,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
-import melt.DAO.*;
-import melt.Model.*;
+import sols.DAO.*;
+import sols.Model.*;
 
 /**
  * the panel of MCQ
@@ -125,9 +126,9 @@ public class QuestionPanel extends JPanel implements ActionListener{
         }
         if(Q_Type == 2)
         { 
-        questionLabel = new JLabel(((melt.Model.FIB)question).getQuestionInstructions());
+        questionLabel = new JLabel(((sols.Model.FIB)question).getQuestionInstructions());
         questionDeleteButton = new JButton("Delete");
-        String rawQuestion = ((melt.Model.FIB)question).getQuestionText();
+        String rawQuestion = ((sols.Model.FIB)question).getQuestionText();
         JPanel fibPanel = new JPanel();
         fibPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         
@@ -179,6 +180,49 @@ public class QuestionPanel extends JPanel implements ActionListener{
         this.setLayout(groupLayout);
         }
         
+        if(Q_Type == 3)
+        {
+            questionLabel = new JLabel(((Essay)question).getInstructions());
+        questionDeleteButton = new JButton("Delete");
+        
+        JTextArea essayTextArea = new JTextArea();
+                      
+        JLabel wordLimit = new JLabel("Word Limit: "+((Essay)question).getNoOfWords());
+        
+        questionDeleteButton.addActionListener(this);
+
+        groupLayout = new GroupLayout(this);
+        groupLayout.setAutoCreateContainerGaps(true);
+        groupLayout.setAutoCreateGaps(true);
+        horizontalContentGroup_P=groupLayout.createParallelGroup();
+        horizontalGroup_S = groupLayout.createSequentialGroup();
+        verticalGroup_S = groupLayout.createSequentialGroup();
+        
+        
+        //group for horizontal
+        horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
+                .addComponent(questionLabel)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addComponent(questionDeleteButton));
+        horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
+                .addComponent(essayTextArea)
+                .addComponent(wordLimit));
+        horizontalGroup_S.addGap(0).addGroup(horizontalContentGroup_P);
+        //group for vertical
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+                .addComponent(questionDeleteButton)
+                .addComponent(questionLabel));
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+                .addComponent(essayTextArea)
+                .addComponent(wordLimit));
+
+        
+        groupLayout.setHorizontalGroup(horizontalGroup_S);
+        groupLayout.setVerticalGroup(verticalGroup_S);
+
+        this.setLayout(groupLayout);
+        }
+        
         //return p3;
     }
     /**
@@ -186,7 +230,6 @@ public class QuestionPanel extends JPanel implements ActionListener{
      * @param questionID
      */
     public void getQ(int questionID){
-        //Question_DAO question_DAO=new Question_DAO();
         if(Q_Type == 1)
         {
         MCQ_DAO mcq_dao=new MCQ_DAO();        
@@ -197,11 +240,16 @@ public class QuestionPanel extends JPanel implements ActionListener{
         }
         if(Q_Type == 2)
         {
-        
         FIB_DAO fib_dao=new FIB_DAO();        
         FIBAnswer_DAO fIBAnswer_DAO=new FIBAnswer_DAO();
           
         question=fib_dao.getModel(questionID); 
+        }
+        if(Q_Type == 3)
+        {
+        Essay_DAO essay_dao=new Essay_DAO();        
+          
+        question=essay_dao.getModel(questionID); 
         }
     }
     @Override
