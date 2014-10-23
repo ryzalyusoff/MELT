@@ -30,7 +30,7 @@ public class QuestionDAO {
        public void startSQL() {
         try {
 
-            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            InputStream in = this.getClass().getResourceAsStream("/sols/Util/jdbc.properties");
             Properties pp = new Properties();
             pp.load(in);
             url = pp.getProperty("jdbc.url");
