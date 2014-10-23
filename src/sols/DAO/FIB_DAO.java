@@ -35,7 +35,7 @@ public class FIB_DAO {
 
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT QuestionID,QuestionType,QuestionText, Instructions");
-            sql.append(" FROM MELTSystem.`FIB`");
+            sql.append(" FROM `FIB`");
             sql.append(" where QuestionID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();
@@ -96,7 +96,7 @@ public class FIB_DAO {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT QuestionID,QuestionType,QuestionText, Instructions");
-        sql.append(" FROM MELTSystem.`FIB`");
+        sql.append(" FROM `FIB`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }

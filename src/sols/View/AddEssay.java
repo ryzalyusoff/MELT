@@ -182,6 +182,7 @@ if(jTextArea1.getText()!=null || jTextArea1.getText()==" ") {
         
          int key = 0;
             /////////////// INSERT THE QUESTION & Get the last id that was inserted for the question ////////////////
+            connectDb();
             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.executeUpdate();
             ResultSet keys = pstmt.getGeneratedKeys();

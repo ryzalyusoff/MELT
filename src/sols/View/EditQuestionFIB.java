@@ -21,11 +21,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import sols.DAO.QuestionDAO;
 import sols.Util.SQLHelper;
-import static sols.View.AddQuestionFib.driver;
-import static sols.View.AddQuestionFib.password;
-import static sols.View.AddQuestionFib.url;
-import static sols.View.AddQuestionFib.user;
-import sun.security.krb5.Config;
+
 
 /**
  *

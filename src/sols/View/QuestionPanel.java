@@ -187,7 +187,7 @@ public class QuestionPanel extends JPanel implements ActionListener{
         
         JTextArea essayTextArea = new JTextArea();
                       
-        JLabel wordLimit = new JLabel("Word Limit: "+((Essay)question).getNoOfWords());
+        JLabel wordLimit = new JLabel("Word Limit: "+((Essay)question).getNoofwords());
         
         questionDeleteButton.addActionListener(this);
 

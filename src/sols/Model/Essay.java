@@ -9,12 +9,10 @@ package sols.Model;
  *
  * @author Ghader
  */
-public class Essay {
+public class Essay extends Question{
     
     private int noofwords;
     private String instructions;
-    private int QType_ID;
-    private int Question_ID;
     
     
     /**
@@ -47,22 +45,7 @@ public class Essay {
     }
     
     
-     public int getQType_ID() {
-        return QType_ID;
-    }
     
-      public void setQType_ID(int  QType_ID) {
-        this.QType_ID = QType_ID;
-    }
-      
-      
-       public int getQuestion_ID() {
-        return Question_ID;
-    }
-       
-        public void setQuestion_ID(int  Question_ID) {
-        this.Question_ID = Question_ID;
-    }
 }
     
     

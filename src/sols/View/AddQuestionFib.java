@@ -53,11 +53,7 @@ import javax.swing.table.TableColumn;
 import sols.DAO.QuestionDAO;
 import sols.Model.QuestionTableModel;
 import sols.Util.SQLHelper;
-import static sols.Util.SQLHelper.driver;
-import static sols.Util.SQLHelper.password;
-import static sols.Util.SQLHelper.url;
-import static sols.Util.SQLHelper.user;
-import static sun.security.krb5.Config.refresh;
+
 
 /**
  *
