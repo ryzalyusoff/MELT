@@ -131,14 +131,14 @@ public class QuestionPanel extends JPanel implements ActionListener{
         JPanel fibPanel = new JPanel();
         fibPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         
-        while(rawQuestion.contains("<"))
+        while(rawQuestion.contains("["))
         {
-            int startIndex = rawQuestion.indexOf("<");
+            int startIndex = rawQuestion.indexOf("[");
             fibPanel.add(new JLabel(rawQuestion.substring(0, startIndex)));
             JTextField blank = new JTextField();
             blank.setPreferredSize(new Dimension(80,25));
             fibPanel.add(blank);
-            rawQuestion = rawQuestion.substring(rawQuestion.indexOf(">")+1);            
+            rawQuestion = rawQuestion.substring(rawQuestion.indexOf("]")+1);            
         }
         if(!(rawQuestion.isEmpty()))
         {

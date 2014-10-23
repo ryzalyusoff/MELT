@@ -29,7 +29,7 @@ public class FIB_DAO {
         try {
 
             StringBuffer sql = new StringBuffer("");
-            sql.append("SELECT QuestionID,QuestionType,QuestionText, QuestionInstructions");
+            sql.append("SELECT QuestionID,QuestionType,QuestionText, Instructions");
             sql.append(" FROM MELTSystem.`FIB`");
             sql.append(" where QuestionID=" + Question_ID);
 
@@ -41,7 +41,7 @@ public class FIB_DAO {
                 fibQuestion.setQtype_ID(rs.getInt("QuestionType"));
                 fibQuestion.setQuestion_ID(rs.getInt("QuestionID"));
                 fibQuestion.setQuestionText(rs.getString("QuestionText"));
-                fibQuestion.setQuestionInstructions(rs.getString("QuestionInstructions"));
+                fibQuestion.setQuestionInstructions(rs.getString("Instructions"));
                
 
             }
@@ -90,7 +90,7 @@ public class FIB_DAO {
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
-        sql.append("SELECT QuestionID,QuestionType,QuestionText, QuestionInstructions");
+        sql.append("SELECT QuestionID,QuestionType,QuestionText, Instructions");
         sql.append(" FROM MELTSystem.`FIB`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
