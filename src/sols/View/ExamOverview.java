@@ -25,7 +25,7 @@ import javax.swing.*;
 import sols.DAO.Exam_DAO;
 
 /**
- * privode an overview of the exam(show all the exam in the system)
+ * provide an overview of the exam(show all the exam in the system)
  * @author Aote Zhou
  */
 public class ExamOverview extends JFrame implements ActionListener,WindowListener {

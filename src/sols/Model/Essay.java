@@ -7,41 +7,52 @@ package sols.Model;
 
 /**
  *
- * @author eddychou
+ * @author Ghader
  */
 public class Essay extends Question{
-    private String noOfWords;
-    private String Instructions;
-
+    
+    private int noofwords;
+    private String instructions;
+    
+    
     /**
-     * @return the noOfWords
+     * @return the noofwords
      */
-    public String getNoOfWords() {
-        return noOfWords;
+    public int getNoofwords() {
+        return noofwords;
     }
 
-    /**
-     * @param noOfWords the noOfWords to set
+/**
+     * @param noofwords the noofwords to set
      */
-    public void setNoOfWords(String noOfWords) {
-        this.noOfWords = noOfWords;
+    public void setNoofwords(int noofwords) {
+        this.noofwords = noofwords;
     }
-
+    
+    
     /**
-     * @return the Instructions
+     * @return the instructions
      */
     public String getInstructions() {
-        return Instructions;
+        return instructions;
     }
 
-    /**
-     * @param Instructions the Instructions to set
+/**
+     * @param instructions the instructions to set
      */
-    public void setInstructions(String Instructions) {
-        this.Instructions = Instructions;
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
-
     
-
+    
     
 }
+    
+    
+
+
+
+
+ 
+
+

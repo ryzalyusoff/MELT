@@ -272,7 +272,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
                 
             }
             
-            rs= essay_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='"+exam_ID+"') ");
+            rs= essay_DAO.getList("question_ID not in (select question_ID from QuestionsByExamID where Exam_ID='"+exam_ID+"') ");
             
             //store data into arraylist
             while (rs.next()) {

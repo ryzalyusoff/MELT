@@ -53,11 +53,7 @@ import javax.swing.table.TableColumn;
 import sols.DAO.QuestionDAO;
 import sols.Model.QuestionTableModel;
 import sols.Util.SQLHelper;
-import static sols.Util.SQLHelper.driver;
-import static sols.Util.SQLHelper.password;
-import static sols.Util.SQLHelper.url;
-import static sols.Util.SQLHelper.user;
-import static sun.security.krb5.Config.refresh;
+
 
 /**
  *
@@ -475,18 +471,27 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
         question = questionField.getText();
         instructions = instructionField.getText();
+        
+        if (instructions.equals("")|| instructions==null)
+           JOptionPane.showMessageDialog(null, "you have to add instructions!"); 
 
         // set the match patter of "[]"
         Matcher matcher = Pattern.compile("\\[([^\\]]+)").matcher(question);
 
         ArrayList<String> answers = new ArrayList<String>();
+        
+          int counter = 0;
 
         int pos = -1;
         while (matcher.find(pos + 1)) {
             pos = matcher.start();
             // Add the matched word to the Arraylist
             answers.add(matcher.group(1));
+             counter++;
         }
+        
+         if (counter==0)
+                JOptionPane.showMessageDialog(null, "you have to add at leat one blank!");
 
         // Find the word with bracket and replace it with blank
         String newQuestion = question.replaceAll("\\[.*?]", "_____");
