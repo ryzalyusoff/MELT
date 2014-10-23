@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Model.FIB;
-import melt.Util.SQLHelper;
+import sols.Model.FIB;
+import sols.Util.SQLHelper;
 
 /**
  *

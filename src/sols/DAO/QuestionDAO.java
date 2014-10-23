@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Util.SQLHelper;
+import sols.Util.SQLHelper;
 import sols.View.SettingQuestion;
 
 public class QuestionDAO {

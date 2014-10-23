@@ -31,11 +31,11 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import melt.DAO.FIB_DAO;
+import sols.DAO.FIB_DAO;
 import sols.View.AddQuestion;
-import melt.DAO.MCQ_DAO;
-import melt.DAO.Question_DAO;
-import melt.Model.MCQ;
+import sols.DAO.MCQ_DAO;
+import sols.DAO.Question_DAO;
+import sols.Model.MCQ;
 
 /**
  * the dialog enable for teacher to choose question for the Exam

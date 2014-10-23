@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Util.SQLHelper;
+import sols.Util.SQLHelper;
 
 /**
  *
@@ -42,7 +42,7 @@ public class Subsection_DAO {
      * @param subSection
      * @return
      */
-    public int add(melt.Model.SubSection subSection){
+    public int add(sols.Model.SubSection subSection){
         int generated_Subsec_ID=-1;
         
         StringBuffer sql=new StringBuffer();

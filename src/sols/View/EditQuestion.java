@@ -21,7 +21,7 @@ import static sols.View.AddQuestion.driver;
 import static sols.View.AddQuestion.password;
 import static sols.View.AddQuestion.url;
 import static sols.View.AddQuestion.user;
-import melt.Util.SQLHelper;
+import sols.Util.SQLHelper;
 
 /**
  *

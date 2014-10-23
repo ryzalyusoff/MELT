@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Model.MCQOption;
-import melt.Util.SQLHelper;
+import sols.Model.MCQOption;
+import sols.Util.SQLHelper;
 
 /**
  *

@@ -18,8 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
-import melt.DAO.SubsectionQuestion_DAO;
-import melt.Model.*;
+import sols.DAO.SubsectionQuestion_DAO;
+import sols.Model.*;
 
 /**
  * panel for the subsection

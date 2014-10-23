@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
-import melt.DAO.Exam_DAO;
+import sols.DAO.Exam_DAO;
 
 /**
  * JFrame class for adding a exam can also use getGUI to return its jpanel
@@ -119,7 +119,7 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
         }else if (e.getSource()==okButton) {//submit button
             
             //parentJpanel.repaint();
-            melt.Model.Exam exam =new melt.Model.Exam();
+            sols.Model.Exam exam =new sols.Model.Exam();
             exam.setInstructions(instructionsText.getText());
             exam.setIsPublic(false);
             

@@ -18,8 +18,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
-import melt.DAO.*;
-import melt.Model.*;
+import sols.DAO.*;
+import sols.Model.*;
 
 /**
  * the panel of MCQ
@@ -125,9 +125,9 @@ public class QuestionPanel extends JPanel implements ActionListener{
         }
         if(Q_Type == 2)
         { 
-        questionLabel = new JLabel(((melt.Model.FIB)question).getQuestionInstructions());
+        questionLabel = new JLabel(((sols.Model.FIB)question).getQuestionInstructions());
         questionDeleteButton = new JButton("Delete");
-        String rawQuestion = ((melt.Model.FIB)question).getQuestionText();
+        String rawQuestion = ((sols.Model.FIB)question).getQuestionText();
         JPanel fibPanel = new JPanel();
         fibPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         

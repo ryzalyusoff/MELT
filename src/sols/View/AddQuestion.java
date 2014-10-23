@@ -1,8 +1,8 @@
 package sols.View;
 
-import melt.Model.QuestionTableModel;
+import sols.Model.QuestionTableModel;
 import java.awt.Dimension;
-import melt.DAO.QuestionDAO;
+import sols.DAO.QuestionDAO;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -31,11 +31,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import sols.View.EditQuestion;
-import melt.Util.SQLHelper;
-import static melt.Util.SQLHelper.driver;
-import static melt.Util.SQLHelper.password;
-import static melt.Util.SQLHelper.url;
-import static melt.Util.SQLHelper.user;
+import sols.Util.SQLHelper;
+import static sols.Util.SQLHelper.driver;
+import static sols.Util.SQLHelper.password;
+import static sols.Util.SQLHelper.url;
+import static sols.Util.SQLHelper.user;
 import sols.View.SettingQuestion;
 
 /**

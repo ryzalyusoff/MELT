@@ -28,8 +28,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
-import melt.DAO.*;
-import melt.Model.*;
+import sols.DAO.*;
+import sols.Model.*;
 
 /**
  * panels for sections
