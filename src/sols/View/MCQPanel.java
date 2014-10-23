@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
-import melt.DAO.*;
-import melt.Model.*;
+import sols.DAO.*;
+import sols.Model.*;
 
 /**
  * the panel of MCQ

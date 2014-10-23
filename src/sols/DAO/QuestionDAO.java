@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Util.SQLHelper;
+import sols.Util.SQLHelper;
 import sols.View.SettingQuestion;
 
 public class QuestionDAO {
@@ -30,7 +30,7 @@ public class QuestionDAO {
        public void startSQL() {
         try {
 
-            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            InputStream in = this.getClass().getResourceAsStream("/sols/Util/jdbc.properties");
             Properties pp = new Properties();
             pp.load(in);
             url = pp.getProperty("jdbc.url");

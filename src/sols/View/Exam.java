@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import melt.DAO.MCQ_DAO;
-import melt.DAO.Question_DAO;
-import melt.DAO.Section_DAO;
-import melt.DAO.SubsectionQuestion_DAO;
-import melt.DAO.Subsection_DAO;
-import melt.Model.*;
+import sols.DAO.MCQ_DAO;
+import sols.DAO.Question_DAO;
+import sols.DAO.Section_DAO;
+import sols.DAO.SubsectionQuestion_DAO;
+import sols.DAO.Subsection_DAO;
+import sols.Model.*;
 
 /**
  * Exam frame shows the detailed info of it(Sections and subsec and Questions)

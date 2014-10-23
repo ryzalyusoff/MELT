@@ -12,8 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Model.Section;
-import melt.Util.SQLHelper;
+import sols.Model.Section;
+import sols.Util.SQLHelper;
 
 /**
  *
@@ -26,7 +26,7 @@ public class Section_DAO {
      * @param section
      * @return
      */
-    public int add(melt.Model.Section section) {
+    public int add(sols.Model.Section section) {
         int generated_Sec_ID=-1;
         StringBuffer sql = new StringBuffer();
         sql.append("INSERT INTO Section");

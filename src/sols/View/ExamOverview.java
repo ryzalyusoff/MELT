@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import melt.DAO.Exam_DAO;
+import sols.DAO.Exam_DAO;
 
 /**
  * privode an overview of the exam(show all the exam in the system)
@@ -30,7 +30,7 @@ import melt.DAO.Exam_DAO;
  */
 public class ExamOverview extends JFrame implements ActionListener,WindowListener {
 
-    public ArrayList<melt.Model.Exam> exams;
+    public ArrayList<sols.Model.Exam> exams;
     public JLabel[] examLabels;
     JButton addExamButton,backButton;
     public JButton[] isPublicButtons;
@@ -129,7 +129,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
         examLabels = new JLabel[exams.size()];
 
         for (int i = 1; i < exams.size() + 1; i++) {
-            melt.Model.Exam exam = exams.get(i - 1);
+            sols.Model.Exam exam = exams.get(i - 1);
 
             examLabels[i - 1] = new JLabel("Exam" + i);
             //Checkboxes
@@ -223,9 +223,9 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
             Exam_DAO exam_DAO = new Exam_DAO();
             ResultSet rs = exam_DAO.getList("");
 
-            exams = new ArrayList<melt.Model.Exam>();
+            exams = new ArrayList<sols.Model.Exam>();
             while (rs.next()) {
-                melt.Model.Exam examTemp = new melt.Model.Exam();
+                sols.Model.Exam examTemp = new sols.Model.Exam();
                 examTemp.setExam_ID(rs.getInt("Exam_ID"));
                 examTemp.setInstructions(rs.getString("Instructions"));
                 examTemp.setIsPublic(rs.getBoolean("isPublic"));

@@ -21,7 +21,7 @@ import static sols.View.AddQuestion.driver;
 import static sols.View.AddQuestion.password;
 import static sols.View.AddQuestion.url;
 import static sols.View.AddQuestion.user;
-import melt.Util.SQLHelper;
+import sols.Util.SQLHelper;
 
 /**
  *
@@ -54,7 +54,7 @@ public class EditQuestion extends javax.swing.JFrame {
     public void startSQL() {
         try {
 
-            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            InputStream in = this.getClass().getResourceAsStream("/sols/Util/jdbc.properties");
             Properties pp = new Properties();
             pp.load(in);
             url = pp.getProperty("jdbc.url");

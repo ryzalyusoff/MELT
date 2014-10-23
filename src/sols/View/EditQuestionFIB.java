@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import melt.DAO.QuestionDAO;
-import melt.Util.SQLHelper;
+import sols.DAO.QuestionDAO;
+import sols.Util.SQLHelper;
 import static sols.View.AddQuestionFib.driver;
 import static sols.View.AddQuestionFib.password;
 import static sols.View.AddQuestionFib.url;
@@ -70,7 +70,7 @@ public class EditQuestionFIB extends javax.swing.JFrame {
     public void startSQL() {
         try {
 
-            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            InputStream in = this.getClass().getResourceAsStream("/sols/Util/jdbc.properties");
             Properties pp = new Properties();
             pp.load(in);
             url = pp.getProperty("jdbc.url");

@@ -31,11 +31,12 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import melt.DAO.FIB_DAO;
+import sols.DAO.Essay_DAO;
+import sols.DAO.FIB_DAO;
 import sols.View.AddQuestion;
-import melt.DAO.MCQ_DAO;
-import melt.DAO.Question_DAO;
-import melt.Model.MCQ;
+import sols.DAO.MCQ_DAO;
+import sols.DAO.Question_DAO;
+import sols.Model.MCQ;
 
 /**
  * the dialog enable for teacher to choose question for the Exam
@@ -241,6 +242,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         try {
             MCQ_DAO mcq_DAO = new MCQ_DAO();
             FIB_DAO fib_DAO = new FIB_DAO();
+            Essay_DAO essay_DAO = new Essay_DAO();
             //get question
             //get question
             ArrayList<MCQ> mcqs = mcq_DAO.getList("question_ID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
@@ -250,24 +252,37 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
                 MCQ currentMcq = (MCQ) mcqs.get(i);
                 Object[] col = new Object[4];
                 col[0] = currentMcq.getQuestion_ID();
-                col[1]=currentMcq.getQtype_ID();
+                col[1]= "MCQ";
                 col[2] = currentMcq.getQuestion_Text();
                 col[3] = false;
                 objectArraylist.add(col);
 
             }
 
-            ResultSet rs = fib_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
-
+            ResultSet rs= fib_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='"+exam_ID+"') ");
+            
             //store data into arraylist
             while (rs.next()) {
                 Object[] col = new Object[4];
                 col[0] = rs.getInt(1);
-                col[1] = rs.getInt(2);
+                col[1] = "FIB";
                 col[2] = rs.getString(3);
                 col[3] = false;
                 objectArraylist.add(col);
-
+                
+            }
+            
+            rs= essay_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='"+exam_ID+"') ");
+            
+            //store data into arraylist
+            while (rs.next()) {
+                Object[] col = new Object[4];
+                col[0] = rs.getInt(1);
+                col[1] = "Essay";
+                col[2] = rs.getString(4);
+                col[3] = false;
+                objectArraylist.add(col);
+                
             }
             //trun arraylist<object[]> to object[][]
             Object[][] datas = new Object[objectArraylist.size()][4];
@@ -289,17 +304,35 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel();
         chooseQuestionsPanel.setVisible(true);
     }
+    
+    public int typeToInt(String type)
+    {
+        if(type.equals("MCQ"))
+        {
+            return 1;
+        }
+        if(type.equals("FIB"))
+        {
+            return 2;
+        }
+        if(type.equals("Essay"))
+        {
+            return 3;
+        }
+        return 0;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button1) {
             int[] ints = table1.getSelectedRows();
+            
             for (int rowNum : ints) {
                 if (fatherPanelState == 0) {
-                    ((SectionPanel) fatherPanel).addQ(new QuestionPanel((int) table1.getValueAt(rowNum, 0), (int) table1.getValueAt(rowNum, 1)));
+                    ((SectionPanel) fatherPanel).addQ(new QuestionPanel((int) table1.getValueAt(rowNum, 0), typeToInt((String)table1.getValueAt(rowNum, 1))));
                     ((SectionPanel) fatherPanel).subQPanelRepaint();
                 } else {
-                    ((SubsectionPanel) fatherPanel).addQ(new QuestionPanel((int) table1.getValueAt(rowNum, 0), (int) table1.getValueAt(rowNum, 1)));
+                    ((SubsectionPanel) fatherPanel).addQ(new QuestionPanel((int) table1.getValueAt(rowNum, 0), typeToInt((String)table1.getValueAt(rowNum, 1))));
                     ((SubsectionPanel) fatherPanel).subQPanelRepaint();
                 }
 

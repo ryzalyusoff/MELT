@@ -50,13 +50,13 @@ import javax.management.Query;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-import melt.DAO.QuestionDAO;
-import melt.Model.QuestionTableModel;
-import melt.Util.SQLHelper;
-import static melt.Util.SQLHelper.driver;
-import static melt.Util.SQLHelper.password;
-import static melt.Util.SQLHelper.url;
-import static melt.Util.SQLHelper.user;
+import sols.DAO.QuestionDAO;
+import sols.Model.QuestionTableModel;
+import sols.Util.SQLHelper;
+import static sols.Util.SQLHelper.driver;
+import static sols.Util.SQLHelper.password;
+import static sols.Util.SQLHelper.url;
+import static sols.Util.SQLHelper.user;
 import static sun.security.krb5.Config.refresh;
 
 /**
@@ -141,7 +141,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
     public void startSQL() {
         try {
 
-            InputStream in = this.getClass().getResourceAsStream("/melt/Util/jdbc.properties");
+            InputStream in = this.getClass().getResourceAsStream("/sols/Util/jdbc.properties");
             Properties pp = new Properties();
             pp.load(in);
             url = pp.getProperty("jdbc.url");
