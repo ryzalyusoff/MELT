@@ -14,8 +14,10 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
 import melt.DAO.SubsectionQuestion_DAO;
@@ -32,10 +34,12 @@ public class SubsectionPanel extends JPanel implements ActionListener{
     JPanel subsectionQuestionPanel;
     JPanel p1,p2;
     int exam_ID;
+    public JRadioButton mcqRadio, fibRadio;
 
     public SubsectionPanel(int exam_ID) {
         this.exam_ID=exam_ID;
     }
+    
     
     
     /**
@@ -56,6 +60,14 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
         
         subsectionLabel1 = new JLabel("Subsection");
+        mcqRadio = new JRadioButton("MCQ");
+        fibRadio = new JRadioButton("FIB");
+        
+        
+        mcqRadio.addActionListener(this);
+        fibRadio.addActionListener(this);
+        
+        
         subsectionButton1 = new JButton("Add question");
         subsectionButton2 = new JButton("Delete");
         
@@ -73,6 +85,8 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(subsectionLabel1)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addComponent(mcqRadio)
+                .addComponent(fibRadio)
                 .addComponent(subsectionButton1)
                 .addComponent(subsectionButton2))
             .addGroup(groupLayout.createSequentialGroup()
@@ -82,6 +96,8 @@ public class SubsectionPanel extends JPanel implements ActionListener{
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                 .addComponent(subsectionLabel1)
+                .addComponent(mcqRadio)
+                .addComponent(fibRadio)
                 .addComponent(subsectionButton1)
                 .addComponent(subsectionButton2))
                 .addComponent(subsectionQuestionPanel)
@@ -152,6 +168,12 @@ public class SubsectionPanel extends JPanel implements ActionListener{
             this.setVisible(false);
             this.getParent().remove(this);
             this.invalidate();
+        }
+        if (e.getSource()==fibRadio) {
+            mcqRadio.setSelected(false);
+        }
+        if (e.getSource()==mcqRadio) {            
+            fibRadio.setSelected(false);
         }
     }
 
