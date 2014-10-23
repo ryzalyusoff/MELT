@@ -51,6 +51,10 @@ public class AddEssay extends javax.swing.JFrame {
      */
     public AddEssay() {
         initComponents();
+        
+        startSQL() ;
+        connectDb();
+        
         jTextArea2.setEditable(false);
         
          Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -193,8 +197,11 @@ if(jTextArea1.getText()!=null || jTextArea1.getText()==" ") {
         instructions = jTextArea1.getText();
         noofwords=  Integer.parseInt(jTextField1.getText());
 
-        sql1 = "INSERT INTO essay (noofwords,instructions,QType_ID,Question_ID) VALUES(' "+noofwords+"', '"+instructions+"', 3,' " + key + "'')";
-        st.executeUpdate(sql1);
+        sql1 = "INSERT INTO essay (noofwords,instructions,QType_ID,Question_ID) VALUES(' "+noofwords+"', '"+instructions+"', 3,' " + key + "')";
+        int rows = st.executeUpdate(sql1);
+        if (rows > 0) {
+            JOptionPane.showMessageDialog(this, "Question is saved successfully!");
+        }
         
         System.out.println(sql1);
         

@@ -90,7 +90,7 @@ public class Essay_DAO {
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
-        sql.append("SELECT Question_ID,QType_ID,noofwords, instructions");
+        sql.append("SELECT Question_ID,QType_ID,noofwords,instructions");
         sql.append(" FROM `Essay`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);

@@ -230,8 +230,10 @@ public class QuestionChoicePanel extends javax.swing.JFrame {
         questionPanel.setVisible(true);
         questionPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         */
-        dispose();
-        new StartupPanel().setVisible(true);
+        //dispose();
+        StartupPanel startupPanel=new StartupPanel();
+        startupPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        startupPanel.setVisible(true);
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void MCQBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCQBtnActionPerformed
