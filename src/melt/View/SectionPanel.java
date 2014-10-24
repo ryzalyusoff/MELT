@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -202,7 +203,10 @@ public class SectionPanel extends JPanel implements ActionListener {
                 sectionContentPanel.add(subsectionPanel);
             }
 
-        } else {
+        } else if (numOfQTypes == 0) {
+            
+
+        }else {
             sectionContentPanel.add(new JLabel("fail to load exam try again"));
         }
 
@@ -217,6 +221,8 @@ public class SectionPanel extends JPanel implements ActionListener {
     public void addQ(QuestionPanel questionPanel) {
         questionPanel.getGUI();
         sectionContentPanel.add(questionPanel);
+//        sectionContentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
     }
 
     /**
@@ -335,8 +341,13 @@ public class SectionPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sectionButton2) {//add a question
-            ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel((SectionPanel) this);
-            chooseQuestionsPanel.setVisible(true);
+            if (sectionContentPanel.getComponentCount()==0||sectionContentPanel.getComponent(0) instanceof QuestionPanel) {
+                ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel((SectionPanel) this);
+                chooseQuestionsPanel.setVisible(true);
+
+            }else{
+               JOptionPane.showMessageDialog(sectionLabel, "please click the <add question> button of subsection!", "Attention", JOptionPane.ERROR_MESSAGE);
+            }
 
         }
     }

@@ -6,18 +6,25 @@
 package melt.View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import melt.DAO.*;
 import melt.Model.*;
 
@@ -26,17 +33,18 @@ import melt.Model.*;
  *
  * @author Aote Zhou
  */
-public class QuestionPanel_PreView extends JPanel implements ActionListener {
+public class QuestionPanel_Preview extends JPanel implements ActionListener {
 
     JPanel p3;
     //components in p3
     JLabel questionLabel, questionContent;
+    JCheckBox[] jCheckBox;
     JLabel[] choices;
     int Q_ID, Q_Type;
     Question question;
     MCQOption[] mCQOptions;
 
-    public QuestionPanel_PreView(int Q_ID, int Q_Type) {
+    public QuestionPanel_Preview(int Q_ID, int Q_Type) {
         super();
         this.Q_ID = Q_ID;
         this.Q_Type = Q_Type;
@@ -47,7 +55,7 @@ public class QuestionPanel_PreView extends JPanel implements ActionListener {
      */
     public void getGUI() {
 
-        //JPanel p3;
+        JPanel p1=new JPanel();
         GroupLayout groupLayout;
         GroupLayout.ParallelGroup horizontalContentGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S, horizontalGroup_S;
@@ -58,76 +66,66 @@ public class QuestionPanel_PreView extends JPanel implements ActionListener {
 
         getQ(Q_ID);
         if (Q_Type == 1) {
-            questionLabel = new JLabel("");
+            questionLabel = new JLabel("MCQ");
+            
             questionContent = new JLabel(((MCQ) question).getQuestion_Text());
             choices = new JLabel[mCQOptions.length];
+            jCheckBox=new JCheckBox[mCQOptions.length];
 
             for (int i = 0; i < mCQOptions.length; i++) {
 //            if(mCQOptions[i].getContent().trim().isEmpty()){
 //                break;
 //            }
-                if (i == 0) {
-                    choices[i] = new JLabel("A.  " + mCQOptions[i].getContent());
-                }
-                if (i == 1) {
-                    choices[i] = new JLabel("B.  " + mCQOptions[i].getContent());
-                }
-                if (i == 2) {
-                    choices[i] = new JLabel("C.  " + mCQOptions[i].getContent());
-                }
-                if (i == 3) {
-                    choices[i] = new JLabel("D.  " + mCQOptions[i].getContent());
-                }
-                if (i == 4) {
-                    choices[i] = new JLabel("E.  " + mCQOptions[i].getContent());
-                }
-                if (i == 5) {
-                    choices[i] = new JLabel("F.  " + mCQOptions[i].getContent());
-                }
+              
+                    choices[i] = new JLabel(mCQOptions[i].getContent());
+                
 
             }
 
-           
+         
 
-            groupLayout = new GroupLayout(this);
+            groupLayout = new GroupLayout(p1);
             groupLayout.setAutoCreateContainerGaps(true);
             groupLayout.setAutoCreateGaps(true);
             horizontalContentGroup_P = groupLayout.createParallelGroup();
             horizontalGroup_S = groupLayout.createSequentialGroup();
             verticalGroup_S = groupLayout.createSequentialGroup();
 
-            GroupLayout.ParallelGroup choiceGroup_P = groupLayout.createParallelGroup();
-            GroupLayout.SequentialGroup choiceGroup_S = groupLayout.createSequentialGroup();
+            GroupLayout.ParallelGroup choicehorizontalGroup_P = groupLayout.createParallelGroup();
+            GroupLayout.SequentialGroup choiceVerticalGroup_S = groupLayout.createSequentialGroup();
 
-            for (JLabel choice : choices) {
-                choiceGroup_P.addComponent(choice);
-                choiceGroup_S.addComponent(choice);
+            for (int i=0;i<choices.length;i++) {
+                jCheckBox[i]=new JCheckBox();
+                choicehorizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
+                        .addComponent(jCheckBox[i]).addComponent(choices[i]));
+                choiceVerticalGroup_S.addGroup(groupLayout.createParallelGroup()
+                        .addComponent(jCheckBox[i]).addComponent(choices[i]));
             }
 
             //group for horizontal
             horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
                     .addComponent(questionLabel)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
-                    );
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE));
             horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
                     .addComponent(questionContent));
             horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
                     .addGap(5)
-                    .addGroup(choiceGroup_P));
+                    .addGroup(choicehorizontalGroup_P));
             horizontalGroup_S.addGap(0).addGroup(horizontalContentGroup_P);
             //group for vertical
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                    .addComponent(questionLabel));
+                    .addComponent(questionLabel)
+            );
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                     .addComponent(questionContent));
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                    .addGroup(choiceGroup_S
+                    .addGroup(choiceVerticalGroup_S
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)));
 
             groupLayout.setHorizontalGroup(horizontalGroup_S);
             groupLayout.setVerticalGroup(verticalGroup_S);
 
-            this.setLayout(groupLayout);
+            p1.setLayout(groupLayout);
         }
         if (Q_Type == 2) {
             questionLabel = new JLabel(((melt.Model.FIB) question).getQuestionInstructions());
@@ -147,9 +145,8 @@ public class QuestionPanel_PreView extends JPanel implements ActionListener {
                 fibPanel.add(new JLabel(rawQuestion));
             }
 
-           
 
-            groupLayout = new GroupLayout(this);
+            groupLayout = new GroupLayout(p1);
             groupLayout.setAutoCreateContainerGaps(true);
             groupLayout.setAutoCreateGaps(true);
             horizontalContentGroup_P = groupLayout.createParallelGroup();
@@ -172,8 +169,12 @@ public class QuestionPanel_PreView extends JPanel implements ActionListener {
             groupLayout.setHorizontalGroup(horizontalGroup_S);
             groupLayout.setVerticalGroup(verticalGroup_S);
 
-            this.setLayout(groupLayout);
+            p1.setLayout(groupLayout);
         }
+            p1.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            this.add(p1);
+            this.add(Box.createRigidArea(new Dimension(0, 10)));
 
         //return p3;
     }

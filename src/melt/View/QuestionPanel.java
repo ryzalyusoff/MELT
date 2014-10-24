@@ -6,10 +6,14 @@
 package melt.View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,6 +22,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import melt.DAO.*;
 import melt.Model.*;
 
@@ -48,7 +54,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
      */
     public void getGUI() {
 
-        //JPanel p3;
+        JPanel p1=new JPanel();
         GroupLayout groupLayout;
         GroupLayout.ParallelGroup horizontalContentGroup_P;
         GroupLayout.SequentialGroup verticalGroup_S, horizontalGroup_S;
@@ -59,7 +65,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
 
         getQ(Q_ID);
         if (Q_Type == 1) {
-            questionLabel = new JLabel("");
+            questionLabel = new JLabel("MCQ");
             questionDeleteButton = new JButton("Delete");
             questionContent = new JLabel(((MCQ) question).getQuestion_Text());
             choices = new JLabel[mCQOptions.length];
@@ -91,7 +97,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
 
             questionDeleteButton.addActionListener(this);
 
-            groupLayout = new GroupLayout(this);
+            groupLayout = new GroupLayout(p1);
             groupLayout.setAutoCreateContainerGaps(true);
             groupLayout.setAutoCreateGaps(true);
             horizontalContentGroup_P = groupLayout.createParallelGroup();
@@ -120,7 +126,8 @@ public class QuestionPanel extends JPanel implements ActionListener {
             //group for vertical
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                     .addComponent(questionDeleteButton)
-                    .addComponent(questionLabel));
+                    .addComponent(questionLabel)
+            );
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                     .addComponent(questionContent));
             verticalGroup_S.addGroup(groupLayout.createParallelGroup()
@@ -130,7 +137,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
             groupLayout.setHorizontalGroup(horizontalGroup_S);
             groupLayout.setVerticalGroup(verticalGroup_S);
 
-            this.setLayout(groupLayout);
+            p1.setLayout(groupLayout);
         }
         if (Q_Type == 2) {
             questionLabel = new JLabel(((melt.Model.FIB) question).getQuestionInstructions());
@@ -153,7 +160,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
 
             questionDeleteButton.addActionListener(this);
 
-            groupLayout = new GroupLayout(this);
+            groupLayout = new GroupLayout(p1);
             groupLayout.setAutoCreateContainerGaps(true);
             groupLayout.setAutoCreateGaps(true);
             horizontalContentGroup_P = groupLayout.createParallelGroup();
@@ -178,8 +185,12 @@ public class QuestionPanel extends JPanel implements ActionListener {
             groupLayout.setHorizontalGroup(horizontalGroup_S);
             groupLayout.setVerticalGroup(verticalGroup_S);
 
-            this.setLayout(groupLayout);
+            p1.setLayout(groupLayout);
         }
+            p1.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            this.add(p1);
+            this.add(Box.createRigidArea(new Dimension(0, 10)));
 
         //return p3;
     }
