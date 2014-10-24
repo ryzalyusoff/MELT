@@ -53,11 +53,6 @@ import javax.swing.table.TableColumn;
 import melt.DAO.QuestionDAO;
 import melt.Model.QuestionTableModel;
 import melt.Util.SQLHelper;
-import static melt.Util.SQLHelper.driver;
-import static melt.Util.SQLHelper.password;
-import static melt.Util.SQLHelper.url;
-import static melt.Util.SQLHelper.user;
-import static sun.security.krb5.Config.refresh;
 
 /**
  *

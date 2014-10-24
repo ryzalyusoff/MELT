@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -18,47 +19,47 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
-import melt.DAO.SubsectionQuestion_DAO;
+import melt.DAO.SectionQuestion_DAO;
 import melt.Model.*;
 
 /**
  * panel for the subsection
+ *
  * @author Aote Zhou
  */
-public class SubsectionPanel_Preview extends JPanel implements ActionListener{
+public class SubsectionPanel_Preview extends JPanel implements ActionListener {
+
     //components in p2
+
     JLabel subsectionLabel1;
-    
+
     JPanel subsectionQuestionPanel;
-    JPanel p1,p2;
+    JPanel p1, p2;
     int exam_ID;
 
     public SubsectionPanel_Preview(int exam_ID) {
-        this.exam_ID=exam_ID;
+        this.exam_ID = exam_ID;
     }
-    
-    
+
     /**
-     *set the GUI of this panel
+     * set the GUI of this panel
      */
-    public void getGUI(){
-        
-        
+    public void getGUI() {
+
         GroupLayout groupLayout;
-        GroupLayout.ParallelGroup  horizontalGroup_P;
-        GroupLayout.SequentialGroup  verticalGroup_S;
-        
+        GroupLayout.ParallelGroup horizontalGroup_P;
+        GroupLayout.SequentialGroup verticalGroup_S;
+
         //p2 = new JPanel();
         this.setName("subsec");
-        subsectionQuestionPanel=new JPanel();
+        subsectionQuestionPanel = new JPanel();
         subsectionQuestionPanel.setName("subsecQ");
         //subsectionQuestionPanel.setBackground(Color.white);
         subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
-        
+
         subsectionLabel1 = new JLabel("Subsection");
-        
-        
-        JSeparator jSeparator=new JSeparator();
+
+        JSeparator jSeparator = new JSeparator();
 
         groupLayout = new GroupLayout(this);
         groupLayout.setAutoCreateContainerGaps(true);
@@ -69,25 +70,23 @@ public class SubsectionPanel_Preview extends JPanel implements ActionListener{
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(subsectionLabel1)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
-               )
-            .addGroup(groupLayout.createSequentialGroup()
-                .addGap(20)
-                .addComponent(subsectionQuestionPanel))
+        )
+                .addGroup(groupLayout.createSequentialGroup()
+                        .addGap(20)
+                        .addComponent(subsectionQuestionPanel))
                 .addComponent(jSeparator);
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
                 .addComponent(subsectionLabel1)
-                )
+        )
                 .addComponent(subsectionQuestionPanel)
                 .addComponent(jSeparator);
-                
 
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
-        
+
         this.setLayout(groupLayout);
-        
-        
+
 //        p1=new JPanel();
 //        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 //        p1.add(p2);
@@ -95,52 +94,32 @@ public class SubsectionPanel_Preview extends JPanel implements ActionListener{
 //        subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
 //        //subsectionQuestionPanel.add(new MCQPanel().getGUI());
 //        p1.add(subsectionQuestionPanel);
-
         //return p2;
     }
 
-    /**
-     *get the gui when provided with a subsection
-     * @param subSection
-     */
-    public void getGUI(SubSection subSection){
-        getGUI();
-        SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
-        ResultSet rs=subsectionQuestion_DAO.getList("subsection_ID='"+subSection.getSubSection_ID()+"'");
-        try {
-            while (rs.next()) {
-                MCQPanel_Preview mCQPanel=new MCQPanel_Preview(rs.getInt("Question_ID"));
-                addQ(mCQPanel);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SubsectionPanel_Preview.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //return p2;
-        
-        //return p2;
-    }
+    
 
     /**
      * add MCQPanel to subsectionQuestionPanel
-     * @param mCQPanel
+     *
+     * @param questionPanel
      */
-    public void addQ(MCQPanel_Preview mCQPanel){
-        mCQPanel.getGUI();
-        subsectionQuestionPanel.add(mCQPanel);
+    public void addQ(QuestionPanel_PreView questionPanel) {
+        questionPanel.getGUI();
+        subsectionQuestionPanel.add(questionPanel);
     }
 
     /**
      * reaint the subsectionpanel
      */
-    public void subQPanelRepaint(){
+    public void subQPanelRepaint() {
         subsectionQuestionPanel.revalidate();
         subsectionQuestionPanel.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 
 }
