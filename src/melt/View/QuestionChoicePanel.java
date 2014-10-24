@@ -28,6 +28,7 @@ public class QuestionChoicePanel extends javax.swing.JFrame {
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int)width, (int)height);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -173,7 +174,7 @@ public class QuestionChoicePanel extends javax.swing.JFrame {
                             .addComponent(MCQBtn)
                             .addComponent(fibBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel8))))
                 .addGap(44, 44, 44))
