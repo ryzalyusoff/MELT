@@ -99,7 +99,7 @@ public class SubsectionPanel extends JPanel implements ActionListener{
 //        p1.add(p2);
 //        subsectionQuestionPanel=new JPanel();
 //        subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
-//        //subsectionQuestionPanel.add(new MCQPanel().getGUI());
+//        //subsectionQuestionPanel.add(new QuestionPanel().getGUI());
 //        p1.add(subsectionQuestionPanel);
 
         //return p2;
@@ -115,7 +115,7 @@ public class SubsectionPanel extends JPanel implements ActionListener{
         ResultSet rs=subsectionQuestion_DAO.getList("subsection_ID='"+subSection.getSubSection_ID()+"'");
         try {
             while (rs.next()) {
-                MCQPanel mCQPanel=new MCQPanel(rs.getInt("Question_ID"));
+                QuestionPanel mCQPanel = new QuestionPanel(rs.getInt("SSQ.Question_ID"), rs.getInt("Q.QType_ID"));
                 addQ(mCQPanel);
             }
         } catch (SQLException ex) {
@@ -126,10 +126,10 @@ public class SubsectionPanel extends JPanel implements ActionListener{
     }
 
     /**
-     * add MCQPanel to subsectionQuestionPanel
+     * add QuestionPanel to subsectionQuestionPanel
      * @param mCQPanel
      */
-    public void addQ(MCQPanel mCQPanel){
+    public void addQ(QuestionPanel mCQPanel){
         mCQPanel.getGUI();
         subsectionQuestionPanel.add(mCQPanel);
     }

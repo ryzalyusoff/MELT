@@ -143,7 +143,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
         initComponents();
         addingFlag=addingState.ORIGINAL;
         
-         try {
+        try {
             questionDAO = new QuestionDAO();
             
             List<SettingQuestion> questions = null;
@@ -261,7 +261,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
         setTitle("MELT");
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Add Question"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "MCQ Question Overview"));
 
         jLabel1.setText("Question :");
 
@@ -467,6 +467,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                 .addGap(19, 19, 19))
         );
 
+        jPanel1.getAccessibleContext().setAccessibleName("MCQ Question");
         jPanel1.getAccessibleContext().setAccessibleDescription("");
 
         pack();
@@ -538,9 +539,11 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
         
         
         try {
-                int rowcheck = questionTable.getSelectedRow();
-                if (rowcheck > -1) {
-                    
+                
+            int rowcheck = questionTable.getSelectedRow();
+                
+            if (rowcheck > -1) {
+
                 // Get the selected row
                 int selectedRow = questionTable.getSelectedRow();
 
@@ -555,17 +558,15 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                 // Set the Question field on the edit panel based on the selected row
                 editQPanel.questionField.setText(rowQuestion);
 
+                rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
 
-                    rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
+            }
+                
+        } catch (NullPointerException ex) {
 
-                        }
-                } catch (NullPointerException ex) {
+        }
 
-                }
-
-
-
-                connectDb();
+        connectDb();
 
         try {
 
@@ -898,6 +899,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
             new melt.View.StartupPanel().setVisible(true);
         }
         this.dispose();
+        new melt.View.QuestionChoicePanel().setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

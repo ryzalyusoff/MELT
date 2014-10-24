@@ -216,8 +216,8 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
                 ResultSet rs1 = subsectionQuestion_DAO.getList("subsection_ID='" + subSection.getSubSection_ID() + "'");
                 try {
                     while (rs1.next()) {
-                        MCQPanel mCQPanel = new MCQPanel(rs1.getInt("Question_ID"));
-                        addQ(mCQPanel);
+                        QuestionPanel questionPanel = new QuestionPanel(rs1.getInt("Question_ID"),1);
+                        addQ(questionPanel);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(SubsectionPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,9 +254,9 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
      *get GUI of mcqPanel and set it as content panel
      * @param mCQPanel
      */
-    public void addQ(MCQPanel mCQPanel) {
-        mCQPanel.getGUI();
-        sectionContentPanel.add(mCQPanel);
+    public void addQ(QuestionPanel questionPanel) {
+        questionPanel.getGUI();
+        sectionContentPanel.add(questionPanel);
     }
 
     /**
@@ -315,7 +315,7 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
             int subsection_ID = subsection_DAO.add(subSection);
             Component[] components = sectionContentPanel.getComponents();
             for (Component component : components) {
-                if (component instanceof MCQPanel) {
+                if (component instanceof QuestionPanel) {
                     //System.out.println(((JPanel)component).getName());
 
 //                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
@@ -374,7 +374,7 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
                         if (component2 instanceof JPanel) {
                             Component[] components3 = ((JPanel) component2).getComponents();  //SubsectionQuestion
                             for (Component component3 : components3) {
-                                if (component3 instanceof MCQPanel) {
+                                if (component3 instanceof QuestionPanel) {
 //                                    Question_DAO question_DAO = new Question_DAO();
 //                                    MCQ_DAO mcq_dao = new MCQ_DAO();
 //

@@ -10,34 +10,36 @@ package melt.Model;
  * @author eddychou
  */
 public class FIB extends Question{
-    private int AnswerID;
-    private String AnswerContentText;
+    private String QuestionText;
+    private String QuestionInstructions;
 
     /**
-     * @return the AnswerID
+     * @return the QuestionText
      */
-    public int getAnswerID() {
-        return AnswerID;
+    public String getQuestionText() {
+        return QuestionText;
     }
 
     /**
-     * @param AnswerID the AnswerID to set
+     * @param QuestionText the QuestionText to set
      */
-    public void setAnswerID(int AnswerID) {
-        this.AnswerID = AnswerID;
+    public void setQuestionText(String QuestionText) {
+        this.QuestionText = QuestionText;
     }
 
     /**
-     * @return the AnswerContentText
+     * @return the QuestionInstructionsString
      */
-    public String getAnswerContentText() {
-        return AnswerContentText;
+    public String getQuestionInstructions() {
+        return QuestionInstructions;
     }
 
     /**
-     * @param AnswerContentText the AnswerContentText to set
+     * @param QuestionInstructionsString the QuestionInstructionsString to set
      */
-    public void setAnswerContentText(String AnswerContentText) {
-        this.AnswerContentText = AnswerContentText;
+    public void setQuestionInstructions(String QuestionInstructions) {
+        this.QuestionInstructions = QuestionInstructions;
     }
+
+    
 }
