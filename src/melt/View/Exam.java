@@ -7,11 +7,16 @@ package melt.View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.ResultSet;
@@ -22,6 +27,13 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import melt.DAO.Exam_DAO;
 import melt.DAO.MCQ_DAO;
 import melt.DAO.Question_DAO;
 import melt.DAO.Section_DAO;
@@ -36,17 +48,21 @@ import melt.Model.*;
 public class Exam extends JFrame implements ActionListener, WindowListener {
 
     public JLabel welcomeLabel, timeLabel;
-    public JButton addSectionButton, deleteButton, editButton, backButton,previewButton;
+    public JButton addSectionButton, deleteButton, editButton, backButton;
+    private JButton previewButton,activatedButton,addExamButton;
     public ArrayList<Section> sections;
-    public JLabel[] sectionLabels;
-    public JCheckBox[] sectionChosen;
+    public ArrayList<melt.Model.Exam> exams;
     public JPanel contentPanel;
-    public JPanel mainPanel, buttonsPanel, leftPanel, rightPanel;
+    public JPanel mainPanel, sectionButtonsPanel, examButtonsPanel, leftPanel, rightPanel;
     public JScrollPane scrollPane;
-    public int examId;
+    public JTree examTree;
 
-    public Exam(int examId) {
-        this.examId = examId;
+    private Section selectedSection;
+    private melt.Model.Exam selectedExam;
+
+    public Exam() {
+        
+ 
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
         setTitle("MELTSystem");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -63,7 +79,85 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 
         addWindowListener(this);
     }
+/**
+     * getExams from database
+     */
+    private void getExams() {
+        try {
+            Exam_DAO exam_DAO = new Exam_DAO();
+            ResultSet rs = exam_DAO.getList("");
 
+            exams = new ArrayList<melt.Model.Exam>();
+            while (rs.next()) {
+                melt.Model.Exam examTemp = new melt.Model.Exam();
+                examTemp.setExam_ID(rs.getInt("Exam_ID"));
+                examTemp.setInstructions(rs.getString("Instructions"));
+                examTemp.setIsPublic(rs.getBoolean("isPublic"));
+                exams.add(examTemp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamOverview.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    private void getTree() {
+        getExams();
+        DefaultMutableTreeNode top = new DefaultMutableTreeNode("Exam");
+
+        for(melt.Model.Exam exam:exams){
+            DefaultMutableTreeNode top2 = new DefaultMutableTreeNode(exam);
+            top.add(top2);
+            getSections(exam.getExam_ID());
+            DefaultMutableTreeNode[] sectionNodes = new DefaultMutableTreeNode[sections.size()];
+            for (int i = 0; i < sections.size(); i++) {
+                //getsections according to examId
+                sectionNodes[i] = new DefaultMutableTreeNode(sections.get(i));
+                top2.add(sectionNodes[i]);
+            }
+        }
+        examTree = new JTree(top);
+        examTree.setRootVisible(false);
+        examTree.setBackground(new Color(153, 153, 153));
+        examTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        MouseListener mouseListener = new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                TreePath path = examTree.getPathForLocation(e.getX(), e.getY());
+                try {
+                    
+                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+                    if (node.getLevel() == 1) {
+                        sectionButtonsPanel.setVisible(false);
+                        examButtonsPanel.setVisible(true);
+                        selectedExam=(melt.Model.Exam)node.getUserObject();
+                        selectedSection=null;
+                    } else if (node.getLevel() == 2) {
+                        sectionButtonsPanel.setVisible(true);
+                        examButtonsPanel.setVisible(false);
+                        selectedSection = (Section) node.getUserObject();
+                        selectedExam=null;
+                    }
+                } catch (Exception exception) {
+                }
+
+                
+            }
+        };
+        examTree.addMouseListener(mouseListener);
+
+    }
+
+    private DefaultMutableTreeNode getTreeNode_Exam(melt.Model.Exam exam){
+        DefaultMutableTreeNode top = new DefaultMutableTreeNode(exam);
+        DefaultMutableTreeNode[] sectionNodes = new DefaultMutableTreeNode[sections.size()];
+        for (int i = 0; i < sections.size(); i++) {
+
+            sectionNodes[i] = new DefaultMutableTreeNode(sections.get(i));
+            top.add(sectionNodes[i]);
+        }
+
+       
+        return top;
+    }
     public JPanel getGUI() {
 
 //        welcomeLabel = new JLabel("....,Welcome!");
@@ -78,16 +172,14 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 //        p1.add(timeLabel);
         //create mainPanel(mainPanel is the main part to show the sections and its subsec and questions)
         mainPanel = new JPanel();
-        backButton = new JButton("<<<Back to Exams");
+        backButton = new JButton("<<<Back to Home");
         backButton.setMinimumSize(new Dimension(350, 20));
         backButton.addActionListener(this);
-        
-        previewButton=new JButton("Preview");
-        previewButton.addActionListener(this);
-        
+
+
         setMainPanel();
-        //Create buttonsPanel
-        buttonsPanel = new JPanel();
+        //Create sectionButtonsPanel
+        sectionButtonsPanel = new JPanel();
 
         editButton = new JButton("Edit");
         editButton.addActionListener(this);
@@ -98,7 +190,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         addSectionButton = new JButton("Add a Section");
         addSectionButton.addActionListener(this);
 
-        buttonsPanel.setLayout(new BorderLayout());
+        sectionButtonsPanel.setLayout(new BorderLayout());
         //p3.add(new JLabel("Overall   6.0/30.0"));
         JPanel pTemp = new JPanel(new BorderLayout());
 
@@ -109,7 +201,32 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         pTemp.add(deleteButton, BorderLayout.CENTER);
         pTemp.add(addSectionButton, BorderLayout.SOUTH);
 
-        buttonsPanel.add(pTemp, BorderLayout.SOUTH);
+        sectionButtonsPanel.add(pTemp, BorderLayout.SOUTH);
+        //examButtonsPanel
+        examButtonsPanel = new JPanel();
+        examButtonsPanel.setBackground(new Color(153, 153, 153));
+        examButtonsPanel.setLayout(new BorderLayout());
+  
+        previewButton = new JButton("Preview");
+        previewButton.addActionListener(this);
+
+        activatedButton = new JButton("Activate");
+        activatedButton.addActionListener(this);
+
+        addExamButton = new JButton("Add a Exam");
+        addExamButton.addActionListener(this);
+        
+        
+        JPanel pTemp1 = new JPanel(new BorderLayout());
+        pTemp1.setBackground(new Color(153, 153, 153));
+        
+        pTemp1.add(previewButton,BorderLayout.NORTH);
+        pTemp1.add(activatedButton, BorderLayout.CENTER);
+        pTemp1.add(addExamButton, BorderLayout.SOUTH);
+        
+      
+        
+        examButtonsPanel.add(pTemp1,BorderLayout.SOUTH);
 
         //Create leftPanel
         leftPanel = new JPanel();
@@ -117,11 +234,16 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         //add mainPanel to a scrollpane and set scrollbarpolicy
         scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setMinimumSize(new Dimension(100, 500));
+        scrollPane.setPreferredSize(new Dimension(100, 500));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         leftPanel.add(backButton);
-        leftPanel.add(previewButton);
         leftPanel.add(scrollPane);
-        leftPanel.add(buttonsPanel);
+        leftPanel.add(sectionButtonsPanel);
+        leftPanel.add(examButtonsPanel);
+        sectionButtonsPanel.setVisible(false);
+        
+        
 
         //create rightPanel (right part)
         rightPanel = new JPanel();
@@ -134,10 +256,10 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 
         //set the background color of the leftpart
         mainPanel.setBackground(new Color(153, 153, 153));
-        buttonsPanel.setBackground(new Color(153, 153, 153));
+        sectionButtonsPanel.setBackground(new Color(153, 153, 153));
         leftPanel.setBackground(new Color(153, 153, 153));
 
-        String examName = "Exam " + examId;
+        String examName = "ExamOverView";
 
         leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), examName));
 
@@ -145,43 +267,9 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     }
 
     private void setMainPanel() {
-        //getsections according to examId
-        getSections(examId);
+        
 
-        sectionChosen = new JCheckBox[sections.size()];
-
-        sectionLabels = new JLabel[sections.size()];
-
-        //set editbuttons, editbuttons and sectionlabels
-        for (int i = 1; i < sections.size() + 1; i++) {
-            Section section = sections.get(i - 1);
-            String sectionTimeLimit = new SimpleDateFormat("HH:mm:ss").format(section.getTimeLimit());
-
-            sectionLabels[i - 1] = new JLabel("Section " + i + "  " + section.getSection_Name());
-            //Edit Button
-
-            //Checkboxes
-            sectionChosen[i - 1] = new JCheckBox();
-            sectionChosen[i - 1].setName(section.getSection_ID() + "");
-            sectionChosen[i - 1].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    JCheckBox cbLog = (JCheckBox) e.getSource();
-
-                    if (cbLog.isSelected()) {
-                        for (int i = 0; i < sectionChosen.length; i++) {
-                            if (!(sectionChosen[i] == e.getSource())) {
-                                sectionChosen[i].setEnabled(false);
-                            }
-                        }
-                    } else {
-                        for (int i = 0; i < sectionChosen.length; i++) {
-                            sectionChosen[i].setEnabled(true);
-                        }
-                    }
-                }
-            });
-
-        }
+ 
 
         //p2.setLayout(new GridLayout(sections.size(),3));
         //setlayout
@@ -195,25 +283,16 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 
         horizontalGroup_P = groupLayout.createParallelGroup();
         verticalGroup_S = groupLayout.createSequentialGroup();
-
-        for (int i = 0; i < sections.size(); i++) {
-//            mainPanel.add(sectionLabels[i]);
-//            mainPanel.add(buttons[i]);
-//            mainPanel.add(deleteButtons[i]);
-            horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
-                    .addComponent(sectionChosen[i])
-                    .addComponent(sectionLabels[i])
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE));
-
-            verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                    .addComponent(sectionChosen[i])
-                    .addComponent(sectionLabels[i]));
-
-        }
+        
+        getTree();
+        
+        horizontalGroup_P.addComponent(examTree);
+        verticalGroup_S.addComponent(examTree);
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
         mainPanel.setLayout(groupLayout);
         mainPanel.revalidate();
+        mainPanel.setMinimumSize(new Dimension(100, 500));
         //p2.repaint();
 
     }
@@ -224,12 +303,9 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
      * @param examId
      */
     private void getSections(int examId) {
-       
+
         Section_DAO section_DAO = new Section_DAO();
         sections = section_DAO.getList("Exam_ID='" + examId + "'");
-
-            
-       
 
     }
 
@@ -237,92 +313,100 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addSectionButton) {
             //add settingSection panel to the right panel
-            AddSection settingSection = new AddSection(examId);
+            AddSection settingSection = new AddSection(selectedSection.getExam_ID());
             contentPanel.removeAll();
             JPanel temp = settingSection.getGUI();
 
             contentPanel.setLayout(new FlowLayout());
             contentPanel.add(temp);
             contentPanel.revalidate();
-            for (int i = 0; i < sectionChosen.length; i++) {
-                sectionChosen[i].setSelected(false);
-                sectionChosen[i].setEnabled(true);
-            }
+
             //contentPanel.repaint();
+        } else if (e.getSource() == backButton) {
+            melt.View.StartupPanel startupPanel=new melt.View.StartupPanel();
+            startupPanel.setVisible(true);
+            this.dispose();
 
-        }else if (e.getSource() == backButton) {
-            //this.dispose();
-            ExamOverview examOverview = new ExamOverview();
-            //examOverview.setVisible(true);
-            JFrame fatherFrame = (JFrame) mainPanel.getRootPane().getParent();
-            fatherFrame.setContentPane(examOverview.getGUI());
-            fatherFrame.revalidate();
-            fatherFrame.repaint();
+        }  else if (((JButton) e.getSource()).getText().equals("Delete")) {
+            //set section_ID
 
-        } else if (e.getSource() == previewButton) {
-            //this.dispose();
-            ExamPreview examPreview=new ExamPreview(examId);
-            
+            if (selectedSection!= null) {
+                       // section_ID = Integer.parseInt((sectionChosen[i].getName()));
+                //get settingExamPanel and add to right panel
+                //create and intialize the DAOs
+                //MCQ_DAO mcq_DAO=new MCQ_DAO();
+                //Question_DAO question_DAO=new Question_DAO();
+                SectionQuestion_DAO subSectionQuestion_DAO = new SectionQuestion_DAO();
+
+                Section_DAO section_DAO = new Section_DAO();
+
+                        //update the info of question and MCQ then delete the relative data in section and subsection 
+                //mcq_DAO.cancelRWithSubSec(section_ID);
+                //question_DAO.cancelRWithSubSec(section_ID);
+                subSectionQuestion_DAO.cancelRWithSec(selectedSection.getSection_ID());
+                section_DAO.delete("Section_ID='" + selectedSection.getSection_ID() + "'");
+
+                mainPanel.removeAll();
+
+                setMainPanel();
+            }
+
+        } else if ((JButton) e.getSource()==editButton) {  //Edit Button
+            // this.dispose();
+
+            if (selectedSection != null) {
+                        //section_ID = Integer.parseInt((sectionChosen[i].getName()));
+
+                //get settingExamPanel and add to right panel
+                SettingExam settingExam = new SettingExam(selectedSection.getSection_ID());
+                contentPanel.removeAll();
+                contentPanel.setLayout(new BorderLayout());
+                contentPanel.add(settingExam.getGUI());
+                contentPanel.revalidate();
+                        //contentPanel.repaint();
+                //settingExam.setVisible(true);
+            }
+        }else if ( e.getSource()==previewButton) {  //Preview Button
+           
+                ExamPreview examPreview = new ExamPreview(selectedExam.getExam_ID());
+
             //examOverview.setVisible(true);
             contentPanel.removeAll();
             contentPanel.setLayout(new BorderLayout());
             contentPanel.add(examPreview.getGUI());
             contentPanel.revalidate();
+         
+        
 
-        } else if (((JButton) e.getSource()).getText().equals("Delete")) {
-            //set section_ID
-            if (sectionChosen.length > 0) {
-                int section_ID = 0;
-                for (int i = 0; i < sectionChosen.length; i++) {
-                    if (sectionChosen[i].isSelected()) {
-                        section_ID = Integer.parseInt((sectionChosen[i].getName()));
-                        //get settingExamPanel and add to right panel
-                        //create and intialize the DAOs
-                        //MCQ_DAO mcq_DAO=new MCQ_DAO();
-                        //Question_DAO question_DAO=new Question_DAO();
-                        SectionQuestion_DAO subSectionQuestion_DAO = new SectionQuestion_DAO();
-                       
-                        Section_DAO section_DAO = new Section_DAO();
+        }else if (e.getSource() == addExamButton) {
+            AddExam addExam = new AddExam();
+            //settingSection.setVisible(true);
+            contentPanel.removeAll();
+            JPanel temp = addExam.getGUI();
 
-                        //update the info of question and MCQ then delete the relative data in section and subsection 
-                        //mcq_DAO.cancelRWithSubSec(section_ID);
-                        //question_DAO.cancelRWithSubSec(section_ID);
-                        subSectionQuestion_DAO.cancelRWithSec(section_ID);
-                        section_DAO.delete("Section_ID='" + section_ID + "'");
+            contentPanel.setLayout(new BorderLayout());
+            
+            
+            contentPanel.add(temp, BorderLayout.NORTH);
+            contentPanel.revalidate();
+        } else if (e.getSource()==activatedButton) {
+            //isPublicButtons
+           
+                if (selectedExam!=null) {
+                    Exam_DAO exam_DAO=new Exam_DAO();
+                    exam_DAO.makeItPublic(selectedExam.getExam_ID());
+            //update the panel
+                 mainPanel.removeAll();
 
-                        mainPanel.removeAll();
-
-                        setMainPanel();
-                    }
+                setMainPanel();
                 }
-            }
+           
+        }
 
-        } else if (((JButton) e.getSource()).getText().equals("Edit")) {  //Edit Button
-            // this.dispose();
-            if (sectionChosen.length > 0) {
-                int section_ID = 0;
-                for (int i = 0; i < sectionChosen.length; i++) {
-                    if (sectionChosen[i].isSelected()) {
-                        section_ID = Integer.parseInt((sectionChosen[i].getName()));
-
-                        //get settingExamPanel and add to right panel
-                        SettingExam settingExam = new SettingExam(section_ID);
-                        contentPanel.removeAll();
-                        contentPanel.setLayout(new BorderLayout());
-                        contentPanel.add(settingExam.getGUI());
-                        contentPanel.revalidate();
-                        //contentPanel.repaint();
-                        //settingExam.setVisible(true);
-                    }
-                }
-
-            }
-
-        } 
     }
 
     public static void main(String[] args) {
-        Exam test = new Exam(1);
+        Exam test = new Exam();
 
         test.setVisible(true);
 
