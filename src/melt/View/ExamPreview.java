@@ -28,6 +28,7 @@ import melt.Model.Section;
 public class ExamPreview extends JDialog implements WindowListener{
     private int exam_ID;
     private SectionPanel sectionPanel;
+    private JPanel fatherJPanel;
     private ArrayList<Section>  sections;
     
     public ExamPreview(int exam_ID){
@@ -42,6 +43,7 @@ public class ExamPreview extends JDialog implements WindowListener{
     public ExamPreview(int exam_ID,melt.View.SectionPanel sectionPanel){
         this.exam_ID=exam_ID;
         this.sectionPanel=sectionPanel;
+        fatherJPanel=(JPanel)sectionPanel.getParent();
         setTitle("MELTSystem");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -147,8 +149,9 @@ public class ExamPreview extends JDialog implements WindowListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        sectionPanel.getRootPane().revalidate();
-        sectionPanel.getRootPane().repaint();
+        fatherJPanel.add(sectionPanel);
+        fatherJPanel.revalidate();
+        fatherJPanel.repaint();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

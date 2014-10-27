@@ -6,6 +6,7 @@
 package melt.View;
 
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -117,12 +118,15 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         horizontalGroup_P = groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER);
         verticalGroup_S = groupLayout.createSequentialGroup();
      
-        horizontalGroup_P.addComponent(sectionPanel);
+        JPanel secContentPanel=new JPanel();
+        secContentPanel.setLayout(new BorderLayout());
+        secContentPanel.add(sectionPanel);
+        horizontalGroup_P.addComponent(secContentPanel);
                 
         
                 
 
-        verticalGroup_S.addComponent(sectionPanel);
+        verticalGroup_S.addComponent(secContentPanel);
         
         //when update shows the update button and when add shows the submit button
         if (isUpdate) {
