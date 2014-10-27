@@ -6,6 +6,7 @@
 package melt.View;
 
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -27,7 +28,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
 
     public String sectionName;
     public int timeLimit_h,timeLimit_m,timeLimit_s,numOfSub;
-    public JButton submitButton,updateButton,cancelButton;
+    public JButton submitButton,updateButton,cancelButton,previewButton;
     public SectionPanel sectionPanel;
     public boolean isUpdate; 
     JScrollPane scrollPane;
@@ -105,6 +106,8 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         updateButton.addActionListener(this);
         cancelButton=new JButton("Cancel");
         cancelButton.addActionListener(this);
+        previewButton=new JButton("Preview");
+        previewButton.addActionListener(this);
 
         
         p999 = new JPanel();
@@ -115,26 +118,33 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
         horizontalGroup_P = groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER);
         verticalGroup_S = groupLayout.createSequentialGroup();
      
-        horizontalGroup_P.addComponent(sectionPanel);
+        JPanel secContentPanel=new JPanel();
+        secContentPanel.setLayout(new BorderLayout());
+        secContentPanel.add(sectionPanel);
+        horizontalGroup_P.addComponent(secContentPanel);
                 
         
                 
 
-        verticalGroup_S.addComponent(sectionPanel);
+        verticalGroup_S.addComponent(secContentPanel);
         
         //when update shows the update button and when add shows the submit button
         if (isUpdate) {
             horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
+                    .addComponent(previewButton)
                     .addComponent(updateButton)
                     .addComponent(cancelButton));
             verticalGroup_S.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addComponent(previewButton)
                     .addComponent(updateButton)
                     .addComponent(cancelButton));
         }else{
             horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
+                    .addComponent(previewButton)
                     .addComponent(submitButton)
                     .addComponent(cancelButton));
             verticalGroup_S.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addComponent(previewButton)
                     .addComponent(submitButton)
                     .addComponent(cancelButton));
         }
@@ -188,6 +198,12 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
             scrollPane.setVisible(false);
             scrollPane.getParent().remove(scrollPane);
             scrollPane.invalidate();
+                
+              
+        }else if (e.getSource()==previewButton) {
+            //remove current panel when calbutton
+            ExamPreview examPreview=new ExamPreview(examId,sectionPanel);
+            examPreview.setVisible(true);
                 
               
         }
