@@ -53,11 +53,6 @@ import javax.swing.table.TableColumn;
 import melt.DAO.QuestionDAO;
 import melt.Model.QuestionTableModel;
 import melt.Util.SQLHelper;
-import static melt.Util.SQLHelper.driver;
-import static melt.Util.SQLHelper.password;
-import static melt.Util.SQLHelper.url;
-import static melt.Util.SQLHelper.user;
-import static sun.security.krb5.Config.refresh;
 
 /**
  *
@@ -101,10 +96,10 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
     @Override
     public void windowClosing(WindowEvent e) {
         if (addingFlag != addingState.WHENEDITSECTIONS) {
-            new melt.View.StartupPanel().setVisible(true);
+//            new melt.View.StartupPanel().setVisible(true);
+        new melt.View.QuestionChoicePanel().setVisible(true);
         }
         this.dispose();
-        new melt.View.QuestionChoicePanel().setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -388,7 +383,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(addBlankBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(addBtn)
                 .addContainerGap())
         );
@@ -437,7 +432,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteBtn)
                     .addComponent(editBtn))
@@ -449,7 +444,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -683,7 +678,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
-        new melt.View.QuestionChoicePanel().setVisible(true);
+        //new melt.View.QuestionChoicePanel().setVisible(true);
 
     }//GEN-LAST:event_formWindowClosing
 

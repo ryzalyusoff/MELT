@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package melt.DAO;
+package sols.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import melt.Util.SQLHelper;
+import sols.Util.SQLHelper;
 
 /**
  *

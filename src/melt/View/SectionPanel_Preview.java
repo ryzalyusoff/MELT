@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -33,39 +34,34 @@ import melt.Model.*;
 
 /**
  * panels for sections
+ *
  * @author Aote Zhou
  */
 public class SectionPanel_Preview extends JPanel implements ActionListener {
 
     //components 
-    public JLabel sectionLabel, l0,l1, l2;
+    public JLabel sectionLabel, l0, l1, l2;
     public JLabel sectionTimeField_h, sectionTimeField_m, sectionTimeField_s;
     public JPanel p1;
     public JPanel sectionContentPanel;
-    //state for sectionContents:have no subsec or two subsec
-    public enum sectionContentState {
-
-        NOSUB, TWOSUB
-    };
-    public sectionContentState sectionContentFlag;//the flag to store Content State
-
     public Section section;
 
     public int numOfSub;//number of subsections
     int exam_ID;
 
     public SectionPanel_Preview(int exam_ID) {
-        this.exam_ID=exam_ID;
+        this.exam_ID = exam_ID;
     }
 
-    public SectionPanel_Preview(int numOfSub,int exam_ID) {
-        this.numOfSub = numOfSub;
-        this.exam_ID=exam_ID;
+    public SectionPanel_Preview(int numOfSub, int exam_ID) {
+        this.numOfSub = 0;
+        this.exam_ID = exam_ID;
     }
 
     /**
-     *get the content panel(when adding a new section)
-     * @param sectionName 
+     * get the content panel(when adding a new section)
+     *
+     * @param sectionName
      * @param timelimit_h
      * @param timelimit_m
      * @param timelimit_s
@@ -80,7 +76,7 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
         if (section == null) {
             section = new Section();
             section.setSection_Name(sectionName);
-            
+
             try {
                 Date timeLimit = new SimpleDateFormat("HH:mm:ss").parse(timelimit_h + ":" + timelimit_m + ":" + timelimit_s);
                 section.setTimeLimit(timeLimit);
@@ -96,13 +92,7 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
         sectionContentPanel = new JPanel();
         //sectionContentPanel.setBackground(Color.red);
         sectionContentPanel.setLayout(new BoxLayout(sectionContentPanel, BoxLayout.Y_AXIS));
-        for (int i = 0; i < numOfSub; i++) {
-            SubsectionPanel_Preview subSectionPanel1 = new SubsectionPanel_Preview(exam_ID);
-
-            subSectionPanel1.getGUI();
-            sectionContentPanel.add(subSectionPanel1);       
-            sectionContentFlag = sectionContentState.TWOSUB;
-        }
+        
 
         sectionLabel = new JLabel("Section " + sectionName);
         l0 = new JLabel("Hours");
@@ -111,16 +101,13 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
         String timelimit_hString = Integer.toString(timelimit_h);
         String timelimit_mString = Integer.toString(timelimit_m);
         String timelimit_sString = Integer.toString(timelimit_s);
-        if(timelimit_h == 0)
-        {
+        if (timelimit_h == 0) {
             timelimit_hString = "00";
         }
-        if(timelimit_m == 0)
-        {
+        if (timelimit_m == 0) {
             timelimit_mString = "00";
         }
-        if(timelimit_s == 0)
-        {
+        if (timelimit_s == 0) {
             timelimit_sString = "00";
         }
         sectionTimeField_h = new JLabel(timelimit_hString + "");
@@ -129,10 +116,7 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
         sectionTimeField_m.setMaximumSize(new Dimension(30, 4));
         sectionTimeField_s = new JLabel(timelimit_sString + "");
         sectionTimeField_s.setMaximumSize(new Dimension(30, 4));
-        
-
-        
-
+      
         groupLayout = new GroupLayout(this);
         groupLayout.setAutoCreateContainerGaps(true);
         groupLayout.setAutoCreateGaps(true);
@@ -170,7 +154,9 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
     }
 
     /**
-     *get the content panel of section(a section which is now exited in the database)
+     * get the content panel of section(a section which is now exited in the
+     * database)
+     *
      * @param section_ID
      */
     public void getGUI(int section_ID) {
@@ -182,249 +168,65 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
         Date sectionTimeLimit = section.getTimeLimit();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(sectionTimeLimit);
-        
+
         //set content panel
         getGUI(section.getSection_Name(), calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
 
-        //get subsections
-        Subsection_DAO subsection_DAO = new Subsection_DAO();
-        ResultSet rs = subsection_DAO.getList("Section_ID='" + section_ID + "'");
-        ArrayList<SubSection> subSections = new ArrayList<SubSection>();
-        try {
-            while (rs.next()) {
-                SubSection subSection = new SubSection();
+        //getnum of questiontypes
+        SectionQuestion_DAO sectionQuestion_DAO = new SectionQuestion_DAO();
+        ArrayList<Integer> qTypeLists= sectionQuestion_DAO.getQTypes("section_ID='" + section_ID + "'");
+        int numOfQTypes=qTypeLists.size();
+        if (numOfQTypes == 1) {
+            //getquestions
+            ArrayList<int[]> results = sectionQuestion_DAO.getList("section_ID='" + section_ID + "'");
 
-                subSection.setSection_ID(rs.getInt("section_ID"));
-                subSection.setSubSection_ID(rs.getInt("SubSection_ID"));
-                subSection.setSubSection_Name(rs.getString("SubSection_Name"));
-
-                subSections.add(subSection);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SectionPanel_Preview.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //the condition that have only one subsection in the database now
-        if (subSections.size() == 1) {
-            SubSection subSection = subSections.get(0);
-            if (subSection.getSubSection_Name().equals("0")) {
-                //on the condition no subsection            
-                //if the subsectionname equals 0 means this section will have no subsection and have only one type of question
-
-                //getquestions
-                SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
-                ResultSet rs1 = subsectionQuestion_DAO.getList("subsection_ID='" + subSection.getSubSection_ID() + "'");
-                try {
-                    while (rs1.next()) {
-                        QuestionPanel questionPanel = new QuestionPanel(rs1.getInt("Question_ID"),1);
-                        addQ(questionPanel);
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(SubsectionPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                sectionContentFlag = sectionContentState.NOSUB;
-
-            } else {
-                //on the condition has two subsection but only add a subsection
-                SubsectionPanel_Preview subSectionPanel1 = new SubsectionPanel_Preview(exam_ID);
-
-                subSectionPanel1.getGUI(subSections.get(0));
-                //add subSectionPanel1 and set the flag of section
-                sectionContentPanel.add(subSectionPanel1);
-                sectionContentFlag = sectionContentState.TWOSUB;
+            for (int i = 0; i < results.size(); i++) {
+                int[] ints = results.get(i);
+                QuestionPanel_Preview questionPanel_Preview=new QuestionPanel_Preview(ints[0], ints[2]);
+                addQ(questionPanel_Preview);
             }
 
-        } else if (subSections.size() == 2) {
-            //create two panels
-            SubsectionPanel_Preview subSectionPanel1 = new SubsectionPanel_Preview(exam_ID);
-            SubsectionPanel_Preview subSectionPanel2 = new SubsectionPanel_Preview(exam_ID);
+        } else if (numOfQTypes == 2) {
+            for(int qType:qTypeLists){
+                SubsectionPanel_Preview subsectionPanel_Preview=new SubsectionPanel_Preview(exam_ID,section_ID,qType);
+                sectionContentPanel.add(subsectionPanel_Preview);
+            }
 
-            subSectionPanel1.getGUI(subSections.get(0));
-            subSectionPanel2.getGUI(subSections.get(1));
-            //add subseationpanel to the contentpanel and set the contentstate
-            sectionContentPanel.add(subSectionPanel1);
-            sectionContentPanel.add(subSectionPanel2);
-            sectionContentFlag = sectionContentState.TWOSUB;
+        } else if (numOfQTypes == 0) {
+            
+
+        }else {
+            sectionContentPanel.add(new JLabel("fail to load exam try again"));
         }
 
         //return p1;
     }
 
     /**
-     *get GUI of mcqPanel and set it as content panel
-     * @param mCQPanel
+     * get GUI of mcqPanel and set it as content panel
+     *
+     * @param questionPanel
      */
-    public void addQ(QuestionPanel questionPanel) {
+    public void addQ(QuestionPanel_Preview questionPanel) {
         questionPanel.getGUI();
         sectionContentPanel.add(questionPanel);
+//        sectionContentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
     }
 
     /**
-     *repaint the subQuestionPanel
+     * repaint the subQuestionPanel
      */
     public void subQPanelRepaint() {
         sectionContentPanel.revalidate();
         sectionContentPanel.repaint();
     }
 
-    /**
-     *deal with the data when submit the section
-     * @return
-     */
-    public boolean submitSection() {
-        if (sectionContentFlag == sectionContentState.NOSUB) {    
-            //on the condition that section has no subsection
-            Section_DAO section_DAO = new Section_DAO();
-            Subsection_DAO subsection_DAO = new Subsection_DAO();
-//            Question_DAO question_DAO = new Question_DAO();
-//            MCQ_DAO mcq_dao = new MCQ_DAO();
-            SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
-
-            // get timelimit
-            String final_timelimit_h = sectionTimeField_h.getText();
-            String final_timelimit_m = sectionTimeField_m.getText();
-            String final_timelimit_s = sectionTimeField_s.getText();
-            int timeLimit_h = 0;
-            int timeLimit_m = 0;
-            int timeLimit_s = 0;
-            try{
-            timeLimit_h=Integer.parseInt(final_timelimit_h);
-            timeLimit_m=Integer.parseInt(final_timelimit_m);
-            timeLimit_s=Integer.parseInt(final_timelimit_s);
-            }catch(Exception exception){JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
-            return false;}
-            if(timeLimit_h >24 || timeLimit_h <00 || timeLimit_m > 60 || timeLimit_m < 0 || timeLimit_s > 60 || timeLimit_s <0 || (timeLimit_h == 0 && timeLimit_m == 0 && timeLimit_s == 0))
-            {JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
-            return false;}
-            
-            Date timeLimit = new Date();
-            try {
-                timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
-            } catch (ParseException ex) {
-                Logger.getLogger(SectionPanel_Preview.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            section.setTimeLimit(timeLimit);
-
-            //add section and get section_ID
-            int section_ID = section_DAO.add(section);
-            
-            //construct the subsection and add to the database
-            SubSection subSection = new SubSection();
-            subSection.setSection_ID(section_ID);
-            subSection.setSubSection_Name("0");
-            int subsection_ID = subsection_DAO.add(subSection);
-            Component[] components = sectionContentPanel.getComponents();
-            for (Component component : components) {
-                if (component instanceof QuestionPanel) {
-                    //System.out.println(((JPanel)component).getName());
-
-//                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
-//                    mcq_dao.update(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
-                    subsectionQuestion_DAO.add(subsection_ID, Integer.parseInt(((JPanel) component).getName()));
-                }
-
-            }
-            
-            JOptionPane.showMessageDialog(sectionLabel, "Successfully saved!", "Success", JOptionPane.PLAIN_MESSAGE);
-            return true;
-        } else if (sectionContentFlag == sectionContentState.TWOSUB) { //the condition that section has two subsection
-
-            //add section to the database
-            Section_DAO section_DAO = new Section_DAO();
-
-            String final_timelimit_h = sectionTimeField_h.getText();
-            String final_timelimit_m = sectionTimeField_m.getText();
-            String final_timelimit_s = sectionTimeField_s.getText();
-            int timeLimit_h = 0;
-            int timeLimit_m = 0;
-            int timeLimit_s = 0;
-            try{
-            timeLimit_h=Integer.parseInt(final_timelimit_h);
-            timeLimit_m=Integer.parseInt(final_timelimit_m);
-            timeLimit_s=Integer.parseInt(final_timelimit_s);
-            }catch(Exception exception){JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
-            return false;}
-            if(timeLimit_h >24 || timeLimit_h <00 || timeLimit_m > 60 || timeLimit_m < 0 || timeLimit_s > 60 || timeLimit_s <0 || (timeLimit_h == 0 && timeLimit_m == 0 && timeLimit_s == 0))
-            {JOptionPane.showMessageDialog(p1, "Please enter a correct time format (ex. 00:30:00)", "Incorrect time value", JOptionPane.ERROR_MESSAGE);
-            return false;}
-            Date timeLimit = new Date();
-            try {
-                timeLimit = new SimpleDateFormat("HH:mm:ss").parse(final_timelimit_h + ":" + final_timelimit_m + ":" + final_timelimit_s);
-            } catch (ParseException ex) {
-                Logger.getLogger(SectionPanel_Preview.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            section.setTimeLimit(timeLimit);
-            section.setExam_ID(exam_ID);
-
-            int section_ID = section_DAO.add(section);
-            //get subsection and add to the database
-            Component[] components = sectionContentPanel.getComponents();//Subsection
-            for (Component component : components) {
-                if (component instanceof SubsectionPanel) {
-                    Subsection_DAO subsection_DAO = new Subsection_DAO();
-                    SubSection subSection = new SubSection();
-                    subSection.setSection_ID(section_ID);
-                    subSection.setSubSection_Name("");
-                    
-                    int subsection_ID = subsection_DAO.add(subSection);
-                    //get subsection question and save to the database
-                    Component[] components2 = ((JPanel) component).getComponents();  //SubsectionQuestion
-                    for (Component component2 : components2) {
-                        System.out.println(component2 instanceof JPanel);
-                        if (component2 instanceof JPanel) {
-                            Component[] components3 = ((JPanel) component2).getComponents();  //SubsectionQuestion
-                            for (Component component3 : components3) {
-                                if (component3 instanceof QuestionPanel) {
-//                                    Question_DAO question_DAO = new Question_DAO();
-//                                    MCQ_DAO mcq_dao = new MCQ_DAO();
-//
-//                                    question_DAO.update(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
-//                                    mcq_dao.update(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
-                                    SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
-                                    subsectionQuestion_DAO.add(subsection_ID, Integer.parseInt(((JPanel) component3).getName()));
-                                }
-                            }
-                        }
-                    }
-
-                }
-
-            }
-            JOptionPane.showMessageDialog(sectionLabel, "Successfully saved!", "Success", JOptionPane.PLAIN_MESSAGE);
-            return true;
-
-        } else {
-            JOptionPane.showMessageDialog(sectionLabel, "Cannot submit empty section...", "Attention", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-    }
-
-    /**
-     *operations for update the section(delete the related info first and then add again)
-     * @return
-     */
-    public boolean updateSection() {
-//        MCQ_DAO mcq_DAO = new MCQ_DAO();
-//        Question_DAO question_DAO = new Question_DAO();
-        SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
-        Subsection_DAO subsection_DAO = new Subsection_DAO();
-        Section_DAO section_DAO = new Section_DAO();
-
-        int section_ID = section.getSection_ID();
-//        mcq_DAO.cancelRWithSubSec(section_ID);
-//        question_DAO.cancelRWithSubSec(section_ID);
-        subsectionQuestion_DAO.cancelRWithSubSec(section_ID);
-        
-        subsection_DAO.delete("Section_ID='" + section_ID + "'");
-        section_DAO.delete("Section_ID='" + section_ID + "'");
-
-        boolean result = submitSection();
-        return result;
-    }
-
+  
+   
     @Override
     public void actionPerformed(ActionEvent e) {
-       
+        
     }
 
 }
