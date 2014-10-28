@@ -60,16 +60,20 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     private Section selectedSection;
     private melt.Model.Exam selectedExam;
 
-    public Exam() {
+    public Exam(boolean showWindowsFirstOrNot) {
         
  
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
         setTitle("MELTSystem");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         setSize((int) width, (int) height);
+        if (showWindowsFirstOrNot) {
+            
+            setVisible(true);
+        }
         setContentPane(getGUI());
         //MenuBar
         JMenuBar jMenuBar1 = new JMenuBar();
@@ -79,6 +83,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 
         addWindowListener(this);
     }
+    
 /**
      * getExams from database
      */
@@ -199,7 +204,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         //pTemp.add(backButton,BorderLayout.NORTH);
         pTemp.add(editButton, BorderLayout.NORTH);
         pTemp.add(deleteButton, BorderLayout.CENTER);
-        pTemp.add(addSectionButton, BorderLayout.SOUTH);
+        //pTemp.add(addSectionButton, BorderLayout.SOUTH);
 
         sectionButtonsPanel.add(pTemp, BorderLayout.SOUTH);
         //examButtonsPanel
@@ -222,7 +227,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         
         pTemp1.add(previewButton,BorderLayout.NORTH);
         pTemp1.add(activatedButton, BorderLayout.CENTER);
-        pTemp1.add(addExamButton, BorderLayout.SOUTH);
+        pTemp1.add(addSectionButton, BorderLayout.SOUTH);
         
       
         
@@ -238,6 +243,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         scrollPane.setPreferredSize(new Dimension(100, 500));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         leftPanel.add(backButton);
+        leftPanel.add(addExamButton);
         leftPanel.add(scrollPane);
         leftPanel.add(sectionButtonsPanel);
         leftPanel.add(examButtonsPanel);
@@ -313,13 +319,16 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addSectionButton) {
             //add settingSection panel to the right panel
-            AddSection settingSection = new AddSection(selectedSection.getExam_ID());
-            contentPanel.removeAll();
-            JPanel temp = settingSection.getGUI();
+            if (selectedExam!=null) {
+                
+                AddSection settingSection = new AddSection(selectedExam.getExam_ID());
+                contentPanel.removeAll();
+                JPanel temp = settingSection.getGUI();
 
-            contentPanel.setLayout(new FlowLayout());
-            contentPanel.add(temp);
-            contentPanel.revalidate();
+                contentPanel.setLayout(new FlowLayout());
+                contentPanel.add(temp);
+                contentPanel.revalidate();
+            }
 
             //contentPanel.repaint();
         } else if (e.getSource() == backButton) {
@@ -406,7 +415,7 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
     }
 
     public static void main(String[] args) {
-        Exam test = new Exam();
+        Exam test = new Exam(false);
 
         test.setVisible(true);
 
@@ -419,7 +428,8 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-
+    new melt.View.StartupPanel().setVisible(true);
+        dispose();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

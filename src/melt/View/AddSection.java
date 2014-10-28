@@ -87,7 +87,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
         horizontalGroup_S.addGroup(groupLayout.createParallelGroup()
                             .addComponent(l1)
                             .addComponent(l2)
-                            .addComponent(l3))
+                            /*.addComponent(l3)*/)
                         .addGroup(groupLayout.createParallelGroup()
                             .addComponent(tf1)
                             .addGroup(groupLayout.createSequentialGroup()
@@ -96,7 +96,7 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
                                 .addComponent(tf3_m)
                                 .addComponent(l5)
                                 .addComponent(tf3_s))
-                            .addComponent(cb1))
+                            /*.addComponent(cb1)*/)
                         .addGroup(groupLayout.createParallelGroup()
                             .addComponent(button2)
                             .addComponent(button1));
@@ -113,9 +113,9 @@ public class AddSection extends JFrame implements ActionListener,WindowListener{
                                 .addComponent(l5)
                                 .addComponent(tf3_s))
                             .addComponent(button1))
-                        .addGroup(groupLayout.createParallelGroup()
+                        /*.addGroup(groupLayout.createParallelGroup()
                             .addComponent(l3)
-                            .addComponent(cb1));
+                            .addComponent(cb1))*/;
                                                 
                            
         //set grouplayout
