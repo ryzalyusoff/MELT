@@ -129,7 +129,7 @@ public class AddExam extends JFrame implements ActionListener,WindowListener{
             //close the parentFrame and reopen it
             JFrame fatherFrame=(JFrame)examPanel.getRootPane().getParent();
             //fatherFrame.dispose();
-            Exam examPanel=new Exam();
+            Exam examPanel=new Exam(false);
             fatherFrame.setContentPane(examPanel.getGUI());
             fatherFrame.revalidate();
             fatherFrame.repaint();
