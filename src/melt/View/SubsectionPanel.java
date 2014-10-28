@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -18,51 +19,55 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
-import melt.DAO.SubsectionQuestion_DAO;
+import melt.DAO.SectionQuestion_DAO;
 import melt.Model.*;
 
 /**
  * panel for the subsection
+ *
  * @author Aote Zhou
  */
-public class SubsectionPanel extends JPanel implements ActionListener{
-    //components in p2
-    JLabel subsectionLabel1;
-    JButton subsectionButton1,subsectionButton2;
-    JPanel subsectionQuestionPanel;
-    JPanel p1,p2;
-    int exam_ID;
+public class SubsectionPanel extends JPanel implements ActionListener {
 
-    public SubsectionPanel(int exam_ID) {
-        this.exam_ID=exam_ID;
+    //components in p2
+
+    JLabel subsectionLabel1;
+    JButton subsectionButton1, subsectionButton2;
+    JPanel subsectionQuestionPanel;
+    JPanel p1, p2;
+    int exam_ID;
+    int qType;
+
+    public SubsectionPanel(int exam_ID,int sectionID,int qtype) {
+        this.exam_ID = exam_ID;
+        this.qType=qtype;
+        getGUI(sectionID);
     }
-    
-    
+
     /**
-     *set the GUI of this panel
+     * set the GUI of this panel
      */
-    public void getGUI(){
-        
-        
+    private void getGUI(int sectionID) {
+
         GroupLayout groupLayout;
-        GroupLayout.ParallelGroup  horizontalGroup_P;
-        GroupLayout.SequentialGroup  verticalGroup_S;
-        
+        GroupLayout.ParallelGroup horizontalGroup_P;
+        GroupLayout.SequentialGroup verticalGroup_S;
+
         //p2 = new JPanel();
         this.setName("subsec");
-        subsectionQuestionPanel=new JPanel();
+        subsectionQuestionPanel = new JPanel();
         subsectionQuestionPanel.setName("subsecQ");
         //subsectionQuestionPanel.setBackground(Color.white);
         subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
-        
+
         subsectionLabel1 = new JLabel("Subsection");
         subsectionButton1 = new JButton("Add question");
         subsectionButton2 = new JButton("Delete");
-        
+
         subsectionButton1.addActionListener(this);
         subsectionButton2.addActionListener(this);
-        
-        JSeparator jSeparator=new JSeparator();
+
+        JSeparator jSeparator = new JSeparator();
 
         groupLayout = new GroupLayout(this);
         groupLayout.setAutoCreateContainerGaps(true);
@@ -75,9 +80,9 @@ public class SubsectionPanel extends JPanel implements ActionListener{
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
                 .addComponent(subsectionButton1)
                 .addComponent(subsectionButton2))
-            .addGroup(groupLayout.createSequentialGroup()
-                .addGap(20)
-                .addComponent(subsectionQuestionPanel))
+                .addGroup(groupLayout.createSequentialGroup()
+                        .addGap(20)
+                        .addComponent(subsectionQuestionPanel))
                 .addComponent(jSeparator);
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
@@ -86,68 +91,50 @@ public class SubsectionPanel extends JPanel implements ActionListener{
                 .addComponent(subsectionButton2))
                 .addComponent(subsectionQuestionPanel)
                 .addComponent(jSeparator);
-                
 
         groupLayout.setHorizontalGroup(horizontalGroup_P);
         groupLayout.setVerticalGroup(verticalGroup_S);
-        
+
         this.setLayout(groupLayout);
-        
-        
-//        p1=new JPanel();
-//        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-//        p1.add(p2);
-//        subsectionQuestionPanel=new JPanel();
-//        subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
-//        //subsectionQuestionPanel.add(new QuestionPanel().getGUI());
-//        p1.add(subsectionQuestionPanel);
 
-        //return p2;
-    }
+        SectionQuestion_DAO sectionQuestion_DAO = new SectionQuestion_DAO();
+        ArrayList<int[]> results = sectionQuestion_DAO.getList("section_ID='" + sectionID + "' and QType_ID='"+qType+"'");
 
-    /**
-     *get the gui when provided with a subsection
-     * @param subSection
-     */
-    public void getGUI(SubSection subSection){
-        getGUI();
-        SubsectionQuestion_DAO subsectionQuestion_DAO=new SubsectionQuestion_DAO();
-        ResultSet rs=subsectionQuestion_DAO.getList("subsection_ID='"+subSection.getSubSection_ID()+"'");
-        try {
-            while (rs.next()) {
-                QuestionPanel mCQPanel = new QuestionPanel(rs.getInt("SSQ.Question_ID"), rs.getInt("Q.QType_ID"));
-                addQ(mCQPanel);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SubsectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        for (int i = 0; i < results.size(); i++) {
+            int[] ints = results.get(i);
+            QuestionPanel questionPanel = new QuestionPanel(ints[0], ints[2]);
+            addQ(questionPanel);
         }
-        
         //return p2;
     }
+
+    
 
     /**
      * add QuestionPanel to subsectionQuestionPanel
-     * @param mCQPanel
+     *
+     * @param questionPanel
      */
-    public void addQ(QuestionPanel mCQPanel){
-        mCQPanel.getGUI();
-        subsectionQuestionPanel.add(mCQPanel);
+    public void addQ(QuestionPanel questionPanel) {
+        questionPanel.getGUI();
+        subsectionQuestionPanel.add(questionPanel);
     }
 
     /**
      * reaint the subsectionpanel
      */
-    public void subQPanelRepaint(){
+    public void subQPanelRepaint() {
         subsectionQuestionPanel.revalidate();
         subsectionQuestionPanel.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==subsectionButton1) {//add a question
-            ChooseQuestionsPanel chooseQuestionsPanel=new ChooseQuestionsPanel((SubsectionPanel)this);
+        if (e.getSource() == subsectionButton1) {//add a question
+            ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel((SubsectionPanel) this);
             chooseQuestionsPanel.setVisible(true);
-        }if (e.getSource()==subsectionButton2) {//cancel
+        }
+        if (e.getSource() == subsectionButton2) {//cancel
             //remove current panel form the parent panel
             this.setVisible(false);
             this.getParent().remove(this);

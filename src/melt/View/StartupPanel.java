@@ -16,7 +16,7 @@ public class StartupPanel extends javax.swing.JFrame {
 
     
     AddQuestion questionPanel; 
-    melt.View.ExamOverview examPanel;
+    melt.View.Exam examPanel;
     HelpPanel helpPanel; 
     
     /**
@@ -192,15 +192,15 @@ public class StartupPanel extends javax.swing.JFrame {
         questionPanel.setVisible(true);
         questionPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         */
-        dispose();
         QuestionChoicePanel questionChoicePanel = new QuestionChoicePanel();
         questionChoicePanel.setVisible(true);
         questionChoicePanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        examPanel = new melt.View.ExamOverview();
+        examPanel = new melt.View.Exam();
         examPanel.setVisible(true);
         examPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.dispose();

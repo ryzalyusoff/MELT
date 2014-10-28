@@ -55,4 +55,14 @@ public class Exam {
     public void setIsPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
+
+    @Override
+    public String toString() {
+        String isActivateString="";
+        if (isPublic) {
+            isActivateString+="--Activated";
+        }
+        return "Exam "+exam_ID+isActivateString; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

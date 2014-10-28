@@ -21,11 +21,6 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import melt.DAO.QuestionDAO;
 import melt.Util.SQLHelper;
-import static melt.View.AddQuestionFib.driver;
-import static melt.View.AddQuestionFib.password;
-import static melt.View.AddQuestionFib.url;
-import static melt.View.AddQuestionFib.user;
-import sun.security.krb5.Config;
 
 /**
  *

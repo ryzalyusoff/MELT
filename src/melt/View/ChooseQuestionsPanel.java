@@ -1,5 +1,3 @@
- 
- 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -42,12 +40,10 @@ import melt.Model.MCQ;
  *
  * @author Aote Zhou
  */
-
-
 public class ChooseQuestionsPanel extends JDialog implements ActionListener {
 
     JTable table1;
-    JButton button1,addquestionButton1, addquestionButton2;
+    JButton button1, addquestionButton1, addquestionButton2;
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
     double width;
@@ -75,6 +71,8 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
      */
     public ChooseQuestionsPanel(SectionPanel fatherPanel) {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        fatherPanelState = 0;
+        this.fatherPanel = fatherPanel;
         this.exam_ID = ((SectionPanel) fatherPanel).exam_ID;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
@@ -82,13 +80,13 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         setSize((int) width, (int) height);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
-        this.fatherPanel = fatherPanel;
 
-        fatherPanelState = 0;
     }
 
     public ChooseQuestionsPanel(SubsectionPanel fatherPanel) {
         //this.setLocationRelativeTo(null);  //make window in the center of desktop
+        fatherPanelState = 1;
+        this.fatherPanel = fatherPanel;
         this.exam_ID = ((SubsectionPanel) fatherPanel).exam_ID;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
@@ -96,9 +94,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         setSize((int) width, (int) height);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(getGUI());
-        this.fatherPanel = fatherPanel;
 
-        fatherPanelState = 1;
     }
 
     /**
@@ -111,7 +107,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
 
         button1 = new JButton("Add Question");
         button1.addActionListener(this);
-        
+
         addquestionButton1 = new JButton("Set a MCQ Question");
         addquestionButton1.addActionListener(this);
         addquestionButton2 = new JButton("Set a FIB Question");
@@ -241,34 +237,52 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         try {
             MCQ_DAO mcq_DAO = new MCQ_DAO();
             FIB_DAO fib_DAO = new FIB_DAO();
+            boolean needMCQ = false;
+            boolean needFIB = false;
+            if (fatherPanelState == 0) {//SectionPanel
+                needFIB = true;
+                needMCQ = true;
+
+            } else {//SubsectionPanel
+                if (((SubsectionPanel) fatherPanel).qType == 1) {//MCQ
+                    needMCQ = true;
+                } else if (((SubsectionPanel) fatherPanel).qType == 2) {
+                    needFIB = true;
+                }
+            }
             //get question
-            //get question
-            ArrayList<MCQ> mcqs = mcq_DAO.getList("question_ID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
             ArrayList<Object[]> objectArraylist = new ArrayList<Object[]>();
-            //store data into arraylist
-            for (int i = 0; i < mcqs.size(); i++) {
-                MCQ currentMcq = (MCQ) mcqs.get(i);
-                Object[] col = new Object[4];
-                col[0] = currentMcq.getQuestion_ID();
-                col[1]=currentMcq.getQtype_ID();
-                col[2] = currentMcq.getQuestion_Text();
-                col[3] = false;
-                objectArraylist.add(col);
+            if (needMCQ) {
 
+                ArrayList<MCQ> mcqs = mcq_DAO.getList("question_ID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
+                //store data into arraylist
+                for (int i = 0; i < mcqs.size(); i++) {
+                    MCQ currentMcq = (MCQ) mcqs.get(i);
+                    Object[] col = new Object[4];
+                    col[0] = currentMcq.getQuestion_ID();
+                    col[1] = currentMcq.getQtype_ID();
+                    col[2] = currentMcq.getQuestion_Text();
+                    col[3] = false;
+                    objectArraylist.add(col);
+
+                }
+            }
+            if (needFIB) {
+
+                ResultSet rs = fib_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
+
+                //store data into arraylist
+                while (rs.next()) {
+                    Object[] col = new Object[4];
+                    col[0] = rs.getInt(1);
+                    col[1] = rs.getInt(2);
+                    col[2] = rs.getString(3);
+                    col[3] = false;
+                    objectArraylist.add(col);
+
+                }
             }
 
-            ResultSet rs = fib_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
-
-            //store data into arraylist
-            while (rs.next()) {
-                Object[] col = new Object[4];
-                col[0] = rs.getInt(1);
-                col[1] = rs.getInt(2);
-                col[2] = rs.getString(3);
-                col[3] = false;
-                objectArraylist.add(col);
-
-            }
             //trun arraylist<object[]> to object[][]
             Object[][] datas = new Object[objectArraylist.size()][4];
             for (int i = 0; i < objectArraylist.size(); i++) {
@@ -280,11 +294,13 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         }
         return null;
     }
+
     public void refresh() {
         this.setContentPane(getGUI());
         this.revalidate();
         this.repaint();
     }
+
     public static void main(String[] args) {
         ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel();
         chooseQuestionsPanel.setVisible(true);
@@ -306,7 +322,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             }
             this.dispose();
 
-        }else if (e.getSource() == addquestionButton1) {
+        } else if (e.getSource() == addquestionButton1) {
             AddQuestion addQuestion = new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS, this);
             addQuestion.setVisible(true);
             addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
@@ -316,7 +332,7 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
 //            AddQuestion addQuestion = new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS, this);
 //            addQuestion.setVisible(true);
 //            addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
-            AddQuestionFib addQuestionFib=new AddQuestionFib(AddQuestionFib.addingState.WHENEDITSECTIONS,this);
+            AddQuestionFib addQuestionFib = new AddQuestionFib(AddQuestionFib.addingState.WHENEDITSECTIONS, this);
             addQuestionFib.setVisible(true);
             addQuestionFib.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
             //this.setVisible(false);

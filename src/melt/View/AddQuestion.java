@@ -896,10 +896,10 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
     @Override
     public void windowClosing(WindowEvent e) {
         if (addingFlag!=addingState.WHENEDITSECTIONS) {
-            new melt.View.StartupPanel().setVisible(true);
+//            new melt.View.StartupPanel().setVisible(true);
+        new melt.View.QuestionChoicePanel().setVisible(true);
         }
         this.dispose();
-        new melt.View.QuestionChoicePanel().setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
