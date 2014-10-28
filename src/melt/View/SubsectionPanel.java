@@ -15,10 +15,8 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle;
 import melt.DAO.SectionQuestion_DAO;
@@ -63,8 +61,6 @@ public class SubsectionPanel extends JPanel implements ActionListener {
         subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
 
         subsectionLabel1 = new JLabel("Subsection");
-        
-        
         subsectionButton1 = new JButton("Add question");
         subsectionButton2 = new JButton("Delete");
 
