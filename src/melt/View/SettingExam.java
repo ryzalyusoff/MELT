@@ -173,7 +173,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
                 JFrame rootFrame=(JFrame)scrollPane.getRootPane().getParent();
                 //rootFrame.dispose();
                 //this.dispose();
-                Exam exam=new Exam();
+                Exam exam=new Exam(false);
                 rootFrame.setContentPane(exam.getGUI());
                 rootFrame.revalidate();
                 rootFrame.repaint();
@@ -187,7 +187,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
                 JFrame rootFrame=(JFrame)scrollPane.getRootPane().getParent();
                 //rootFrame.dispose();
                 //this.dispose();
-                Exam exam=new Exam();
+                Exam exam=new Exam(false);
                 rootFrame.setContentPane(exam.getGUI());
                 rootFrame.revalidate();
                 rootFrame.repaint();
@@ -224,7 +224,7 @@ public class SettingExam extends JFrame implements ActionListener,WindowListener
     @Override
     public void windowClosing(WindowEvent e) {
         this.dispose();
-        Exam exam=new Exam();
+        Exam exam=new Exam(true); 
         exam.setVisible(true);
         System.out.println("Closing!");
     }
