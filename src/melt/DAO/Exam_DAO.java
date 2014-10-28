@@ -68,7 +68,7 @@ public class Exam_DAO {
                 generated_Exam_ID=rs.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Subsection_DAO.class.getName()).log(Level.SEVERE, null, ex);
+          ex.printStackTrace();
         }
         return generated_Exam_ID;
     }

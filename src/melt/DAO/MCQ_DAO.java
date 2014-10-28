@@ -7,6 +7,7 @@ package melt.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import melt.Model.MCQ;
@@ -86,7 +87,7 @@ public class MCQ_DAO {
      * @param whereString
      * @return
      */
-    public ResultSet getList(String whereString) {
+    public ArrayList<MCQ> getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT Question_ID,QType_ID,Question_Text");
@@ -97,8 +98,22 @@ public class MCQ_DAO {
         SQLHelper sQLHelper = new SQLHelper();
         sQLHelper.sqlConnect();
         ResultSet rs = sQLHelper.runQuery(sql.toString());
+        ArrayList<MCQ> mcqs = new ArrayList<MCQ>();
+        try {
+            while (rs.next()) {
+                MCQ mcq=new MCQ();
+                mcq.setQtype_ID(rs.getInt("Qtype_ID"));
+                mcq.setQuestion_ID(rs.getInt("Question_ID"));
+                mcq.setQuestion_Text(rs.getString("Question_Text"));
+                mcqs.add(mcq);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Section_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        sQLHelper.sqlClose();
         //sQLHelper.sqlClose();
-        return rs;
+        return mcqs;
     }
 
   

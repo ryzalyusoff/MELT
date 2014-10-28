@@ -9,7 +9,7 @@ package melt.Model;
  *
  * @author Aote Zhou
  */
-public class SubSecionQuestion {
+public class SecionQuestion {
     private int SubSection_ID;
     private int Question_ID;
 

@@ -24,8 +24,13 @@ public class FIB_DAO {
      * @param Question_ID
      * @return
      */
+    
+    
+    FIB fibQuestion;
+        
     public FIB getModel(int Question_ID) {
-        FIB fibQuestion = new FIB();
+    
+            FIB fibQuestion = new FIB();
         try {
 
             StringBuffer sql = new StringBuffer("");

@@ -92,12 +92,56 @@ public class QuestionDAO {
         }    
     }
     
+    // Get all Question
+    public List<SettingQuestion> getAllFIBQuestion() throws Exception {
+    
+        List<SettingQuestion> list = new ArrayList<>();
+        
+        Statement myStmt = null;
+        ResultSet myRs = null;
+       
+        Statement myQtmt = null;
+        ResultSet myQs = null;
+        
+        try {
+            myStmt = con.createStatement();
+            myRs = st.executeQuery("SELECT * FROM fib");
+            
+        
+            int counter = 1;
+            int theid = 0;
+            while (myRs.next()) {
+                SettingQuestion tempQuestion = convertRowToFIBQuestion(counter, theid, myRs);
+                list.add(tempQuestion);
+                
+                counter++;
+            }
+            return list;
+        
+        } finally {
+            close(myStmt, myRs);
+        }    
+    }
+    
     private SettingQuestion convertRowToQuestion(int counter, int theid, ResultSet myRs ) throws SQLException {
 
             int id = myRs.getInt("Question_ID");
             int count = counter;
             
             String question = myRs.getString("Question_Text");
+            //String answer = myRs.getString("answer");
+
+            SettingQuestion tempQuestion = new SettingQuestion(count, id, question );
+
+            return tempQuestion;
+    }
+    
+     private SettingQuestion convertRowToFIBQuestion(int counter, int theid, ResultSet myRs ) throws SQLException {
+
+            int id = myRs.getInt("QuestionID");
+            int count = counter;
+            
+            String question = myRs.getString("QuestionBlank");
             //String answer = myRs.getString("answer");
 
             SettingQuestion tempQuestion = new SettingQuestion(count, id, question );

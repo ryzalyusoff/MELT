@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import melt.Model.Section;
@@ -58,7 +59,7 @@ public class Section_DAO {
      * @param whereString
      * @return
      */
-    public ResultSet getList(String whereString) {
+    public ArrayList<Section> getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
         sql.append("SELECT Section_ID,Exam_ID,Section_Name,TimeLimit");
@@ -69,8 +70,23 @@ public class Section_DAO {
         SQLHelper sQLHelper = new SQLHelper();
         sQLHelper.sqlConnect();
         ResultSet rs = sQLHelper.runQuery(sql.toString());
-        //sQLHelper.sqlClose();
-        return rs;
+        ArrayList<Section> sections = new ArrayList<Section>();
+        try {
+            while (rs.next()) {
+                Section section = new Section();
+                section.setExam_ID(rs.getInt("Exam_ID"));
+                section.setSection_ID(rs.getInt("Section_ID"));
+                section.setSection_Name(rs.getString("Section_Name"));
+                section.setTimeLimit(new SimpleDateFormat("HH:mm:ss").parse(rs.getString("TimeLimit")));
+                sections.add(section);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Section_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Section_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sQLHelper.sqlClose();
+        return sections;
     }
 
     /**

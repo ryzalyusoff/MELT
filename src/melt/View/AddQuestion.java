@@ -1,9 +1,5 @@
 package melt.View;
 
-//<<<<<<< HEAD
-//import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
-//=======
-//>>>>>>> origin/master
 import melt.Model.QuestionTableModel;
 import java.awt.Dimension;
 import melt.DAO.QuestionDAO;
@@ -28,6 +24,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
@@ -74,6 +71,10 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
     public static String password;
     public static String driver;
     
+    private ChooseQuestionsPanel fatherPanel;
+    private addingState addingFlag;// 0 ->original state 1->adding when edit the sections
+    public static enum addingState{ ORIGINAL, WHENEDITSECTIONS}
+    
     
     public void startSQL() {
         try {
@@ -107,10 +108,42 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
     /**
      * Creates new form addQuestion
      */
-      public AddQuestion() {
+      public AddQuestion(addingState addingFlag,ChooseQuestionsPanel fatherPanel) {
         initComponents();
+        this.addingFlag=addingFlag;
+        this.fatherPanel=fatherPanel;
         
          try {
+            questionDAO = new QuestionDAO();
+            
+            List<SettingQuestion> questions = null;
+
+            questions = questionDAO.getAllQuestion();
+            
+            QuestionTableModel model = new QuestionTableModel(questions);
+            questionTable.setModel(model);
+    
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    
+        // Set to full screen
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int)width, (int)height); 
+        
+        setTable();
+        addWindowListener(this);
+      
+
+        
+    }
+       public AddQuestion() {
+        initComponents();
+        addingFlag=addingState.ORIGINAL;
+        
+        try {
             questionDAO = new QuestionDAO();
             
             List<SettingQuestion> questions = null;
@@ -228,7 +261,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
         setTitle("MELT");
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Add Question"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "MCQ Question Overview"));
 
         jLabel1.setText("Question :");
 
@@ -434,6 +467,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                 .addGap(19, 19, 19))
         );
 
+        jPanel1.getAccessibleContext().setAccessibleName("MCQ Question");
         jPanel1.getAccessibleContext().setAccessibleDescription("");
 
         pack();
@@ -505,9 +539,11 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
         
         
         try {
-                int rowcheck = questionTable.getSelectedRow();
-                if (rowcheck > -1) {
-                    
+                
+            int rowcheck = questionTable.getSelectedRow();
+                
+            if (rowcheck > -1) {
+
                 // Get the selected row
                 int selectedRow = questionTable.getSelectedRow();
 
@@ -522,17 +558,15 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                 // Set the Question field on the edit panel based on the selected row
                 editQPanel.questionField.setText(rowQuestion);
 
+                rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
 
-                    rowID = (questionTable.getModel().getValueAt(selectedRow,1).toString());
+            }
+                
+        } catch (NullPointerException ex) {
 
-                        }
-                } catch (NullPointerException ex) {
+        }
 
-                }
-
-
-
-                connectDb();
+        connectDb();
 
         try {
 
@@ -778,6 +812,12 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                         answerField6.setText("");
 
                     refresh();
+                    if (addingFlag==addingState.WHENEDITSECTIONS) {
+                        fatherPanel.refresh();
+                        dispose();
+                        //fatherPanel.setVisible(true);
+                
+                    }
                     } else {
                         JOptionPane.showMessageDialog(null, "Please select at least one correct answer!", "error", JOptionPane.ERROR_MESSAGE);
                         String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
@@ -794,6 +834,7 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                     st.executeUpdate(deletesql2);
                 }
                 
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Please enter the question!", "error", JOptionPane.ERROR_MESSAGE);
                 String deletesql = "DELETE FROM question WHERE Question_ID='"+key+"'";
@@ -802,6 +843,8 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
                 st.executeUpdate(deletesql2);
                 
             }
+            
+            
             
 
         } catch (Exception exc) {
@@ -852,7 +895,10 @@ public class AddQuestion extends javax.swing.JFrame implements WindowListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        new melt.View.StartupPanel().setVisible(true);
+        if (addingFlag!=addingState.WHENEDITSECTIONS) {
+//            new melt.View.StartupPanel().setVisible(true);
+        new melt.View.QuestionChoicePanel().setVisible(true);
+        }
         this.dispose();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

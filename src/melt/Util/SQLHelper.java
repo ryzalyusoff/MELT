@@ -119,9 +119,9 @@ public class SQLHelper {
      */
     public void sqlClose() {
         try {
-            if (rs != null) {
-                rs.close();
-            }
+//            if (rs != null) {
+//                rs.close();
+//            }
             if (stat != null) {
                 stat.close();
             }

@@ -5,6 +5,7 @@
  */
 package melt.View;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -12,10 +13,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -29,18 +30,17 @@ import melt.Model.*;
  *
  * @author Aote Zhou
  */
-public class SubsectionPanel extends JPanel implements ActionListener {
+public class SubsectionPanel_Preview extends JPanel implements ActionListener {
 
     //components in p2
 
     JLabel subsectionLabel1;
-    JButton subsectionButton1, subsectionButton2;
     JPanel subsectionQuestionPanel;
     JPanel p1, p2;
     int exam_ID;
     int qType;
 
-    public SubsectionPanel(int exam_ID,int sectionID,int qtype) {
+    public SubsectionPanel_Preview(int exam_ID,int sectionID,int qtype) {
         this.exam_ID = exam_ID;
         this.qType=qtype;
         getGUI(sectionID);
@@ -63,19 +63,7 @@ public class SubsectionPanel extends JPanel implements ActionListener {
         subsectionQuestionPanel.setLayout(new BoxLayout(subsectionQuestionPanel, BoxLayout.Y_AXIS));
 
         subsectionLabel1 = new JLabel("Subsection");
-        mcqRadio = new JRadioButton("MCQ");
-        fibRadio = new JRadioButton("FIB");
         
-        
-        mcqRadio.addActionListener(this);
-        fibRadio.addActionListener(this);
-        
-        
-        subsectionButton1 = new JButton("Add question");
-        subsectionButton2 = new JButton("Delete");
-
-        subsectionButton1.addActionListener(this);
-        subsectionButton2.addActionListener(this);
 
         JSeparator jSeparator = new JSeparator();
 
@@ -87,22 +75,14 @@ public class SubsectionPanel extends JPanel implements ActionListener {
 
         horizontalGroup_P.addGroup(groupLayout.createSequentialGroup()
                 .addComponent(subsectionLabel1)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
-                .addComponent(mcqRadio)
-                .addComponent(fibRadio)
-                .addComponent(subsectionButton1)
-                .addComponent(subsectionButton2))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE))
                 .addGroup(groupLayout.createSequentialGroup()
                         .addGap(20)
                         .addComponent(subsectionQuestionPanel))
                 .addComponent(jSeparator);
 
         verticalGroup_S.addGroup(groupLayout.createParallelGroup()
-                .addComponent(subsectionLabel1)
-                .addComponent(mcqRadio)
-                .addComponent(fibRadio)
-                .addComponent(subsectionButton1)
-                .addComponent(subsectionButton2))
+                .addComponent(subsectionLabel1))
                 .addComponent(subsectionQuestionPanel)
                 .addComponent(jSeparator);
 
@@ -116,8 +96,8 @@ public class SubsectionPanel extends JPanel implements ActionListener {
 
         for (int i = 0; i < results.size(); i++) {
             int[] ints = results.get(i);
-            QuestionPanel questionPanel = new QuestionPanel(ints[0], ints[2]);
-            addQ(questionPanel);
+            QuestionPanel_Preview questionPanel_Preview=new QuestionPanel_Preview(ints[0], ints[2]);
+            addQ(questionPanel_Preview);
         }
         //return p2;
     }
@@ -129,9 +109,10 @@ public class SubsectionPanel extends JPanel implements ActionListener {
      *
      * @param questionPanel
      */
-    public void addQ(QuestionPanel questionPanel) {
+    public void addQ(QuestionPanel_Preview questionPanel) {
         questionPanel.getGUI();
         subsectionQuestionPanel.add(questionPanel);
+//        subsectionQuestionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
     }
 
     /**
@@ -144,22 +125,7 @@ public class SubsectionPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == subsectionButton1) {//add a question
-            ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel((SubsectionPanel) this);
-            chooseQuestionsPanel.setVisible(true);
-        }
-        if (e.getSource() == subsectionButton2) {//cancel
-            //remove current panel form the parent panel
-            this.setVisible(false);
-            this.getParent().remove(this);
-            this.invalidate();
-        }
-        if (e.getSource()==fibRadio) {
-            mcqRadio.setSelected(false);
-        }
-        if (e.getSource()==mcqRadio) {            
-            fibRadio.setSelected(false);
-        }
+        
     }
 
 }
