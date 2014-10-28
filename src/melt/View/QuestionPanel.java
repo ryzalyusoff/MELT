@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
@@ -187,6 +188,49 @@ public class QuestionPanel extends JPanel implements ActionListener {
 
             p1.setLayout(groupLayout);
         }
+        
+        if(Q_Type == 3)
+        {
+            questionLabel = new JLabel(((Essay)question).getInstructions());
+        questionDeleteButton = new JButton("Delete");
+        
+        JTextArea essayTextArea = new JTextArea();
+                      
+        JLabel wordLimit = new JLabel("Word Limit: "+((Essay)question).getNoOfWords());
+        
+        questionDeleteButton.addActionListener(this);
+
+        groupLayout = new GroupLayout(this);
+        groupLayout.setAutoCreateContainerGaps(true);
+        groupLayout.setAutoCreateGaps(true);
+        horizontalContentGroup_P=groupLayout.createParallelGroup();
+        horizontalGroup_S = groupLayout.createSequentialGroup();
+        verticalGroup_S = groupLayout.createSequentialGroup();
+        
+        
+        //group for horizontal
+        horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
+                .addComponent(questionLabel)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addComponent(questionDeleteButton));
+        horizontalContentGroup_P.addGroup(groupLayout.createSequentialGroup()
+                .addComponent(essayTextArea)
+                .addComponent(wordLimit));
+        horizontalGroup_S.addGap(0).addGroup(horizontalContentGroup_P);
+        //group for vertical
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+                .addComponent(questionDeleteButton)
+                .addComponent(questionLabel));
+        verticalGroup_S.addGroup(groupLayout.createParallelGroup()
+                .addComponent(essayTextArea)
+                .addComponent(wordLimit));
+
+        
+        groupLayout.setHorizontalGroup(horizontalGroup_S);
+        groupLayout.setVerticalGroup(verticalGroup_S);
+
+        this.setLayout(groupLayout);
+        }
             p1.setBorder(BorderFactory.createLineBorder(Color.lightGray));
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(p1);
@@ -215,6 +259,12 @@ public class QuestionPanel extends JPanel implements ActionListener {
             FIBAnswer_DAO fIBAnswer_DAO = new FIBAnswer_DAO();
 
             question = fib_dao.getModel(questionID);
+        }
+        if(Q_Type == 3)
+        {
+        Essay_DAO essay_dao=new Essay_DAO();        
+          
+        question=essay_dao.getModel(questionID); 
         }
     }
 

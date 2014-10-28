@@ -29,6 +29,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import melt.DAO.Essay_DAO;
 import melt.DAO.FIB_DAO;
 import melt.View.AddQuestion;
 import melt.DAO.MCQ_DAO;
@@ -43,7 +44,7 @@ import melt.Model.MCQ;
 public class ChooseQuestionsPanel extends JDialog implements ActionListener {
 
     JTable table1;
-    JButton button1, addquestionButton1, addquestionButton2;
+    JButton button1, addquestionButton1, addquestionButton2, addquestionButton3;
     int fatherPanelState;//0->SectionPanel 1->Subsectionpanel
     JPanel fatherPanel;
     double width;
@@ -112,6 +113,8 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         addquestionButton1.addActionListener(this);
         addquestionButton2 = new JButton("Set a FIB Question");
         addquestionButton2.addActionListener(this);
+        addquestionButton3 = new JButton("Set a FIB Question");
+        addquestionButton3.addActionListener(this);
         //columnNames for the table
         String[] columnNames = {
             "ID",
@@ -221,7 +224,8 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         p.setMaximumSize(new Dimension((int) width, 30));
         p.add(button1, CENTER_ALIGNMENT);
         p.add(addquestionButton1, CENTER_ALIGNMENT);
-        p.add(addquestionButton2, CENTER_ALIGNMENT);
+        p.add(addquestionButton2, CENTER_ALIGNMENT);        
+        p.add(addquestionButton3, CENTER_ALIGNMENT);
         p1.add(p);
 
         return p1;
@@ -237,17 +241,23 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
         try {
             MCQ_DAO mcq_DAO = new MCQ_DAO();
             FIB_DAO fib_DAO = new FIB_DAO();
+            Essay_DAO essay_DAO = new Essay_DAO();
             boolean needMCQ = false;
-            boolean needFIB = false;
+            boolean needFIB = false;            
+            boolean needEssay = false;
             if (fatherPanelState == 0) {//SectionPanel
                 needFIB = true;
                 needMCQ = true;
+                needEssay = true;
 
             } else {//SubsectionPanel
                 if (((SubsectionPanel) fatherPanel).qType == 1) {//MCQ
                     needMCQ = true;
                 } else if (((SubsectionPanel) fatherPanel).qType == 2) {
                     needFIB = true;
+                }
+                else if (((SubsectionPanel) fatherPanel).qType == 3) {
+                    needEssay = true;
                 }
             }
             //get question
@@ -270,6 +280,22 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             if (needFIB) {
 
                 ResultSet rs = fib_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
+
+                //store data into arraylist
+                while (rs.next()) {
+                    Object[] col = new Object[4];
+                    col[0] = rs.getInt(1);
+                    col[1] = rs.getInt(2);
+                    col[2] = rs.getString(3);
+                    col[3] = false;
+                    objectArraylist.add(col);
+
+                }
+            }
+            
+            if (needEssay) {
+
+                ResultSet rs = essay_DAO.getList("questionID not in (select question_ID from QuestionsByExamID where Exam_ID='" + exam_ID + "') ");
 
                 //store data into arraylist
                 while (rs.next()) {
@@ -335,6 +361,17 @@ public class ChooseQuestionsPanel extends JDialog implements ActionListener {
             AddQuestionFib addQuestionFib = new AddQuestionFib(AddQuestionFib.addingState.WHENEDITSECTIONS, this);
             addQuestionFib.setVisible(true);
             addQuestionFib.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+            //this.setVisible(false);
+
+        }
+        
+        else if (e.getSource() == addquestionButton3) {
+//            AddQuestion addQuestion = new AddQuestion(AddQuestion.addingState.WHENEDITSECTIONS, this);
+//            addQuestion.setVisible(true);
+//            addQuestion.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+            AddEssay addEssay = new AddEssay(AddEssay.addingState.WHENEDITSECTIONS, this);
+            addEssay.setVisible(true);
+            addEssay.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
             //this.setVisible(false);
 
         }
