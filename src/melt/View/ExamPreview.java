@@ -97,6 +97,12 @@ public class ExamPreview extends JDialog implements WindowListener{
         return scrollPane;
 
     }
+
+    /**
+     * get the preview but replace the specific one(which is now edited) with the current one 
+     * @param sectionPanel
+     * @return
+     */
     public JPanel getGUI(melt.View.SectionPanel sectionPanel){
         JPanel p1=new JPanel();
         JPanel p2=new JPanel();
