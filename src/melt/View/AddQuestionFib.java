@@ -53,11 +53,7 @@ import javax.swing.table.TableColumn;
 import melt.DAO.QuestionDAO;
 import melt.Model.QuestionTableModel;
 import melt.Util.SQLHelper;
-import static melt.Util.SQLHelper.driver;
-import static melt.Util.SQLHelper.password;
-import static melt.Util.SQLHelper.url;
-import static melt.Util.SQLHelper.user;
-import static sun.security.krb5.Config.refresh;
+
 
 /**
  *
@@ -101,10 +97,10 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
     @Override
     public void windowClosing(WindowEvent e) {
         if (addingFlag != addingState.WHENEDITSECTIONS) {
-            new melt.View.StartupPanel().setVisible(true);
+//            new melt.View.StartupPanel().setVisible(true);
+        new melt.View.QuestionChoicePanel().setVisible(true);
         }
         this.dispose();
-        new melt.View.QuestionChoicePanel().setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -322,7 +318,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
         jLabel1.setText("Write the question in the following field:");
 
-        addBtn.setText("Add The Question");
+        addBtn.setText("ADD");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
@@ -357,27 +353,21 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(addBlankBtn))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(addBlankBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addGap(0, 238, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,9 +384,9 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(addBlankBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(addBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         questionTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -443,7 +433,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteBtn)
                     .addComponent(editBtn))
@@ -455,7 +445,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -481,33 +471,28 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
         question = questionField.getText();
         instructions = instructionField.getText();
-       //if (instructions.equals("")|| instructions==null || counter==0 )
-         //   JOptionPane.showMessageDialog(null, "The question wasn't added successfully!");
-           
+        
+        
          if (instructions.equals("")|| instructions==null)
            JOptionPane.showMessageDialog(null, "you have to add instructions!"); 
 
-       
         // set the match patter of "[]"
         Matcher matcher = Pattern.compile("\\[([^\\]]+)").matcher(question);
 
         ArrayList<String> answers = new ArrayList<String>();
         
-          int counter = 0;
- 
+         int counter = 0;
+
         int pos = -1;
         while (matcher.find(pos + 1)) {
             pos = matcher.start();
             // Add the matched word to the Arraylist
             answers.add(matcher.group(1));
-             counter++;
-
+            counter++;
         }
-        
-          if (counter==0) // the teacher did'nt add any blank
+               if (counter==0) // the teacher did'nt add any blank
                 JOptionPane.showMessageDialog(null, "you have to add at leat one blank!");
           else{
-
         // Find the word with bracket and replace it with blank
         String newQuestion = question.replaceAll("\\[.*?]", "_____");
 
@@ -568,11 +553,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
         instructionField.setText("");
         questionField.setText("");
-        
-        JOptionPane.showMessageDialog(null, "The question is added successfully!");
-          }
-           
-              
+               }
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void questionFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_questionFieldMouseReleased
@@ -707,7 +688,8 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
-        new melt.View.QuestionChoicePanel().setVisible(true);
+        //new melt.View.QuestionChoicePanel().setVisible(true);
+
 
     }//GEN-LAST:event_formWindowClosing
 

@@ -249,7 +249,7 @@ public class ExamOverview extends JFrame implements ActionListener,WindowListene
                 if (examSelected[i].isSelected()) {
                     //this.dispose();
                     exam_ID = Integer.parseInt((examSelected[i].getName()));
-                    Exam exam = new Exam(exam_ID);
+                    Exam exam = new Exam(false);
                     JFrame fatherFrame=(JFrame)ExamListPanel.getRootPane().getParent();
                     fatherFrame.setContentPane(exam.getGUI());
                     fatherFrame.revalidate();

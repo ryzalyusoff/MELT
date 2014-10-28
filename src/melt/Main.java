@@ -1,5 +1,6 @@
 package melt;
 
+import com.sun.org.apache.xerces.internal.util.DOMUtil;
 import melt.View.StartupPanel;
 import java.util.List;
 import melt.View.AddQuestion;
@@ -40,7 +41,8 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new melt.View.StartupPanel().setVisible(true);
+                //new melt.View.StartupPanel().setVisible(true);
+                new melt.View.RolesPanel().setVisible(true);
             }
         });
     }

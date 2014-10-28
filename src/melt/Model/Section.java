@@ -74,6 +74,12 @@ public class Section {
         this.TimeLimit = TimeLimit;
     }
 
+    @Override
+    public String toString() {
+        return "Section "+section_Name; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+
     
     
 }
