@@ -54,6 +54,7 @@ import melt.DAO.QuestionDAO;
 import melt.Model.QuestionTableModel;
 import melt.Util.SQLHelper;
 
+
 /**
  *
  * @author Ghader
@@ -470,19 +471,28 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
         question = questionField.getText();
         instructions = instructionField.getText();
+        
+        
+         if (instructions.equals("")|| instructions==null)
+           JOptionPane.showMessageDialog(null, "you have to add instructions!"); 
 
         // set the match patter of "[]"
         Matcher matcher = Pattern.compile("\\[([^\\]]+)").matcher(question);
 
         ArrayList<String> answers = new ArrayList<String>();
+        
+         int counter = 0;
 
         int pos = -1;
         while (matcher.find(pos + 1)) {
             pos = matcher.start();
             // Add the matched word to the Arraylist
             answers.add(matcher.group(1));
+            counter++;
         }
-
+               if (counter==0) // the teacher did'nt add any blank
+                JOptionPane.showMessageDialog(null, "you have to add at leat one blank!");
+          else{
         // Find the word with bracket and replace it with blank
         String newQuestion = question.replaceAll("\\[.*?]", "_____");
 
@@ -543,7 +553,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
 
         instructionField.setText("");
         questionField.setText("");
-
+               }
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void questionFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_questionFieldMouseReleased
@@ -679,6 +689,7 @@ public class AddQuestionFib extends javax.swing.JFrame implements WindowListener
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
         //new melt.View.QuestionChoicePanel().setVisible(true);
+
 
     }//GEN-LAST:event_formWindowClosing
 

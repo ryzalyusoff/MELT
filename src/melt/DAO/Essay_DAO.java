@@ -30,7 +30,7 @@ public class Essay_DAO {
 
             StringBuffer sql = new StringBuffer("");
             sql.append("SELECT QuestionID,QuestionType,noofwords, instructions");
-            sql.append(" FROM MELTSystem.`Essay`");
+            sql.append(" FROM `Essay`");
             sql.append(" where QuestionID=" + Question_ID);
 
             SQLHelper sQLHelper = new SQLHelper();
@@ -40,7 +40,7 @@ public class Essay_DAO {
 
                 essayQuestion.setQtype_ID(rs.getInt("QuestionType"));
                 essayQuestion.setQuestion_ID(rs.getInt("QuestionID"));
-                essayQuestion.setNoOfWords(rs.getString("noofwords"));
+                essayQuestion.setNoofwords(rs.getString("noofwords"));
                 essayQuestion.setInstructions(rs.getString("instructions"));
                
 
@@ -90,8 +90,8 @@ public class Essay_DAO {
     public ResultSet getList(String whereString) {
 
         StringBuffer sql = new StringBuffer("");
-        sql.append("SELECT QuestionID,QuestionType,noofwords, instructions");
-        sql.append(" FROM MELTSystem.`Essay`");
+        sql.append("SELECT Question_ID,QType_ID,noofwords,instructions");
+        sql.append(" FROM `Essay`");
         if (whereString.trim() != "") {
             sql.append(" where " + whereString);
         }

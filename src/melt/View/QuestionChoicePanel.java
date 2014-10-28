@@ -18,10 +18,24 @@ public class QuestionChoicePanel extends javax.swing.JFrame {
     AddQuestion questionMCQPanel; 
     melt.View.AddQuestionFib questionFIBPanel;
     HelpPanel helpPanel; 
+
     
     /**
      * Creates new form startupPanel
      */
+
+  private void essayBtnActionPerformed(java.awt.event.ActionEvent evt) {                                         
+
+        //dispose();
+        AddEssay addessay = new melt.View.AddEssay();
+        addessay.setVisible(true);
+        addessay.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+
+    }                    
+
+
+
+
     public QuestionChoicePanel() {
         initComponents();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -214,9 +228,11 @@ public class QuestionChoicePanel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton MCQBtn;
+    private javax.swing.JButton essayBtn;
     private javax.swing.JButton fibBtn;
     private javax.swing.JButton homeBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -224,7 +240,9 @@ public class QuestionChoicePanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }
