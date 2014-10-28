@@ -192,23 +192,23 @@ public class QuestionChoicePanel extends javax.swing.JFrame {
         questionPanel.setVisible(true);
         questionPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         */
-        dispose();
         new StartupPanel().setVisible(true);
+        dispose();
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void MCQBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCQBtnActionPerformed
         // TODO add your handling code here:
-        dispose();
         questionMCQPanel = new melt.View.AddQuestion();
         questionMCQPanel.setVisible(true);
         questionMCQPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        dispose();
     }//GEN-LAST:event_MCQBtnActionPerformed
 
     private void fibBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fibBtnActionPerformed
-        dispose();
         questionFIBPanel = new melt.View.AddQuestionFib();
         questionFIBPanel.setVisible(true);
         questionFIBPanel.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        dispose();
     }//GEN-LAST:event_fibBtnActionPerformed
 
 

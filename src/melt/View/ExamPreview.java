@@ -110,12 +110,14 @@ public class ExamPreview extends JDialog implements WindowListener{
         GroupLayout.ParallelGroup horizontalGroup_P = groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER);
         GroupLayout.SequentialGroup verticalGroup_S = groupLayout.createSequentialGroup();
         
+        boolean isNewSec=true;//not a new sec->replace is a new sec->append
         for (int i = 0; i < sections.size(); i++) {
             melt.View.SectionPanel_Preview sectionPanel_Preview=new melt.View.SectionPanel_Preview(exam_ID);
             int sectionID=((melt.Model.Section)sections.get(i)).getSection_ID();
             if(sectionID==sectionPanel.section.getSection_ID()){
                 horizontalGroup_P.addComponent(sectionPanel);
                 verticalGroup_S.addComponent(sectionPanel);
+                isNewSec=false;
             }else{
                 sectionPanel_Preview.getGUI(sectionID);
                 horizontalGroup_P.addComponent(sectionPanel_Preview);
@@ -123,6 +125,10 @@ public class ExamPreview extends JDialog implements WindowListener{
             }
             
             
+        }
+        if (isNewSec) {
+            horizontalGroup_P.addComponent(sectionPanel);
+            verticalGroup_S.addComponent(sectionPanel);
         }
      
         
