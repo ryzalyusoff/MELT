@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MELT - Help 2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css" type="text/css" />
+    </head>
+    <body>
+        <div id="main-container">
+            <h1>How to Add & Set Exam ?</h1>
+            
+            <ul id='steps'>
+                <li>
+                    <b>Step 1:</b> On the Main page, click on the "EXAM" button   <br/><br/>
+                    <img src="img/help3_1.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 2:</b> On the left panel, click on the "Add a Exam" button  <br/><br/>
+                    <img src="img/help3_2.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 3:</b> Fill in the instruction for the Exam, and click "OK" button  <br/><br/>
+                    <img src="img/help3_3.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 4:</b> Newly created exam will appear on the left panel. Now select the exam and click the "Edit button"  <br/><br/>
+                    <img src="img/help3_4.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 5:</b> An Exam shall has at least one section. To add section, click on the "Add a section" button <br/><br/>
+                    <img src="img/help3_5.png" />
+                    <br/><br/>
+                </li>
+                 <li>
+                    <b>Step 6:</b> Set the section name, answering time and the number of subsections that this exam should have. Then, click "OK" button  <br/><br/>
+                    <img src="img/help3_6.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 7:</b> Add questions to by clicking the Add question button. <br/><br/>
+                    <img src="img/help3_7.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 8:</b> Select the question you want to add, then click "Add Question" button  <br/><br/>
+                    <img src="img/help3_8.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 9:</b> After you have added all the questions, click "Create Section" button  <br/><br/>
+                    <img src="img/help3_9.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 10:</b> Now you should see a new Section appeared on the left panel. You can click "Edit" button to edit the section or click "Delete" button to delete it  <br/><br/>
+                    <img src="img/help3_10.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 11:</b> To publish/activate the exam, click "Back to Exams" button. Select the exam, and click "Activate" button  <br/><br/>
+                    <img src="img/help3_11.png" />
+                    <br/><br/>
+                </li>
+            </ul>
+            
+        </div>
+    </body>
+</html>

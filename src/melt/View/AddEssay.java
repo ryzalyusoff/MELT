@@ -8,6 +8,8 @@ package melt.View;
 import java.io.*;
 import java.util.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,15 +22,16 @@ import javax.swing.JFrame;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
-import melt.DAO.Question_DAO;
+import melt.DAO.QuestionDAO;
+import melt.Model.QuestionTableModel;
 import melt.Util.SQLHelper;
-import sun.org.mozilla.javascript.internal.Token;
+import melt.Model.QuestionTableModel;
 
 /**
  *
  * @author Ghader
  */
-public class AddEssay extends javax.swing.JFrame {
+public class AddEssay extends javax.swing.JFrame implements WindowListener{
      private Connection con;
     private Statement st;
     private ResultSet rs;
@@ -45,10 +48,52 @@ public class AddEssay extends javax.swing.JFrame {
     private String instructions;
     private String noofwords;
     private int QType_ID;
-  
     
+    private QuestionDAO questionDAO;
     
-   
+    private ChooseQuestionsPanel fatherPanel;
+    private AddEssay.addingState addingFlag;// 0 ->original state 1->adding when edit the sections
+
+    
+    @Override
+    public void windowOpened(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        if (addingFlag != AddEssay.addingState.WHENEDITSECTIONS) {
+//            new melt.View.StartupPanel().setVisible(true);
+        new melt.View.QuestionChoicePanel().setVisible(true);
+        }
+        this.dispose();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * Creates new form AddEssay
      */
@@ -65,6 +110,44 @@ public class AddEssay extends javax.swing.JFrame {
         double height = screenSize.getHeight();
         setSize((int)width, (int)height); 
         
+    }
+    
+     /**
+     * Creates new form AddEssay
+     */
+    public AddEssay(AddEssay.addingState addingFlag, ChooseQuestionsPanel fatherPanel) {
+        initComponents();
+        this.addingFlag = addingFlag;
+        this.fatherPanel = fatherPanel;
+
+        // Set to full screen
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        setSize((int) width, (int) height);
+
+        try {
+            questionDAO = new QuestionDAO();
+
+            java.util.List<SettingQuestion> questions = null;
+
+            questions = questionDAO.getAllFIBQuestion();
+
+            QuestionTableModel model = new QuestionTableModel(questions);
+            //questionTable.setModel(model);
+
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //setTable();
+        //addWindowListener(this);
+
+    }
+    
+    public static enum addingState {
+
+        ORIGINAL, WHENEDITSECTIONS
     }
     
      public void startSQL() {
@@ -243,6 +326,12 @@ public class AddEssay extends javax.swing.JFrame {
                           }
                           jTextArea1.setText("");
                           jTextField1.setText("");
+                          if (addingFlag==AddEssay.addingState.WHENEDITSECTIONS) {
+                        fatherPanel.refresh();
+                        dispose();
+                        //fatherPanel.setVisible(true);
+                
+                    }
                           System.out.println(sql1);
                           
                       } catch (Exception exc) {
