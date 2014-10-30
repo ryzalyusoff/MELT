@@ -7,6 +7,7 @@ package melt.View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,14 +20,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -71,6 +75,8 @@ public class TakingExam extends javax.swing.JFrame {
     int sessionkey = 0;
     int latestQID = 0;
     Timer timecounter;
+    Date timeLimit;
+    JTextArea essayAnswer = new JTextArea();
     
     Date currentDate;
     Date firstLoginDate;
@@ -125,16 +131,48 @@ public class TakingExam extends javax.swing.JFrame {
 }
     
      public class MyActionListener implements ActionListener {
+         int Hours;
+         int Minute;
+         int Second;
          public void actionPerformed(ActionEvent e) {
-            /* 
-             if(currentDate-firstLoginDate==0){
+            
+             if(false){
              //finish
              }else{
-                 timeCounter.setText(new Date().toString());
+                 Second++;
+                 if(Second>60){
+                     Second=00;
+                     Minute++;
+                 }
+                 
+                     
+                 if(Minute>60){
+                     Minute=00;
+                     Hours++;
+                 }
+                
+                 if(Hours>24){
+                   Hours=00;
+                 }
+                  
+                     
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(timeLimit);
+                
+                int hour = calendar.get(Calendar.HOUR);
+                int minute = calendar.get(Calendar.MINUTE);
+                int seconds = calendar.get(Calendar.SECOND);
+                
+                int resultHour = hour - Hours;
+                int resultMinute = minute - Minute;
+                int resultSecond = seconds - Second;
+                
+                 
+                 timeCounter.setText(Hours+":"+Minute+":"+Second);
                 timeCounter.revalidate();
                 timeCounter.repaint();
              }
-             */
+             
          }
      }
     
@@ -145,13 +183,13 @@ public class TakingExam extends javax.swing.JFrame {
         initComponents();
         questionField.setEditable(false); 
       
-        currentDate = new Date();
+        
         
         
         connectDb();
         
         try {
-            String sql1 = "SELECT * FROM section,exam WHERE section.Exam_ID = exam.Exam_ID AND section.Section_Name='Section 1' AND exam.Exam_ID = 1 ";
+            String sql1 = "SELECT * FROM section,exam WHERE section.Exam_ID = exam.Exam_ID AND section.Section_Name='"+SectionName+"' AND exam.Exam_ID ='"+ExamID+"'  ";
             rs = st.executeQuery(sql1);
         
             while(rs.next()) {
@@ -159,7 +197,9 @@ public class TakingExam extends javax.swing.JFrame {
                 //ExamID = rs.getInt("Exam_ID");
                 SectionName = rs.getString("Section_Name");
                 sectionNameLabel.setText(SectionName);
-                Time timeLimit = rs.getTime("TimeLimit");
+                //Time timeLimit = rs.getTime("TimeLimit");
+                timeLimit = new SimpleDateFormat("HH:mm:ss").parse(rs.getString("TimeLimit"));
+               
                 //timeCounter.setText();
                 //timeLimit.getTime();
                 MyActionListener myActionListener=new MyActionListener();
@@ -197,9 +237,7 @@ public class TakingExam extends javax.swing.JFrame {
                 qID = rs2.getInt("Question_ID");
                 this.questionID.add(qID);
                 
-                for (int i : questionType) {
-                   System.out.println("q types :"+i);
-                }
+                
                 
                 // Get the question type
                 int questionType =rs2.getInt("QType_ID");
@@ -226,6 +264,12 @@ public class TakingExam extends javax.swing.JFrame {
                 } else if (questionType == 3) { 
                    //questionField.setVisible(false);
                    //answerLabel1.setVisible(false);
+                    String sql3 = "SELECT * FROM essay WHERE Question_ID='"+qID+"'";
+                    rs3 = st3.executeQuery(sql3);
+                    while (rs3.next()) {
+                        String instruction = rs3.getString("instructions");
+                        this.questionText.add(instruction);
+                    }
                 }else {
                 
                 }
@@ -238,6 +282,10 @@ public class TakingExam extends javax.swing.JFrame {
                 this.questionID.add(qID);
                 */
             }
+            
+            for (int i : questionType) {
+                   System.out.println("q types :"+i);
+                }
  
         } catch (Exception exc) {
             exc.printStackTrace();
@@ -486,14 +534,26 @@ public class TakingExam extends javax.swing.JFrame {
             answersLabel.setText("Fill in your answer part :");
 
             jPanel2.setLayout(new FlowLayout());
+            
+            
+            essayAnswer.setColumns(40);
+            essayAnswer.setRows(10);
+            jPanel2.add(essayAnswer);
 
             System.out.println("\n");
             
             try {
-                //latestQID = questionID.get(num);
-                //String sql = "SELECT * FROM fibanswer WHERE QuestionID ='"+latestQID+"' ";
-                //rs = st.executeQuery(sql);
-            
+                // Check & Set if the question is already being answered ::
+                String sql2 = "SELECT * FROM exam_answer WHERE session_id='"+sessionkey+"' AND Question_ID='"+latestQID+"' ";
+                rs2 = st2.executeQuery(sql2);
+                int answerCounter = 0;
+                String answers="";
+            String essayAnswerText ="";
+                while(rs2.next()) {
+                    essayAnswerText = rs2.getString("answer");
+                }
+                essayAnswer.setText(essayAnswerText);
+                
             } catch (Exception exc) {
                 exc.printStackTrace();
             } 
@@ -568,7 +628,14 @@ public class TakingExam extends javax.swing.JFrame {
             
             answerFields.clear();
             answerLabel.clear();
-        } else {
+        } else if (questionType == 3) {
+            
+            userAnswers.add(essayAnswer.getText());
+            
+            answerFields.clear();
+            answerLabel.clear();
+            
+        }else {
                 
         }
         

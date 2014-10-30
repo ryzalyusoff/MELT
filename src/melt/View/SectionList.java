@@ -172,7 +172,7 @@ public class SectionList extends javax.swing.JFrame {
        examPanel.ExamID = this.Exam_ID;
         examPanel.SectionName = selectedSection;
         
-        System.out.println(new Integer(ExamID).toString());
+        System.out.println(new Integer(Exam_ID).toString());
         System.out.println(selectedSection);
         
         
