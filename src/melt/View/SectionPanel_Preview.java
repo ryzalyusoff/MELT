@@ -186,7 +186,7 @@ public class SectionPanel_Preview extends JPanel implements ActionListener {
                 addQ(questionPanel_Preview);
             }
 
-        } else if (numOfQTypes == 2) {
+        } else if (numOfQTypes == 2||numOfQTypes == 3) {
             for(int qType:qTypeLists){
                 SubsectionPanel_Preview subsectionPanel_Preview=new SubsectionPanel_Preview(exam_ID,section_ID,qType);
                 sectionContentPanel.add(subsectionPanel_Preview);
