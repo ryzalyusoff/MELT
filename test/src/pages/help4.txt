@@ -1,0 +1,116 @@
+Exam
+
+A. Create an Exam
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. On the left panel towards the bottom, click on the ‘Add an Exam’ button.
+    4. Enter any instructions you may have for the examination (These will be shown to the student when carrying out his/her exam) and click the ‘OK’ button.
+    5. You will be taken back to the Exam Overview section where you can see your exam added (With the last exam added at the bottom of the list on the left panel).
+
+B. Activate an Exam
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to activate from the left panel using the checkbox and then click the ‘Activate’ button.
+    4. You will then see an ‘Activated’ next to the selected exam.
+
+C. Add a Section
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. On the left panel towards the bottom, click on the ‘Add an Section’ button.
+    5. Enter the following information
+    6. An appropriate section name.
+    7. The time limit that will be assigned to that particular section.
+    8. The number of subsections that you would like to include in this section.
+    9. Click the ‘OK’ button.
+
+D. Delete a Section
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. Select the section you would like to delete from the left panel using the checkbox and then click the ‘Delete’ button.
+
+E. Change the time limit
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. Select the section you would like to edit from the left panel using the checkbox and then click the ‘Edit’ button.
+    5. Change the time limit from the top of the page.
+    6. Click on the ‘Update Section’ button to save your changes.
+
+F. Add a Subsection to a Section
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. Select the section you would like to edit from the left panel using the checkbox and then click the ‘Edit’ button.
+    5. Click the ‘Add a Subsection’ button next to the time limit.
+    6. Click on the ‘Update Section’ button to save your changes.
+
+G. Add a Question (not to Subsection)
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. Select the section you would like to edit from the left panel using the checkbox and then click the ‘Edit’ button.
+    5. Click the ‘Add a Question’ button next to the ‘Add a Subsection’ button.
+    6. A table will appear with the available questions.
+    7. Select the question that you wish to add to the section.
+    8. Click on the ‘Add Question’ button at the bottom of the page.
+    9. Click on the ‘Update Section’ button to save your changes.
+
+H. Add a Question from a Subsection
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. Select the section you would like to edit from the left panel using the checkbox and then click the ‘Edit’ button.
+    5. Click the ‘Add a Question’ button which is next to the subsection that you wish to add a question to.
+    6. A table will appear with the available questions.
+    7. Select the question that you wish to add to the subsection.
+    8. Click on the ‘Add Question’ button at the bottom of the page.
+    9. Click on the ‘Update Section’ button to save your changes.
+
+I.Delete a Question from a Section
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. Select the section you would like to edit from the left panel using the checkbox and then click the ‘Edit’ button.
+    5. Click the ‘Delete’ button which is next to the question that you wish to delete.
+    6. Click on the ‘Update Section’ button to save your changes.
+
+J.Delete a Subsection
+    1. Open the Application.
+    2. Click on the ‘EXAM’ button.
+    3. Select the exam you would like to add the section to from the left panel using the checkbox and then click the ‘Edit’ button.
+    4. Select the section you would like to edit from the left panel using the checkbox and then click the ‘Edit’ button.
+    5. Click the ‘Delete’ button which is next to the subsection that you wish to delete.
+    6. Click on the ‘Update Section’ button to save your changes.
+
+
+Question
+
+A. Add a Multiple Choice Question (MCQ)
+    1.Open the Application. 
+    2.Click on the ‘QUESTION’ button.
+    3.Enter the Question text.
+    4.Under ‘Answer Text’, enter the answer text options
+    5.Select which answer/s is correct from beneath ‘Correct Answer’ by selecting the checkboxes.
+    6. Click the ‘Add’ button below. 
+    7.You question will appear in the table on the right side of the window.
+
+B.Edit a Question
+    1. Open the Application.
+    2. Click on the ‘QUESTION’ button.
+    3. Select a question from the list on the right side of the window (which will then be highlighted).
+    4. Click the ‘Edit’ button beneath the list.
+    5. Here you have multiple options which are as follows:
+    6. Change the question text from the top field.
+    7. Change which is the correct answer/s from the checkboxes below ‘Correct Answer’.
+    8. Change the answer text options by modifying the text fields below ‘Answer Text’.
+    9. Add possible answers (provided you have less than 6) by adding text in the text fields below ‘Answer Text’.
+    10. Deleting answer text options by removing the corresponding text from the text fields below ‘Answer Text’, and also unchecking the checkboxes below ‘Correct Answer’ if they are selected.
+    11. Once you have completed this step, click the ‘Update’ button to save your changes.
+
+Delete a Question
+Open the Application.
+Click on the ‘QUESTION’ button.
+Select a question from the list on the right side of the window (which will then be highlighted).
+Click the ‘Delete’ button beneath the list.

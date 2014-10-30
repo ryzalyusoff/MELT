@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MELT - Help 1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css" type="text/css" />
+    </head>
+    <body>
+        <div id="main-container">
+            <h1>How to Add Question ?</h1>
+            
+            <ul id='steps'>
+                <li>
+                    <b>Step 1:</b> On the Main page, click on the "QUESTION" button <br/><br/>
+                    <img src="img/help1_1.png" />
+                    <br/><br/>
+                </li>
+                <li>
+                    <b>Step 2:</b> Fill all the required and click "Add" button <br/><br/>
+                    <img src="img/help1_2.png" /> <br/><br/>
+                    
+                    <div class="info-box">
+                        When adding the question make sure :
+                            <ul>
+                                <li>you fill in the Question field</li>
+                                <li>you fill in at least two answers' field</li>
+                                <li>select at least one correct answer</li>
+                            </ul>
+                    </div> 
+                    <br/><br/>
+                    
+                </li>
+            </ul>
+            
+        </div>
+    </body>
+</html>

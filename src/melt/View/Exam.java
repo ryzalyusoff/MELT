@@ -390,14 +390,15 @@ public class Exam extends JFrame implements ActionListener, WindowListener {
         }else if (e.getSource() == addExamButton) {
             AddExam addExam = new AddExam();
             //settingSection.setVisible(true);
-            contentPanel.removeAll();
             JPanel temp = addExam.getGUI();
 
+            contentPanel.removeAll();
             contentPanel.setLayout(new BorderLayout());
             
             
             contentPanel.add(temp, BorderLayout.NORTH);
             contentPanel.revalidate();
+            contentPanel.repaint();
         } else if (e.getSource()==activatedButton) {
             //isPublicButtons
            

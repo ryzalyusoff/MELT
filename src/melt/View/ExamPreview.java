@@ -40,7 +40,7 @@ public class ExamPreview extends JDialog implements WindowListener{
      * @param exam_ID
      * @param section_ID the section_ID cannot same as db
      */
-    public ExamPreview(int exam_ID, melt.View.SectionPanel sectionPanel){
+    public ExamPreview(int exam_ID,melt.View.SectionPanel sectionPanel){
         this.exam_ID=exam_ID;
         this.sectionPanel=sectionPanel;
         fatherJPanel=(JPanel)sectionPanel.getParent();
@@ -97,6 +97,12 @@ public class ExamPreview extends JDialog implements WindowListener{
         return scrollPane;
 
     }
+
+    /**
+     * get the preview but replace the specific one(which is now edited) with the current one 
+     * @param sectionPanel
+     * @return
+     */
     public JPanel getGUI(melt.View.SectionPanel sectionPanel){
         JPanel p1=new JPanel();
         JPanel p2=new JPanel();

@@ -341,7 +341,7 @@ public class SectionPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sectionButton2) {//add a question
-            if (sectionContentPanel.getComponentCount()==0||sectionContentPanel.getComponent(0) instanceof QuestionPanel) {
+            if (sectionContentPanel.getComponentCount()==0||sectionContentPanel.getComponent(0) instanceof QuestionPanel||sectionContentPanel.getComponentCount()<3) {
                 ChooseQuestionsPanel chooseQuestionsPanel = new ChooseQuestionsPanel((SectionPanel) this);
                 chooseQuestionsPanel.setVisible(true);
 
