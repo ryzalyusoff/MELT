@@ -197,7 +197,7 @@ public class SectionPanel extends JPanel implements ActionListener {
                 addQ(questionPanel);
             }
 
-        } else if (numOfQTypes == 2) {
+        } else if (numOfQTypes == 2||numOfQTypes == 2) {
             for(int qType:qTypeLists){
                 SubsectionPanel subsectionPanel=new SubsectionPanel(exam_ID,section_ID,qType);
                 sectionContentPanel.add(subsectionPanel);

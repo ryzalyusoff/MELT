@@ -41,8 +41,10 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new melt.View.StartupPanel().setVisible(true);
-                new melt.View.RolesPanel().setVisible(true);
+                new melt.View.StartupPanel().setVisible(true);
+                //new melt.View.RolesPanel().setVisible(true);
+                //new melt.View.SectionList().setVisible(true);
+                //new melt.View.TakingExam().setVisible(true);
             }
         });
     }

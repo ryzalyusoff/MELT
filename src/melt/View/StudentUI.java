@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import melt.Util.SQLHelper;
@@ -49,6 +50,8 @@ public final class StudentUI extends javax.swing.JFrame {
     public static String password;
     public static String driver;
     
+     public JLabel questionLabel;
+    
     // Class important variables
     int examID = 0;
     ArrayList<Integer> sectionID = new ArrayList<>();
@@ -66,21 +69,19 @@ public final class StudentUI extends javax.swing.JFrame {
         
         getExam();
         //System.out.println(this.examID);
-        getSection();
+        setSection();
         
         for (int i : sectionID) {
             System.out.print("Section ID: "+i+" ||");
             getSectionDetails(i);
             
-            setSubSection(i);
-            
-            for (int j : subSectionID) { 
-                getQuestion(j);
-            }
+             
+                getQuestion(i);
             
             
             //System.out.println("-------------------------------------");
-        
+            
+            
         }
         
         
@@ -133,7 +134,9 @@ public final class StudentUI extends javax.swing.JFrame {
             while (rs.next()) {
                 String instruction = rs.getString("instructions");
                 int examID = rs.getInt("Exam_ID");
-                System.out.println("INSTRUCTION: "+instruction);
+                //System.out.println("INSTRUCTION: "+instruction);
+                questionLabel = new JLabel("INSTRUCTION: "+instruction);
+               studentUIPanel.add(questionLabel);
                 System.out.println("____________________________");
                 this.examID = examID;
             }
@@ -142,7 +145,7 @@ public final class StudentUI extends javax.swing.JFrame {
         } 
     }
     
-    public void getSection() {
+    public void setSection() {
          try {
             String sql = "SELECT * FROM section WHERE Exam_ID='"+examID+"' ";
             rs = st.executeQuery(sql);
@@ -173,30 +176,15 @@ public final class StudentUI extends javax.swing.JFrame {
         } 
     }
     
-     public void setSubSection(int SectionID) {
-         try {
-            String sql = "SELECT * FROM subsection WHERE Section_ID='"+SectionID+"' ";
-            rs = st.executeQuery(sql);
-            
-            while (rs.next()) {
-                //String subSectionName = rs.getString("Section_Name");
-                int subSectionID = rs.getInt("SubSection_ID");
-                //System.out.println("Subsection ID: "+subSectionID);
-                this.subSectionID.add(subSectionID);
-            }
-           
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        } 
-    }
+
     
-    public void getQuestion(int SubSection_ID) {
+    public void getQuestion(int section_ID) {
          try {
              
             int questionID = 0;
             int questionType = 0;
             
-            String sql = "SELECT * FROM subsectionquestion WHERE SubSection_ID='"+SubSection_ID+"' ";
+            String sql = "SELECT * FROM sectionquestion WHERE Section_ID='"+section_ID+"' ";
             rs = st.executeQuery(sql);
             
             while (rs.next()) {
@@ -255,41 +243,124 @@ public final class StudentUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         studentUIPanel = new javax.swing.JPanel();
+        choice1 = new javax.swing.JCheckBox();
+        choice2 = new javax.swing.JCheckBox();
+        choice3 = new javax.swing.JCheckBox();
+        choice4 = new javax.swing.JCheckBox();
+        choice5 = new javax.swing.JCheckBox();
+        choice6 = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MELT SYSTEM - Student");
+
+        choice1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                choice1ActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout studentUIPanelLayout = new javax.swing.GroupLayout(studentUIPanel);
         studentUIPanel.setLayout(studentUIPanelLayout);
         studentUIPanelLayout.setHorizontalGroup(
             studentUIPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
+            .addGroup(studentUIPanelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(studentUIPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(choice2)
+                    .addComponent(choice1)
+                    .addComponent(choice3)
+                    .addComponent(choice4)
+                    .addComponent(choice5)
+                    .addComponent(choice6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(studentUIPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         studentUIPanelLayout.setVerticalGroup(
             studentUIPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentUIPanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(choice1)
+                .addGap(18, 18, 18)
+                .addComponent(choice2)
+                .addGap(18, 18, 18)
+                .addComponent(choice3)
+                .addGap(18, 18, 18)
+                .addComponent(choice4)
+                .addGap(18, 18, 18)
+                .addComponent(choice5)
+                .addGap(18, 18, 18)
+                .addComponent(choice6)
+                .addGap(31, 31, 31))
         );
+
+        jButton1.setText("SAVE");
+
+        jButton2.setText("NEXT");
+
+        jButton3.setText("BACK");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Time Left :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(studentUIPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(studentUIPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(368, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(14, 14, 14)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(109, 109, 109))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(studentUIPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(studentUIPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(24, 24, 24))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void choice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choice1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_choice1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -328,6 +399,19 @@ public final class StudentUI extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox choice1;
+    private javax.swing.JCheckBox choice2;
+    private javax.swing.JCheckBox choice3;
+    private javax.swing.JCheckBox choice4;
+    private javax.swing.JCheckBox choice5;
+    private javax.swing.JCheckBox choice6;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel studentUIPanel;
     // End of variables declaration//GEN-END:variables
 }
