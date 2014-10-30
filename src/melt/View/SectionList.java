@@ -39,7 +39,7 @@ public class SectionList extends javax.swing.JFrame {
     public static String password;
     public static String driver;
     
-    public int ExamID;
+    public int Exam_ID;
     
     public void startSQL() {
         try {
@@ -88,7 +88,7 @@ public class SectionList extends javax.swing.JFrame {
           String sql = "SELECT * FROM section, exam WHERE section.Exam_ID = exam.Exam_ID AND exam.isPublic=1 ";
             rs=st.executeQuery(sql);
             while(rs.next()) {
-                this.ExamID = rs.getInt("Exam_ID");
+                this.Exam_ID = rs.getInt("Exam_ID");
                 String name = rs.getString("Section_Name");
                 DLM.addElement(name);
             }
@@ -164,12 +164,12 @@ public class SectionList extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String selectedSection = (String)sectionList.getSelectedValue(); 
-        //System.out.println(selectedText);
-        TakingExam examPanel = new TakingExam();
+      
+       TakingExam examPanel = new TakingExam();
         
         examPanel.setVisible(true);
         
-        examPanel.ExamID = this.ExamID;
+       examPanel.ExamID = this.Exam_ID;
         examPanel.SectionName = selectedSection;
         
         System.out.println(new Integer(ExamID).toString());
