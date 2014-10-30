@@ -179,7 +179,9 @@ public class TakingExam extends javax.swing.JFrame {
     /**
      * Creates new form ExamMCQ
      */
-    public TakingExam() {
+    public TakingExam(int exam_ID,String sectionName) {
+        this.ExamID=exam_ID;
+        this.SectionName=sectionName;
         initComponents();
         questionField.setEditable(false); 
       
@@ -304,6 +306,8 @@ public class TakingExam extends javax.swing.JFrame {
     
     public void setQuestion(int num){
         
+        if (questionType.size() > 0 ) {
+        
        if (questionType.get(num) == 1) {
            SubSectionName = "MCQ";
            SubsectionNameLabel.setText(SubSectionName);
@@ -314,10 +318,10 @@ public class TakingExam extends javax.swing.JFrame {
            SubSectionName = "ESSAY";
            SubsectionNameLabel.setText(SubSectionName);
        }
-        
+          
         String latestQuestion = questionText.get(num);        
         questionField.setText(num+1 + ". "+ latestQuestion);
- 
+      }  
     }
     
      public void setAnswer(int num){
@@ -547,11 +551,15 @@ public class TakingExam extends javax.swing.JFrame {
                 String sql2 = "SELECT * FROM exam_answer WHERE session_id='"+sessionkey+"' AND Question_ID='"+latestQID+"' ";
                 rs2 = st2.executeQuery(sql2);
                 int answerCounter = 0;
+                
                 String answers="";
-            String essayAnswerText ="";
+                
+                String essayAnswerText ="";
+                
                 while(rs2.next()) {
                     essayAnswerText = rs2.getString("answer");
                 }
+                
                 essayAnswer.setText(essayAnswerText);
                 
             } catch (Exception exc) {
@@ -602,6 +610,8 @@ public class TakingExam extends javax.swing.JFrame {
     } 
     
     private void storeAnswers (int num) {
+        
+        
         ArrayList<String> userAnswers = new ArrayList<>();
         int selectedAnswer = 0;
 
@@ -634,7 +644,6 @@ public class TakingExam extends javax.swing.JFrame {
             
             answerFields.clear();
             answerLabel.clear();
-            
         }else {
                 
         }
@@ -1187,7 +1196,7 @@ public class TakingExam extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TakingExam().setVisible(true);
+                //new TakingExam().setVisible(true);
             }
         });
     }

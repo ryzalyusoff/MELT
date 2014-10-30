@@ -163,14 +163,14 @@ public class SectionList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String selectedSection = (String)sectionList.getSelectedValue(); 
+       String selectedSection = (String)sectionList.getSelectedValue(); 
       
-       TakingExam examPanel = new TakingExam();
+       TakingExam examPanel = new TakingExam(this.Exam_ID,selectedSection);
         
-        examPanel.setVisible(true);
+       examPanel.setVisible(true);
         
-       examPanel.ExamID = this.Exam_ID;
-        examPanel.SectionName = selectedSection;
+      //examPanel.ExamID = this.Exam_ID;
+      //examPanel.SectionName = selectedSection;
         
         System.out.println(new Integer(Exam_ID).toString());
         System.out.println(selectedSection);
